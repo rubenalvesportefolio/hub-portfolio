@@ -1,4 +1,4 @@
-# Ruben Alves - Portfolio
+
 
 A dark, metallic, CGI-inspired portfolio in several pages. Your Spline
 scene runs as a darkened, full-page background on every page.
