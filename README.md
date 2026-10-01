@@ -1,17 +1,21 @@
 # Ruben Alves - Portfolio
 
-A dark, metallic, CGI-inspired portfolio in several pages. Your Spline
-scene runs as a darkened, full-page background on every page. The whole
+A dark, metallic, CGI-inspired portfolio in several pages, on a flat
+black background with a soft navy glow (see "Page background"). The whole
 site reads in **English or Portuguese** - there's an EN/PT switch in the
-header of every page (see "Languages (EN / PT)" below).
+header of every page (see "Languages (EN / PT)" below) - and a gear
+button in the top-right corner that switches between the **full
+experience** and a **lite** mode (see "Display mode" below).
 
 ## Pages
 
 - `index.html` - Home / hero, with two buttons: "Explore selected work"
   (all categories) and "See my best projects" (a short curated list -
-  see `best-projects.html` below).
-- `work.html` - Six category tabs (3D / Graphic Design / 3D Printable /
-  Contests / Commissions / Games). Each shows only the projects you've
+  see `best-projects.html` below) - then a "Selected work" block with
+  three featured projects (see "Homepage: selected work" below).
+- `work.html` - Category tabs (3D / Graphic Design / 3D Printable /
+  Contests / Commissions, plus a Games tab that's hidden for now - see
+  "Hiding a category tab" below). Each shows only the projects you've
   added - no filler tiles - plus a search bar that filters by tag. Search
   suggestions are built per-category from that category's own tags, so
   categories never share a keyword list.
@@ -26,14 +30,23 @@ header of every page (see "Languages (EN / PT)" below).
 - `project.html` - one shared, dynamic page for every 3D /
   Graphic Design / 3D Printable / Contests / Games project. It reads
   `?id=...` from the URL and fills itself in from `PROJECTS` - see below.
-  Clicking the cover image or any image in a project's extra gallery
-  opens it larger in a lightbox (click outside it, the ✕, or press Esc
-  to close).
+  A project can also carry a longer, full-width case study below the
+  cover (see `caseStudy` below - used by Protocol - Marked). Clicking the
+  cover image or any image in a project's extra gallery opens it larger
+  in a lightbox (click outside it, the ✕, or press Esc to close). A
+  project with a `video` shows a play button on its cover instead (see
+  `video` below - used by Protocol - Marked).
 - `best-projects.html` - a short, hand-picked list of your strongest
   work, split into just two sections (3D and Graphic Design), nothing
   else - see "Best Projects page" below.
-- `about.html` - Simple bio: location, availability, focus, and tools.
-- `contact.html` - CV download + contact + social links.
+- `about.html` - Bio, facts (location, availability, focus, languages),
+  education, activities beyond the degree, and tools - all taken from
+  `cv.pdf`. If the CV changes, update this page to match (the text is in
+  `i18n.js` under `about.*`, the tool pills in the HTML).
+- `contact.html` - CV download + email + social links (Instagram,
+  LinkedIn, ArtStation, Behance, The Rookies, itch.io).
+- `404.html` - shown by GitHub Pages for any address that doesn't exist,
+  with links back to Home and Work (see "Search, sharing and stats").
 
 ## Work page - adding your real projects
 
@@ -61,10 +74,13 @@ placeholder tiles are ever generated beyond what you list).
   accepts multiple, comma-separated tags at once (see "Multi-tag search"
   below). Each category builds its own search suggestions automatically
   from whatever tags its projects use. Current 3D vocabulary:
-  `3D Modelling`, `3D Animation`, `Detail`, `Environment`, `Nature`,
-  `Interior`, `Game Asset`, `University Work`.
+  `3D Modelling`, `Hard-Surface Modelling`, `3D Animation`, `Detail`,
+  `Environment`, `Nature`, `Interior`, `Game Asset`, `Geometry Nodes`,
+  `Shading & Materials`, `Procedural Shading`, `Compositing`,
+  `University Work`.
 - `description` - shown on the project's detail page, next to the cover
-  image. Bracketed placeholder text (`[...]`) means "write the real thing
+  image. Plain text, or simple HTML (e.g. `<p>...</p>` paragraphs) when
+  it needs more than one paragraph. Bracketed placeholder text (`[...]`) means "write the real thing
   whenever you have it" - several 3D projects still have these
   since only you know the actual brief/process for each one.
 - `link` - the "View full project" destination on the detail page (always
@@ -88,24 +104,99 @@ placeholder tiles are ever generated beyond what you list).
   cropped at all (e.g. a wordmark or banner with its own padding, like
   Jorge's cover). Leave it out for normal photo/render covers, which crop
   to fill as usual - this applies on both the grid tile and its detail page.
+- `caseStudy` - optional. A longer write-up as HTML, shown full width
+  below the cover/description and above the gallery. Use `<h2>` for
+  phases, `<h3>` for steps, `<p>`, `<ul>/<li>` and `<strong>` (all styled
+  in `styles.css` under `.project-case-study`). Leave it out and the
+  section is hidden. Protocol - Marked uses it for its full
+  pre-production / production / post-production breakdown. It's
+  translatable like `description` (see "Languages" below).
+- `date` - when the project was made: `'2025'`, `'2025-07'`, or a range
+  `'start/end'` with either form on each side (`'2025/2026-04'` shows as
+  "2025 – April 2026"). The project page shows it under the
+  description (month names follow the site language: "julho de 2025"
+  in Portuguese), and the tiles on Work, Best Projects and the homepage
+  show the year(s). Leave it out and nothing is shown -
+  `npm run validate` warns about every visible project without one, and
+  fails on a badly written date.
+- `video` - optional. A YouTube video ID - the 11 characters after
+  `watch?v=` in the address (Protocol - Marked: `'I9UdgZKVZ8A'`). The
+  detail page then shows the cover image with a play button in the
+  cover slot; pressing it loads the YouTube player right there
+  (privacy-enhanced `youtube-nocookie.com`, already playing) and adds a
+  "Watch on YouTube" button. Nothing is loaded from YouTube until
+  someone presses play, so the page stays light. The video keeps playing
+  if the visitor switches language.
+- `hidden: true` - optional. Keeps a draft in the file but off the site:
+  no Work tile, no Best Projects or homepage tile, and its
+  `project.html?id=` page says "not found". `npm run validate` doesn't
+  nag about placeholder text in hidden drafts, and fails if a hidden
+  project is still listed in `BEST_PROJECTS` or `HOME_FEATURED`. Delete
+  the line to publish it.
 - `downloadUrl` / `viewUrl` - optional. Set either (or both) to add extra
   buttons on the project's detail page: one to download a file directly,
   one to open a link (e.g. a PDF preview) in a new tab. Used on Jorge to
-  offer its descriptive-memory PDF alongside the itch.io link.
+  offer its descriptive-memory PDF alongside the itch.io link, on
+  Mystery Box for its project report, and on Protocol - Marked for the
+  full final report (`files/protocol-marked-final-report.pdf`).
 
 If a category's array is empty, the Work page shows a simple "Projects
-coming soon" message instead of a blank grid. `graphic` and `games` are
-sparse/empty for now - add entries the same way once you have work to
-show there.
+coming soon" message instead of a blank grid. `graphic` has a single
+entry for now - add entries the same way once you have work to show
+there.
 
-**3D** now has 8 projects and their cover images (in `images/work/3d/`),
-resized and compressed for the web. 5 of the original 7 (001, 002, 003,
-006, 007) have real titles, descriptions, and skill tags pulled directly
-from what you wrote on each Rookies page; project 008 (Exposição -
-Telefones do Mundo) is a university project with its own 4-image set (1
-cover + 3 in its gallery) and no outside link. Project 004 and 005 don't
-have a Rookies link yet, so their descriptions are still placeholder text
-- fill those in (and give them a `link`) once they're posted.
+### Hiding a category tab
+
+A tab button with the `hidden` attribute in `work.html` is skipped
+entirely - not shown, and it can't be opened with `?tab=` or by a
+remembered choice either. Games is hidden this way until it has
+projects; to bring it back, remove `hidden` from its
+`data-tab="games"` button.
+
+### What's on the site right now
+
+**3D** has 9 projects (7 visible), with cover images in `images/work/3d/`:
+
+- 001 Tower, 002 Pocket Clock, 003 Star Destroyer, 006 Sand and 007
+  Medieval Library Interior have real titles, descriptions and skill
+  tags pulled from each Rookies page, and link to it.
+- 004 and 005 are **hidden** (`hidden: true`) - their titles and
+  descriptions are still placeholders and they have no Rookies link
+  yet. Fill those in, then delete the `hidden` line to publish them.
+- 008 Exposição - Telefones do Mundo is a university project with a
+  4-image set (1 cover + 3 in its gallery) and no outside link.
+- 009 Protocol - Marked is your final degree project (Design of
+  Communication and Audiovisual, ESART/IPCB) - a solo sci-fi 3D
+  cinematic / game teaser submitted to the Casa da Animação competition.
+  Cover: a render of the night city. It has a full `caseStudy` in both
+  languages, the teaser video (`video: 'I9UdgZKVZ8A'`, played in the
+  cover slot), the final report as a PDF (download + view buttons) and
+  a 2-image gallery (the rigged character in Blender, and a viewport
+  shot of the city scene). It's also the first pick on Best Projects.
+
+**Dates** (`date` field) and where each one came from:
+
+| Project | Date | Source |
+| --- | --- | --- |
+| 001 Tower | July 2025 | Rookies page: "Made in 21 July 2025" |
+| 002 Pocket Clock | August 2025 | Rookies page: "Made in 4 August 2025" |
+| 003 Star Destroyer | August 2025 | Rookies page: "Made in 14 Aug 2025" |
+| 006 Sand | August 2026 | Rookies page: "Made in 5 August 2026" |
+| 007 Medieval Library Interior | August 2026 | Rookies publish date (25 Aug 2026) - the page gives no "made in" date |
+| 009 Protocol - Marked | 2025 – April 2026 | Final report: started 1st semester of 3rd year (2025/26), report dated April 2026 |
+| Jorge | June 2024 | Micro Jam 017 ran 28-30 June 2024 (descriptive memory) |
+| Mystery Box | 2025 – January 2026 | Report: 3rd year, 1st semester 2025/2026; finished January 2026 |
+| 008 Exposição - Telefones do Mundo | June 2026 | Given by Ruben |
+| Icon Library | July 2026 | Given by Ruben |
+| UrbanEyePT (commission + Instagram post) | July 2026 | Given by Ruben |
+
+The UrbanEyePT case-study page is plain HTML, so its date is written
+there directly (`urbaneyept.date` in `i18n.js`) - change both it and the
+`date` in `PROJECTS.commissions` if it ever needs correcting.
+
+**Graphic Design** has one entry, the UrbanEyePT Icon Library (linking
+to Behance) - the same work also appears on the UrbanEyePT commission
+page.
 
 **3D Printable** is a new category for physical/3D-printed objects,
 separate from the render-only work in **3D**. It has one real entry,
@@ -140,6 +231,33 @@ only matches against the very start of what you've typed, so it stops
 offering suggestions once you type a comma and start a second tag - you
 can still type the rest by hand, it just won't autocomplete.
 
+**Commissions** has one entry, UrbanEyePT (see "Commissions" below).
+
+**Games** is empty, and its tab is hidden (see "Hiding a category tab").
+
+## Homepage: selected work
+
+Below the hero, the homepage shows three projects: the first one large
+on the left, the other two stacked beside it (one column on phones).
+Each tile shows a number and category, the title and tags, and opens
+the project's page - whose "Back to ..." link then returns to Home.
+
+The picks live in `script.js`, just under `BEST_PROJECTS`:
+
+```js
+const HOME_FEATURED = ['3d-007', '3d-003', 'graphic-icon-library'];
+```
+
+(Medieval Library Interior, Star Destroyer and the Icon Library - an
+environment, a procedural animation and a graphic design piece, to
+show range.) Order = order on the page, and the first is the big one.
+`npm run validate` fails if an id here doesn't exist or is hidden. The
+tiles load the small thumbnail or the full image depending on how big
+they are on screen.
+
+The hero is 86% of the screen tall so the top of these tiles peeks in
+below it.
+
 ## Best Projects page
 
 `best-projects.html` is a short, curated shortcut to your strongest work
@@ -154,7 +272,7 @@ function:
 
 ```js
 const BEST_PROJECTS = {
-  '3d': ['3d-007', '3d-006', '3d-003'],
+  '3d': ['3d-009', '3d-007', '3d-006', '3d-003'],
   graphic: ['graphic-icon-library'],
 };
 ```
@@ -174,7 +292,7 @@ commission page - not through `project.html`.
 
 ## Image sizes and formats
 
-Every cover image ships as WebP (smaller than the original JPEG/PNG at
+Every cover and gallery image ships as WebP (smaller than the original JPEG/PNG at
 the same visual quality) in two sizes:
 
 - `images/.../project-name.webp` - the full-size version (up to 1400px
@@ -187,6 +305,12 @@ the same visual quality) in two sizes:
   `toThumbPath()` in `script.js` derives this path automatically from
   `image`, so you never set it separately - just make sure a `thumbs/`
   version with a matching filename exists alongside the full one.
+
+Gallery images on the detail page also use the small version (the
+full-size one is only fetched when someone opens it in the lightbox).
+`npm run validate` fails if an image is missing its `thumbs/` twin, or
+if a full-size image is over 400 KB or a thumbnail over 120 KB (budgets
+at the top of `scripts/validate-site.mjs`).
 
 Grid images also load with `loading="lazy"` so they don't download until
 they're about to scroll into view. When adding a new project image, run
@@ -205,7 +329,8 @@ opt-in - add `wave-cta` alongside `button button-dark` or `nav-cv` on any
 other link if you want the same effect elsewhere; every other button on
 the site is unaffected. Colours and timing are set in `styles.css` under
 `.button.wave-cta,.nav-cv.wave-cta` and the `waveFlow` keyframes (currently
-a 14s ease-in-out loop). It respects `prefers-reduced-motion`.
+a 14s ease-in-out loop). It respects `prefers-reduced-motion`, and
+turns into a flat solid button in lite mode.
 
 "See my best projects" uses a different modifier, `button-feature`: a
 charcoal/navy glass panel with a slow breathing navy glow (`featurePulse`
@@ -213,23 +338,28 @@ in `styles.css`) instead of a moving shimmer - deliberately distinct from
 `wave-cta` so it reads as its own, separate kind of call-to-action, while
 still using the site's existing palette (charcoal + the navy accent
 colour used sparingly elsewhere). Also opt-in, also respects
-`prefers-reduced-motion`.
+`prefers-reduced-motion`, and stops pulsing in lite mode.
 
 ## "Back" links always return to exactly where you were
 
 Every "← Back to ..." link/button on every detail page (`project.html`,
 commission pages, and any future page) returns to whichever list page
 the person actually came from - the Work page, with the exact tab they
-had open, **or** the Best Projects page - not just "Work" by default.
-This is handled once, globally, in `script.js`, and the button's own
-label updates too ("Back to Work" / "Back to Best Projects").
+had open, **or** the Best Projects page, **or** Home if they clicked a
+homepage tile - not just "Work" by default. This is handled once,
+globally, in `script.js`, and the button's own label updates too ("Back
+to Work" / "Back to Best Projects" / "Back to Home").
 
 How it works:
 
 - `work.html` and `best-projects.html` are the two "list" pages. Each one
   saves its own identity to `sessionStorage` as soon as it loads (or a
   tab is switched, on Work) - a page to return to (e.g.
-  `work.html?tab=commissions`) and a label to show (e.g. `Work`).
+  `work.html?tab=commissions`) and a label to show (e.g. `Work`). The
+  homepage does the same, but only when one of its tiles is clicked.
+- In Portuguese the label carries its own article ("aos Trabalhos",
+  "ao Início") and the template is just "← Voltar {target}", so every
+  destination reads correctly.
 - Any element marked `data-smart-back` (every existing "← Back to Work"
   link and button already has this) gets its `href` and visible label
   rewritten to match whichever list page was saved most recently.
@@ -291,12 +421,13 @@ step and no second copy of any page: the text is swapped in the browser,
 `<html lang>` is updated to match, and the choice is remembered in
 `localStorage` for the next visit.
 
-On a first visit with no saved choice, the site uses (in order) a
-`?lang=` in the URL, then the browser's own language - so a visitor
-whose browser is set to Portuguese lands in Portuguese - then falls back
-to English. `?lang=pt` is useful for sharing a link that opens in a
-specific language; it's removed from the address bar once it's been read,
-so it doesn't follow people around (`?id=` and `?tab=` are left alone).
+The language is picked in this order: a `?lang=` in the URL, then the
+visitor's saved choice, then the browser's own language - so a visitor
+whose browser is set to Portuguese lands in Portuguese - then English.
+`?lang=pt` is useful for sharing a link that opens in a specific
+language: it's saved as the visitor's choice (so the rest of their visit
+stays in that language), then removed from the address bar so it doesn't
+follow people around (`?id=` and `?tab=` are left alone).
 
 ### Where the text lives
 
@@ -332,8 +463,10 @@ translation is never allowed to contain HTML:
     <em data-i18n="about.title.line2">Graphic discipline.</em></h2>
 ```
 
-**Project titles and descriptions** stay next to the project in
-`script.js`, so adding a project is still one edit in one place:
+**Project titles, descriptions and case studies** stay next to the
+project in `script.js`, so adding a project is still one edit in one
+place (`title`, `description` and `caseStudy` are the only translatable
+fields):
 
 ```js
 {
@@ -369,7 +502,8 @@ tags as they appear on screen, so searching works in either language.
 languages don't define exactly the same keys, or if a `{placeholder}`
 appears in one language but not the other - so a half-translated string
 can't reach the site. It warns about keys that nothing uses, and about a
-project that has an English description but no Portuguese one.
+project that has an English description or case study but no Portuguese
+one.
 
 ### Adding a language
 
@@ -379,52 +513,160 @@ header. The checks above then apply to it automatically.
 
 ## Before publishing
 
-1. Put your CV PDF in this folder and name it exactly `cv.pdf`.
+1. `cv.pdf` in this folder is what "Download CV" serves - replace it
+   (same name) whenever your CV changes.
 2. Add your real projects and images in `script.js` as described above.
-3. Double check the social links in `contact.html` match your current
-   profiles. (The Instagram link currently points at `instagram.com`
-   itself rather than a profile - `npm run validate` warns about it.)
-4. Read each page once in **both languages** using the EN/PT switch.
+3. Double check the social links in `contact.html` (Instagram,
+   LinkedIn, ArtStation, Behance, The Rookies, itch.io) match your
+   current profiles.
+4. Run `npm run validate` and deal with any errors (warnings are
+   unfinished content, not breakage).
+5. Read each page once in **both languages** using the EN/PT switch.
 
-## Spline background
+## Checks, build and deployment
 
-Each page includes the same block:
+The site itself has no build step, but the repo has a little tooling
+(Node 20+; run `npm ci` once):
+
+- `npm run build` - copies everything publishable into `_site/`,
+  skipping whatever `.deployignore` lists (tooling, `*.md`, the
+  commission templates, ...). `_site/` is exactly what goes live.
+- `npm run validate` - builds, then runs `scripts/validate-site.mjs`
+  (internal links, `PROJECTS` data, images + thumbnails + size budgets,
+  translations, leftover `[PLACEHOLDER]`s) and `html-validate` on every
+  page. Errors fail; warnings are just reported.
+- `npm run serve` - builds and serves `_site/` at
+  `http://localhost:8080`.
+
+GitHub Actions (`.github/workflows/`):
+
+- `site.yml` - runs the same checks on every push and pull request, and
+  on `main` deploys the exact `_site/` that passed to GitHub Pages, then
+  smoke-tests the live pages.
+- `external-links.yml` - weekly (Mondays), checks every outside link
+  with lychee (`lychee.toml`; Instagram/LinkedIn are skipped because
+  they block bots), so a deleted Rookies post or unpublished Behance
+  project doesn't go unnoticed. It never blocks a deploy.
+- Dependabot opens one grouped update PR a month for the actions and
+  `html-validate`.
+
+## Display mode (full experience / lite)
+
+A gear button sits in the top-right corner of every page's header
+(right of EN/PT on desktop, right of the ☰ menu on mobile). It opens a
+small "Display" panel with one switch, **Full experience**:
+
+- **On (full)** - everything as designed: the shimmering heading, the
+  animated "wave" and "featured" buttons, the noise overlay and the
+  blurred header.
+- **Off (lite)** - no animations or transitions, and solid colours
+  instead of the moving chrome gradients. An idle page in lite mode does
+  no work at all.
+
+The choice is remembered (`localStorage`, key `displayMode`) and applies
+to every page. Before anyone has chosen, the site starts in **full**,
+or in **lite** if the visitor's OS asks for reduced motion.
+
+Where it lives:
+
+- `display-mode.js` - loaded in each page's `<head>`, so the saved mode
+  is set on `<html data-mode="full|lite">` before anything is drawn (no
+  flash of animation in lite). It also wires up the gear and the
+  switch, and fires a `displaymode:change` event when the mode changes
+  (nothing needs it today; it's there for any future script).
+- `styles.css` - the gear/panel styles are under "Display settings";
+  everything lite mode changes is in one block at the very end, under
+  `html[data-mode="lite"]`. To make lite switch off something new, add
+  a rule there.
+- The panel's text is translated like any other copy (`settings.*`
+  keys in `i18n.js`).
+
+The gear markup (`.display-settings`) is repeated in each page's header,
+like the language switch; the commission templates already include it.
+`npm run validate` fails if a page is missing the gear or doesn't load
+`display-mode.js` inside `<head>`.
+
+## Page background
+
+Each page includes the same fixed layer behind everything:
 
 ```html
-<div class="spline-bg" aria-hidden="true">
-  <div class="spline-scrim"></div>
+<div class="page-bg" aria-hidden="true">
+  <div class="page-bg-scrim"></div>
 </div>
 ```
 
-Note there's no `<spline-viewer>` element in the HTML itself anymore -
-`initSplineBackground()` at the very top of `script.js` inserts it (and
-loads the Spline script) only when the visitor is on a screen wider than
-850px **and** hasn't asked their OS/browser for reduced motion. On
-mobile, or with reduced motion on, that function returns early and does
-nothing - no script download, no scene fetch, no WebGL canvas at all.
-What's left is just the flat dark background plus the `.spline-scrim`
-gradient overlay, which was already designed to look intentional on its
-own rather than like a fallback.
+`.page-bg` is flat black; `.page-bg-scrim` adds a soft navy glow at the
+top and a gradient that darkens towards the bottom (both in
+`styles.css`). It's static, so it costs nothing while the page sits
+idle.
 
-This was a deliberate performance choice: a live 3D WebGL scene is
-easily the single heaviest thing on this site, and phones feel that cost
-far more than desktops do (battery drain, jank, weaker GPUs). If you
-ever want the interactive scene on mobile too, delete the
-`isSmallScreen` check in `initSplineBackground()` - the URL and darkening
-filter live in the same function/`.spline-bg spline-viewer` CSS rule as
-before.
+The site used to run a live Spline 3D scene here. It was removed
+because it kept laptops hot even at a capped frame rate and reduced
+resolution, for a picture shown at a fraction of its brightness. If you
+ever want motion back here, a short pre-rendered looping video (muted,
+`playsinline`, `preload="none"`, paused in lite mode) would be far
+cheaper than a live scene.
 
-Darkened via a CSS `filter` on the viewer plus a dark gradient overlay
-(`.spline-scrim`) in `styles.css`, so page text stays readable.
+## Search, sharing and stats
+
+**The live address** is set once, as `"homepage"` in `package.json`
+(currently `https://rubenalvesportefolio.github.io/hub-portfolio/`, from
+the CV). `npm run build` uses it to:
+
+- make the share-preview image URL absolute (link previews need a full
+  URL),
+- add a canonical link and `og:url` to every page except `project.html`
+  (one file serving many projects - a single canonical would tell
+  search engines every project is the same page),
+- give `404.html` a `<base href="/hub-portfolio/">`, so its styles and
+  links work at any wrong address, however deep,
+- write `sitemap.xml`: every page plus one `project.html?id=...` per
+  visible project.
+
+If the site moves (e.g. a custom domain), change `"homepage"` and
+everything follows.
+
+**Link previews** (LinkedIn, WhatsApp, X, Facebook, Slack...): every
+page has Open Graph / Twitter tags and shares `images/og-image.jpg`
+(1200x630 - name, headline and three renders). Project pages share the
+same card, because previews are read without running JavaScript.
+`npm run validate` fails if the preview image is missing.
+
+**Headings and descriptions for search engines**: every page has
+exactly one `<h1>` (its main title; on Contact, a hidden "Contact" one
+via the `.visually-hidden` class, since its two visible titles are
+section headings). `project.html` sets its own `<meta name="description">`
+for each project - the first ~155 characters of its description, in the
+current language.
+
+**robots.txt**: search engines only read it at the root of a domain,
+and this site lives in a sub-folder (`/hub-portfolio/`), so the build
+only writes one when `"homepage"` is a domain root. Instead, submit the
+sitemap once in Google Search Console (add the site as a "URL prefix"
+property, then Sitemaps -> `sitemap.xml`).
+
+**404 page**: `404.html` - GitHub Pages serves it automatically for any
+address that doesn't exist. It's marked `noindex`.
+
+**Visitor stats (GoatCounter)**: off until you set it up. GoatCounter is
+free for personal sites, open-source, uses no cookies and collects no
+personal data. To turn it on, sign up at goatcounter.com, pick a code
+(e.g. `rubenalves` -> rubenalves.goatcounter.com) and put it in
+`GOATCOUNTER_CODE` at the bottom of `script.js`. Each project page is
+counted separately, and local copies (localhost, file://) are never
+counted. To stop your own visits counting, open the live site once with
+`#toggle-goatcounter` at the end of the address.
 
 ## Mobile
 
-All four pages are responsive: safe-area padding for notched phones,
+Every page is responsive: safe-area padding for notched phones,
 `dvh`-based sizing so the mobile browser address bar doesn't cut off
 content, a full-width tap-friendly nav drawer, and a gallery grid that
 drops from 3 → 2 → 1 columns as the screen narrows.
 
 ## Publishing
 
-Static site - host on GitHub Pages, Netlify, Vercel, Cloudflare Pages, or
-any normal web host. Keep all files in the same folder.
+Deployed to GitHub Pages by `site.yml` (see above). It's a plain static
+site, so any other host (Netlify, Vercel, Cloudflare Pages, ...) works
+too - publish the contents of `_site/` after `npm run build`.

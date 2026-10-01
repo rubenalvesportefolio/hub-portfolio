@@ -37,10 +37,10 @@ button{font-family:inherit;touch-action:manipulation}
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 }
 
-/* ---------- Spline background layer (used site-wide, darkened) ---------- */
-.spline-bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--black)}
-.spline-bg spline-viewer{display:block;width:100%;height:100%;filter:brightness(.34) saturate(1.05) contrast(1.05);transform:scale(1.02)}
-.spline-bg .spline-scrim{
+/* ---------- Page background (fixed, behind every page) ----------
+   Flat black plus a soft navy glow and a dark gradient. */
+.page-bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:var(--black)}
+.page-bg .page-bg-scrim{
   position:absolute;inset:0;pointer-events:none;
   background:
     radial-gradient(120% 90% at 50% 0%, rgba(0,0,139,.14), transparent 55%),
@@ -78,11 +78,50 @@ button{font-family:inherit;touch-action:manipulation}
 .lang-btn+.lang-btn{border-left:1px solid var(--line)}
 .lang-btn:hover{color:var(--ink);background:rgba(255,255,255,.05)}
 .lang-btn.active{background:var(--chrome-solid);background-size:220% 220%;color:#0A0A0A}
+
+/* ---------- Display settings (gear, top-right of every header) ----------
+   Opens a small panel with the Full experience / Lite switch - see
+   display-mode.js. The nav gets margin-left:auto so the header reads
+   brand ... nav [gear] even with the extra item. */
+.site-header{gap:22px}
+.nav{margin-left:auto}
+.display-settings{position:relative;flex-shrink:0}
+.settings-toggle{
+  display:grid;place-items:center;width:34px;height:34px;padding:0;cursor:pointer;
+  background:none;border:1px solid var(--line-strong);border-radius:50%;color:var(--muted);
+  transition:color .2s,border-color .2s,transform .4s;
+}
+.settings-toggle:hover,.settings-toggle[aria-expanded="true"]{color:var(--ink);border-color:rgba(255,255,255,.5)}
+.settings-toggle[aria-expanded="true"]{transform:rotate(60deg)}
+.settings-panel{
+  position:absolute;top:calc(100% + 12px);right:0;width:260px;z-index:20;
+  background:#0E0E10;border:1px solid var(--line-strong);padding:16px 16px 14px;
+  box-shadow:0 18px 40px rgba(0,0,0,.6);
+}
+.settings-panel[hidden]{display:none}
+.settings-panel .eyebrow{margin-bottom:12px}
+.mode-row{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:13px;font-weight:700}
+.mode-switch{
+  position:relative;flex-shrink:0;width:44px;height:24px;padding:0;cursor:pointer;
+  border:1px solid var(--line-strong);border-radius:999px;background:#1A1A1D;transition:background-color .2s,border-color .2s;
+}
+.mode-switch-knob{
+  position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
+  background:var(--muted);transition:transform .2s,background-color .2s;
+}
+.mode-switch[aria-checked="true"]{background:var(--chrome-2);border-color:transparent}
+.mode-switch[aria-checked="true"] .mode-switch-knob{transform:translateX(20px);background:#0A0A0A}
+.mode-switch:focus-visible,.settings-toggle:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mode-note{margin:10px 0 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
+html[data-mode="full"] .mode-note-lite,html:not([data-mode="full"]) .mode-note-full{display:none}
 .lang-btn:focus-visible{outline:2px solid var(--ink);outline-offset:-3px}
 
 /* ---------- Shared type ---------- */
 .eyebrow{font:500 10px/1.2 "DM Mono",monospace;letter-spacing:.14em;margin:0 0 14px;color:var(--muted)}
 h1,h2,h3,p{margin-top:0}
+h1{margin-bottom:.83em} /* match the h2 these page titles used to be */
+/* Read by screen readers and search engines, not shown. */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 em{
   font-family:Georgia,serif;font-weight:400;letter-spacing:-.05em;font-style:normal;
   background:var(--chrome-text);background-size:220% 220%;background-position:20% 50%;
@@ -98,8 +137,8 @@ em{
 .button-dark:hover{box-shadow:0 10px 30px rgba(0,0,0,.55),var(--glow-navy);transform:translateY(-1px)}
 .button-light{background:rgba(255,255,255,.04);color:var(--ink);min-width:170px;border:1px solid var(--line-strong)}
 .button-light:hover{box-shadow:var(--glow-silver);border-color:rgba(255,255,255,.5)}
-.text-link,.cv-note{font:500 11px "DM Mono",monospace;border-bottom:1px solid var(--line-strong);padding-bottom:4px;color:var(--ink);transition:border-color .2s}
-.text-link:hover,.cv-note:hover{border-color:rgba(255,255,255,.7)}
+.text-link{font:500 11px "DM Mono",monospace;border-bottom:1px solid var(--line-strong);padding-bottom:4px;color:var(--ink);transition:border-color .2s}
+.text-link:hover{border-color:rgba(255,255,255,.7)}
 
 /* Animated "wave" CTA - used on the homepage's primary button and the
    header's Download CV link. Kept as an opt-in modifier class so it
@@ -138,9 +177,11 @@ em{
   .button-feature{animation:none;box-shadow:0 6px 20px rgba(0,0,0,.4), 0 0 16px rgba(0,0,139,.3)}
 }
 
-/* ================= HOME (single viewport hero) ================= */
+/* ================= HOME (hero + selected work) ================= */
+/* 86% of the viewport, so the top of the selected-work tiles peeks in
+   below the hero and invites a scroll. */
 .home-hero{
-  min-height:calc(100vh - var(--header-h));min-height:calc(100dvh - var(--header-h));
+  min-height:calc(86vh - var(--header-h));min-height:calc(86dvh - var(--header-h));
   display:flex;flex-direction:column;justify-content:center;
   padding:6vh max(5vw, env(safe-area-inset-right)) 6vh max(5vw, env(safe-area-inset-left));
 }
@@ -150,12 +191,39 @@ em{
 .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;row-gap:14px}
 .hero-actions .button{flex:0 1 auto}
 
+.home-featured{padding:0 max(5vw, env(safe-area-inset-right)) 10vh max(5vw, env(safe-area-inset-left))}
+.home-featured-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-bottom:26px;border-top:1px solid var(--line);padding-top:28px}
+.home-featured-head .eyebrow{margin-bottom:10px}
+.home-featured-head h2{margin:0;font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-.05em;font-weight:800;color:var(--ink)}
+.featured-grid{
+  display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:16px;
+  height:clamp(440px,44vw,640px);
+}
+.featured-item{position:relative;display:block;overflow:hidden;border:1px solid var(--line);background:#0D0D0D;transition:border-color .25s}
+.featured-item.featured-main{grid-row:span 2}
+.featured-item img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;transition:transform .5s ease}
+.featured-item:hover{border-color:rgba(255,255,255,.4)}
+.featured-item:hover img{transform:scale(1.04)}
+.featured-item:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.featured-caption{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:48px 20px 18px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.94) 100%)}
+.featured-index{margin:0 0 8px;font:500 10px "DM Mono",monospace;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.featured-caption h3{margin:0 0 6px;font-size:clamp(16px,1.5vw,21px);line-height:1.15;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.featured-main .featured-caption{padding:80px 26px 24px}
+.featured-main .featured-caption h3{font-size:clamp(22px,2.4vw,34px);letter-spacing:-.03em}
+.featured-tags{margin:0;font:500 10px "DM Mono",monospace;color:var(--muted)}
+.featured-arrow{
+  position:absolute;top:14px;right:14px;z-index:1;width:34px;height:34px;display:grid;place-items:center;
+  border:1px solid var(--line-strong);border-radius:50%;background:rgba(10,10,10,.6);color:var(--ink);font-size:13px;
+  transition:background-color .25s,color .25s;
+}
+.featured-item:hover .featured-arrow{background:var(--chrome-2);color:#0A0A0A}
+
 /* ================= WORK (tabs + project gallery) ================= */
 .work-page{
   padding:3.2vw max(5vw, env(safe-area-inset-right)) 5vw max(5vw, env(safe-area-inset-left));
   min-height:calc(100vh - var(--header-h));min-height:calc(100dvh - var(--header-h));
 }
-.work-intro h2{font-size:clamp(28px,3.6vw,52px);line-height:.95;letter-spacing:-.05em;font-weight:800;color:var(--ink)}
+.work-intro h1,.work-intro h2{font-size:clamp(28px,3.6vw,52px);line-height:.95;letter-spacing:-.05em;font-weight:800;color:var(--ink)}
 .work-intro p{max-width:420px;color:var(--muted);font-size:13px;line-height:1.6;margin-top:10px}
 
 /* Best Projects: fewer, larger tiles - a 2-column "featured" grid rather
@@ -173,6 +241,7 @@ em{
   cursor:pointer;transition:color .2s,border-color .2s,box-shadow .2s;
 }
 .tab-btn:hover{color:var(--ink);border-color:rgba(255,255,255,.45)}
+.tab-btn[hidden]{display:none}
 .tab-btn.active{
   background:var(--chrome-solid);background-size:220% 220%;color:#0A0A0A;
   border-color:transparent;box-shadow:0 8px 24px rgba(0,0,0,.5);
@@ -218,7 +287,7 @@ em{
   box-shadow:14px 18px 40px rgba(0,0,0,.6), 0 0 34px rgba(0,0,139,.16);
 }
 .gallery-tag{position:absolute;top:12px;left:12px;z-index:2;background:rgba(10,10,10,.7);border:1px solid var(--line);color:var(--ink);padding:6px 9px;font:500 9px "DM Mono",monospace;backdrop-filter:blur(6px)}
-.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:14px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.8));z-index:2}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:34px 14px 14px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.92) 100%);z-index:2}
 .gallery-caption h3{font-size:14px;margin:0 0 2px;color:var(--ink)}
 .gallery-caption p{font:9px "DM Mono",monospace;color:var(--muted);margin:0}
 .gallery-empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted);font:500 12px "DM Mono",monospace;letter-spacing:.05em}
@@ -230,7 +299,7 @@ em{
   display:flex;flex-direction:column;justify-content:center;
 }
 .about-solo{max-width:640px}
-.about-solo h2{font-size:clamp(30px,3.8vw,56px);line-height:.95;letter-spacing:-.05em;font-weight:800;color:var(--ink);margin-bottom:18px}
+.about-solo h1,.about-solo h2{font-size:clamp(30px,3.8vw,56px);line-height:.95;letter-spacing:-.05em;font-weight:800;color:var(--ink);margin-bottom:18px}
 .large-copy{font-size:clamp(18px,1.7vw,24px);line-height:1.35;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px}
 .about-solo>p:not(.large-copy){color:var(--muted);font-size:14px;line-height:1.7;max-width:480px}
 
@@ -249,10 +318,24 @@ em{
 .tool-pill.some-experience{border-style:dotted;color:var(--ink);opacity:.85}
 .tool-pill.learning{color:var(--muted);border-style:dashed}
 
+.about-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 56px;max-width:1040px;margin-top:46px}
+.about-block h4,.about-tools h4{font:600 10px "DM Mono",monospace;letter-spacing:.12em;color:var(--muted);margin:0 0 14px;text-transform:uppercase}
+.cv-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.cv-item{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.cv-years{font:500 11px/1.6 "DM Mono",monospace;color:var(--muted);letter-spacing:.04em}
+.cv-item div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.cv-item strong{font-size:14px;line-height:1.4;font-weight:700;color:var(--ink)}
+.cv-item span:not(.cv-years){font-size:13px;line-height:1.5;color:var(--muted)}
+.cv-item .text-link{margin-top:6px}
+.about-tools{display:flex;flex-wrap:wrap;gap:0 56px;max-width:1040px;margin-top:18px}
+.about-tools .tools-group{flex:0 1 auto}
+.about-page>.facts-row{max-width:1040px;grid-template-columns:repeat(4,minmax(0,1fr))}
+
 /* ================= COMMISSION DETAIL PAGE ================= */
 .commission-page{
   padding:6vh max(5vw, env(safe-area-inset-right)) 8vh max(5vw, env(safe-area-inset-left));
-  max-width:900px;
+  max-width:1280px;
+  margin-inline:auto;
 }
 .back-link{
   display:inline-flex;align-items:center;gap:8px;font:500 11px "DM Mono",monospace;
@@ -260,24 +343,28 @@ em{
   transition:color .2s,border-color .2s;
 }
 .back-link:hover{color:var(--ink);border-color:var(--line-strong)}
-.commission-page h2{font-size:clamp(28px,3.6vw,52px);line-height:1;letter-spacing:-.04em;font-weight:800;color:var(--ink);margin:0 0 22px}
+.commission-page > h1,.commission-page h2{font-size:clamp(28px,3.6vw,52px);line-height:1;letter-spacing:-.04em;font-weight:800;color:var(--ink);margin:0 0 22px}
 
 .client-badge{
   display:inline-flex;align-items:center;gap:14px;padding:14px 20px;
   background:rgba(255,255,255,.04);border:1px solid var(--line-strong);margin-bottom:30px;
 }
-.client-badge img{max-height:32px;max-width:150px;object-fit:contain;display:block}
+/* Explicit height: an SVG logo without width/height attributes has no
+   intrinsic size, and in this flex badge it would collapse to 0px wide. */
+.client-badge img{height:32px;width:auto;max-width:150px;object-fit:contain;display:block}
 .client-badge span{font:600 13px "DM Mono",monospace;letter-spacing:.03em;color:var(--ink)}
 
 .commission-cover{width:100%;aspect-ratio:16/10;overflow:hidden;border:1px solid var(--line);margin-bottom:30px;background:#0D0D0D}
 .commission-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.commission-cover img[hidden]{display:none}
 .commission-cover img.contain{object-fit:contain;padding:8%;background:#0D0D0D}
 
-.project-detail{display:grid;grid-template-columns:1.05fr .95fr;gap:5vw;align-items:start;margin-bottom:8px}
+.project-detail{display:grid;grid-template-columns:1.1fr .9fr;gap:3.5vw;align-items:start;margin-bottom:8px}
 .project-detail .commission-cover{margin-bottom:0}
-.project-detail-info{display:flex;flex-direction:column}
+.project-detail-info{display:flex;flex-direction:column;min-width:0;justify-content:center}
 .skills-block{margin-top:26px}
 .skills-block .eyebrow{margin-bottom:14px}
+.project-case-study-wrap{margin-top:42px;width:100%}
 
 .project-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 8px}
 .project-gallery-item{aspect-ratio:16/10;overflow:hidden;border:1px solid var(--line);background:#0D0D0D;cursor:zoom-in;transition:border-color .2s}
@@ -286,6 +373,29 @@ em{
 .project-gallery-item:hover img{transform:scale(1.04)}
 
 .commission-cover[data-project-cover-wrap]{cursor:zoom-in}
+
+/* Video in the cover slot (project "video" field): cover image + play
+   button until clicked, then the YouTube player. */
+.project-date-block{margin-top:26px}
+.project-date-block[hidden]{display:none}
+.project-date-block .eyebrow{margin-bottom:8px}
+.project-date{margin:0;font-size:15px;color:var(--ink)}
+.project-date::first-letter{text-transform:uppercase}
+.commission-date{margin:0 0 30px}
+
+.commission-cover.is-video{aspect-ratio:16/9;cursor:default;position:relative}
+.video-facade{position:relative;display:block;width:100%;height:100%;padding:0;border:0;background:#000;cursor:pointer;color:var(--ink)}
+.video-poster{width:100%;height:100%;object-fit:cover;display:block;opacity:.8;transition:opacity .3s}
+.video-facade:hover .video-poster{opacity:1}
+.video-play{
+  position:absolute;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;display:grid;place-items:center;
+  border-radius:50%;background:rgba(10,10,10,.6);border:1px solid rgba(255,255,255,.55);padding-left:4px;
+  transition:background-color .25s,color .25s,transform .25s;
+}
+.video-facade:hover .video-play,.video-facade:focus-visible .video-play{background:var(--chrome-2);color:#0A0A0A;transform:scale(1.06)}
+.video-facade:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+.video-label{position:absolute;left:16px;bottom:14px;font:500 10px "DM Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(10,10,10,.7);border:1px solid var(--line);padding:6px 9px}
+.commission-cover.is-video iframe{display:block;width:100%;height:100%;border:0}
 
 /* Lightbox - click any project image to view it larger */
 .lightbox{
@@ -303,7 +413,31 @@ em{
 }
 .lightbox-close:hover{border-color:rgba(255,255,255,.6);box-shadow:var(--glow-silver)}
 
-.commission-body p{color:var(--muted);font-size:14px;line-height:1.75;max-width:640px}
+.commission-body{width:100%}
+.commission-body p,.project-overview p{color:var(--muted);font-size:14px;line-height:1.75}
+.project-overview{color:var(--muted);font-size:14px;line-height:1.75;width:100%}
+.project-overview > p{margin:0 0 1.1em}
+.project-overview > p:last-child{margin-bottom:0}
+.project-case-study{color:var(--muted);font-size:14px;line-height:1.75;width:100%;max-width:none}
+.project-case-study > p{margin:0 0 1.1em}
+.project-case-study > p:last-child{margin-bottom:0}
+.project-case-study h2{
+  margin:1.85em 0 .55em;
+  font-size:19px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);
+}
+.project-case-study h2:first-child{margin-top:0}
+.project-case-study h3{
+  margin:1.25em 0 .35em;
+  font-size:19px;font-weight:600;
+  color:var(--ink);
+}
+.project-case-study ul{
+  margin:.35em 0 1.1em;padding-left:1.15em;
+  color:var(--muted);
+}
+.project-case-study li{margin:.2em 0;line-height:1.65}
+.project-case-study strong{color:var(--ink);font-weight:600}
 
 .commission-works{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:30px 0}
 .commission-works .gallery-item{aspect-ratio:16/10}
@@ -345,6 +479,8 @@ em{
   .site-header{padding:0 max(6vw, env(safe-area-inset-right)) 0 max(6vw, env(safe-area-inset-left))}
   .nav{display:none}
   .menu-toggle{display:block}
+  .menu-toggle{margin-left:auto}
+  .site-header{gap:18px}
   .nav.open{
     display:flex;position:absolute;top:var(--header-h);left:0;right:0;
     background:rgba(5,5,5,.97);backdrop-filter:blur(14px);
@@ -372,6 +508,20 @@ em{
   .client-badge{flex-wrap:wrap}
 
   .about-solo .large-copy{font-size:20px}
+  .about-columns{grid-template-columns:1fr;gap:34px;margin-top:38px}
+  .about-tools{flex-direction:column}
+  .about-page>.facts-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cv-item{grid-template-columns:78px 1fr;gap:12px}
+
+  .home-hero{min-height:0;padding-top:9vh;padding-bottom:7vh}
+  /* Comfortable tap targets (24px+ tall) for the small text links. */
+  .page-footer a,.back-link{display:inline-block;padding:7px 0}
+  .text-link{display:inline-block;padding-top:9px}
+  .contact-email{display:inline-block;padding:4px 0}
+  .home-featured{padding-left:6vw;padding-right:6vw}
+  .featured-grid{grid-template-columns:1fr;grid-template-rows:none;height:auto}
+  .featured-item,.featured-item.featured-main{grid-row:auto;aspect-ratio:16/10}
+  .featured-main .featured-caption{padding:56px 18px 18px}
   .facts-row{gap:18px}
 
   .cv-card{grid-template-columns:1fr;gap:28px;padding:8vw 7vw}
@@ -385,9 +535,31 @@ em{
   :root{--header-h:58px}
   .home-hero h1{font-size:clamp(30px,9vw,44px)}
   .hero-actions .button{width:100%;justify-content:space-between}
-  .work-intro h2{font-size:clamp(24px,7vw,32px)}
+  .work-intro h1,.work-intro h2{font-size:clamp(24px,7vw,32px)}
   .tab-btn{font-size:11px;padding:10px 12px}
-  .about-solo h2{font-size:clamp(26px,7.5vw,34px)}
+  .about-solo h1,.about-solo h2{font-size:clamp(26px,7.5vw,34px)}
   .cv-card h2{font-size:clamp(26px,8vw,36px)}
   .contact-email{font-size:16px;word-break:break-word}
 }
+
+/* ---------- Lite mode (html[data-mode="lite"]) ----------
+   Chosen from the gear switch (display-mode.js). Everything that makes
+   the GPU/CPU work continuously is switched off: no animations or
+   transitions, solid colours instead of the chrome gradients, no noise
+   overlay or background blur. Full mode is simply "none of these rules apply". */
+html[data-mode="lite"]{
+  --chrome-text:linear-gradient(var(--chrome-2),var(--chrome-2));
+  --chrome-solid:linear-gradient(var(--chrome-2),var(--chrome-2));
+}
+html[data-mode="lite"] *,
+html[data-mode="lite"] *::before,
+html[data-mode="lite"] *::after{animation:none!important;transition:none!important}
+html[data-mode="lite"] .noise{display:none}
+html[data-mode="lite"] em{filter:none}
+html[data-mode="lite"] .button.wave-cta,
+html[data-mode="lite"] .nav-cv.wave-cta{background:var(--chrome-2)}
+html[data-mode="lite"] .button-feature{box-shadow:0 6px 20px rgba(0,0,0,.4)}
+html[data-mode="lite"] .site-header{background:#0A0A0A;backdrop-filter:none}
+html[data-mode="lite"] .gallery-tag,
+html[data-mode="lite"] .lightbox,
+html[data-mode="lite"] .nav.open{backdrop-filter:none}

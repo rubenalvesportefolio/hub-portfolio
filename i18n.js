@@ -53,6 +53,13 @@ const TRANSLATIONS = {
     'nav.aria.langEn': 'Switch to English',
     'nav.aria.langPt': 'Mudar para português',
 
+    // --- Display settings (gear in the header, every page) ---
+    'settings.aria.open': 'Display settings',
+    'settings.title': 'Display',
+    'settings.full': 'Full experience',
+    'settings.note.full': 'Animations on.',
+    'settings.note.lite': 'Lite mode: no animations - easier on your battery.',
+
     // --- <title> and <meta name="description"> ---
     'meta.home.title': 'Ruben Alves - 3D Artist & Graphic Designer',
     'meta.home.desc': 'Portfolio of Ruben Alves, a 3D artist and graphic designer based in Castelo Branco, Portugal.',
@@ -66,6 +73,14 @@ const TRANSLATIONS = {
     'meta.best.desc': "A short, curated list of Ruben Alves's strongest 3D and graphic design projects.",
     'meta.project.title': 'Project - Ruben Alves',
     'meta.project.desc': 'A project by Ruben Alves.',
+    'meta.404.title': 'Page not found - Ruben Alves',
+    'meta.404.desc': "This page doesn't exist on Ruben Alves's portfolio.",
+    'notfound.eyebrow': 'ERROR 404',
+    'notfound.title.line1': 'Nothing here',
+    'notfound.title.line2': 'to render.',
+    'notfound.text': "This page doesn't exist - it may have moved, or the link has a typo. The work is still where it was.",
+    'notfound.home': 'Back to Home',
+    'notfound.work': 'See the work',
     'meta.urbaneyept.title': 'UrbanEyePT - Ruben Alves',
     'meta.urbaneyept.desc': 'Commissioned work by Ruben Alves for UrbanEyePT - icon design and social media visuals.',
 
@@ -76,6 +91,10 @@ const TRANSLATIONS = {
     'home.text': 'I combine 3D modelling, animation and graphic design to bring ideas to life - from product visualization and UI design to game art and personal 3D studies.',
     'home.cta.work': 'Explore selected work',
     'home.cta.best': 'See my best projects',
+    'home.featured.eyebrow': 'SELECTED WORK',
+    'home.featured.title.line1': 'A few',
+    'home.featured.title.line2': 'favourites.',
+    'home.featured.all': 'All best projects ↗',
 
     // --- Work ---
     'work.eyebrow': 'SELECTED WORK',
@@ -113,25 +132,37 @@ const TRANSLATIONS = {
     'about.eyebrow': 'ABOUT',
     'about.title.line1': '3D thinking.',
     'about.title.line2': 'Graphic discipline.',
-    'about.lead': "I'm Ruben Alves, a 3D artist and graphic designer based in Castelo Branco, Portugal.",
-    'about.body': 'My focus is on 3D work - particularly product visualization - alongside graphic design. I enjoy taking a concept from first sketch through modelling, materials, lighting and final delivery.',
+    'about.lead': "I'm Ruben Alves, a 3D artist and graphic designer based in Castelo Branco, Portugal, and a recent graduate in Communication Design and Audiovisual.",
+    'about.body': "I'm most interested in where graphic design meets 3D art. Through my degree I built skills in poster design, 3D modelling and animation, cinematics, packaging prototyping and 3D printing - taking ideas from first sketch to final render, print or object.",
     'about.facts.basedIn': 'Based in',
     'about.facts.basedInValue': 'Castelo Branco, Portugal',
     'about.facts.availableFor': 'Available for',
     'about.facts.availableForValue': 'Freelance',
     'about.facts.focus': 'Focus',
     'about.facts.focusValue': '3D Product Visualization · Graphic Design · 3D Game Assets Creator',
-    'about.tools.familiar': 'Familiar with',
-    'about.tools.some': 'Some experience with',
+    'about.facts.languages': 'Languages',
+    'about.facts.languagesValue': 'Portuguese (native) · English (B2)',
+    'about.edu.title': 'Education',
+    'about.edu.degree': 'BA in Communication Design and Audiovisual',
+    'about.edu.degreeSchool': 'Polytechnic Institute of Castelo Branco - ESART',
+    'about.edu.finalProject': 'Final project: Protocol - Marked ↗',
+    'about.edu.secondary': 'Visual Arts (secondary school)',
+    'about.beyond.title': 'Beyond the degree',
+    'about.beyond.jam': 'Game jam - 2D art in Aseprite for a game made as a team.',
+    'about.beyond.jamLink': 'See the game: Jorge ↗',
+    'about.beyond.cta': 'Treasurer - Academic Traditions Committee',
+    'about.beyond.ae': "Students' Union - helped organise academic events",
+    'about.beyond.tuna': 'Active member of the academic tuna',
+    'about.tools.familiar': 'Main tools',
+    'about.tools.some': 'Also use',
     'about.tools.learning': 'Currently learning',
 
     // --- Contact ---
-    'contact.eyebrow.experience': 'EXPERIENCE',
+    'contact.eyebrow.experience': 'CURRICULUM VITAE',
     'contact.title.line1': 'Want the full',
     'contact.title.line2': 'story?',
-    'contact.cvText': 'My CV includes experience, education, software skills and selected professional work.',
+    'contact.cvText': 'My CV brings together my education, key projects, software skills, languages and activities beyond the degree.',
     'contact.cv.download': 'Download CV',
-    'contact.cv.open': 'Open CV in browser ↗',
     'contact.eyebrow.work': "LET'S WORK",
     'contact.work.line1': 'Have a project',
     'contact.work.line2': 'in mind?',
@@ -147,6 +178,7 @@ const TRANSLATIONS = {
     // --- Project detail ---
     'project.eyebrow': 'PROJECT',
     'project.skills': 'Skills Applied',
+    'project.date': 'Date',
     'project.notFound.title': 'Project not found',
     'project.notFound.body': "This project doesn't exist, or may have moved. Head back to Work to find it.",
     'project.descFallback': "Add a short description of this project - the brief, the process, and what you're proud of.",
@@ -155,11 +187,16 @@ const TRANSLATIONS = {
     'project.viewPdf': 'View PDF online',
     'project.galleryAlt': '{title} - image {n}',
     'project.lightbox.close': 'Close',
+    'project.playVideo': 'Play video: {title}',
+    'project.videoTitle': '{title} - video',
+    'project.watchTeaser': 'Watch the teaser',
+    'project.watchYoutube': 'Watch on YouTube',
 
     // --- "Back to ..." links (label depends on where you came from) ---
     'back.template': '← Back to {target}',
     'back.work': 'Work',
     'back.best': 'Best Projects',
+    'back.home': 'Home',
 
     // --- Commission pages (shared by every commission case study) ---
     'commission.eyebrow': 'COMMISSION',
@@ -168,6 +205,7 @@ const TRANSLATIONS = {
     // --- UrbanEyePT commission page ---
     'urbaneyept.logoAlt': 'UrbanEyePT logo',
     'urbaneyept.body': 'UrbanEyePT is a platform for reporting and managing city issues - not just an app, but a new way to run cities. Work for them has covered icon design for the product and 3D-rendered visuals for social media.',
+    'urbaneyept.date': 'July 2026',
     'urbaneyept.icons.tag': 'GRAPHIC DESIGN',
     'urbaneyept.icons.title': 'Icon Library',
     'urbaneyept.icons.cta': 'View on Behance ↗',
@@ -192,6 +230,13 @@ const TRANSLATIONS = {
     'nav.aria.langEn': 'Switch to English',
     'nav.aria.langPt': 'Mudar para português',
 
+    // --- Display settings (gear in the header, every page) ---
+    'settings.aria.open': 'Definições de visualização',
+    'settings.title': 'Visualização',
+    'settings.full': 'Experiência completa',
+    'settings.note.full': 'Animações ligadas.',
+    'settings.note.lite': 'Modo leve: sem animações - poupa a bateria.',
+
     // --- <title> e <meta name="description"> ---
     'meta.home.title': 'Ruben Alves - Artista 3D & Designer Gráfico',
     'meta.home.desc': 'Portfólio de Ruben Alves, artista 3D e designer gráfico em Castelo Branco, Portugal.',
@@ -205,6 +250,14 @@ const TRANSLATIONS = {
     'meta.best.desc': 'Uma seleção curta dos melhores projetos de 3D e design gráfico de Ruben Alves.',
     'meta.project.title': 'Projeto - Ruben Alves',
     'meta.project.desc': 'Um projeto de Ruben Alves.',
+    'meta.404.title': 'Página não encontrada - Ruben Alves',
+    'meta.404.desc': 'Esta página não existe no portefólio do Ruben Alves.',
+    'notfound.eyebrow': 'ERRO 404',
+    'notfound.title.line1': 'Nada aqui',
+    'notfound.title.line2': 'para renderizar.',
+    'notfound.text': 'Esta página não existe - pode ter mudado de sítio, ou o link tem um erro. Os trabalhos continuam onde estavam.',
+    'notfound.home': 'Voltar ao Início',
+    'notfound.work': 'Ver os trabalhos',
     'meta.urbaneyept.title': 'UrbanEyePT - Ruben Alves',
     'meta.urbaneyept.desc': 'Trabalho por encomenda de Ruben Alves para a UrbanEyePT - design de ícones e visuais para redes sociais.',
 
@@ -215,6 +268,10 @@ const TRANSLATIONS = {
     'home.text': 'Combino modelação 3D, animação e design gráfico para dar vida a ideias - da visualização de produto e design de interfaces à arte para jogos e estudos 3D pessoais.',
     'home.cta.work': 'Ver trabalhos selecionados',
     'home.cta.best': 'Ver os meus melhores projetos',
+    'home.featured.eyebrow': 'TRABALHOS EM DESTAQUE',
+    'home.featured.title.line1': 'Alguns',
+    'home.featured.title.line2': 'favoritos.',
+    'home.featured.all': 'Todos os melhores projetos ↗',
 
     // --- Trabalhos ---
     'work.eyebrow': 'TRABALHOS SELECIONADOS',
@@ -252,25 +309,37 @@ const TRANSLATIONS = {
     'about.eyebrow': 'SOBRE',
     'about.title.line1': 'Pensamento 3D.',
     'about.title.line2': 'Disciplina gráfica.',
-    'about.lead': 'Sou o Ruben Alves, artista 3D e designer gráfico em Castelo Branco, Portugal.',
-    'about.body': 'O meu foco está no trabalho 3D - em particular na visualização de produto - a par do design gráfico. Gosto de levar um conceito do primeiro esboço até à modelação, materiais, iluminação e entrega final.',
+    'about.lead': 'Sou o Ruben Alves, artista 3D e designer gráfico em Castelo Branco, Portugal, recém-licenciado em Design de Comunicação e Audiovisual.',
+    'about.body': 'Interessa-me sobretudo o ponto onde o design gráfico se cruza com a arte 3D. Ao longo da licenciatura desenvolvi competências em cartazes, modelação e animação 3D, cinemáticos, prototipagem de embalagens e impressão 3D - levando ideias do primeiro esboço até ao render, à impressão ou ao objeto final.',
     'about.facts.basedIn': 'Sediado em',
     'about.facts.basedInValue': 'Castelo Branco, Portugal',
     'about.facts.availableFor': 'Disponível para',
     'about.facts.availableForValue': 'Freelance',
     'about.facts.focus': 'Foco',
     'about.facts.focusValue': 'Visualização de Produto 3D · Design Gráfico · Criação de Assets 3D para Jogos',
-    'about.tools.familiar': 'Domínio de',
-    'about.tools.some': 'Alguma experiência com',
+    'about.facts.languages': 'Línguas',
+    'about.facts.languagesValue': 'Português (nativo) · Inglês (B2)',
+    'about.edu.title': 'Formação',
+    'about.edu.degree': 'Licenciatura em Design de Comunicação e Audiovisual',
+    'about.edu.degreeSchool': 'Instituto Politécnico de Castelo Branco - ESART',
+    'about.edu.finalProject': 'Projeto final: Protocol - Marked ↗',
+    'about.edu.secondary': 'Artes Visuais (ensino secundário)',
+    'about.beyond.title': 'Para além do curso',
+    'about.beyond.jam': 'Game jam - arte 2D em Aseprite para um jogo desenvolvido em equipa.',
+    'about.beyond.jamLink': 'Ver o jogo: Jorge ↗',
+    'about.beyond.cta': 'Tesoureiro - Comissão de Tradições Académicas',
+    'about.beyond.ae': 'Associação de Estudantes - colaboração na organização de eventos académicos',
+    'about.beyond.tuna': 'Membro ativo da tuna académica',
+    'about.tools.familiar': 'Ferramentas principais',
+    'about.tools.some': 'Também uso',
     'about.tools.learning': 'A aprender',
 
     // --- Contacto ---
-    'contact.eyebrow.experience': 'EXPERIÊNCIA',
+    'contact.eyebrow.experience': 'CURRICULUM VITAE',
     'contact.title.line1': 'Queres a história',
     'contact.title.line2': 'completa?',
-    'contact.cvText': 'O meu CV inclui experiência, formação, competências em software e trabalho profissional selecionado.',
+    'contact.cvText': 'O meu CV reúne a minha formação, os principais projetos, competências em software, línguas e atividades para além do curso.',
     'contact.cv.download': 'Descarregar CV',
-    'contact.cv.open': 'Abrir CV no navegador ↗',
     'contact.eyebrow.work': 'VAMOS TRABALHAR',
     'contact.work.line1': 'Tens um projeto',
     'contact.work.line2': 'em mente?',
@@ -286,6 +355,7 @@ const TRANSLATIONS = {
     // --- Página de projeto ---
     'project.eyebrow': 'PROJETO',
     'project.skills': 'Competências Aplicadas',
+    'project.date': 'Data',
     'project.notFound.title': 'Projeto não encontrado',
     'project.notFound.body': 'Este projeto não existe ou pode ter mudado de sítio. Volta aos Trabalhos para o encontrar.',
     'project.descFallback': 'Adiciona uma breve descrição deste projeto - o briefing, o processo e aquilo de que te orgulhas.',
@@ -294,11 +364,16 @@ const TRANSLATIONS = {
     'project.viewPdf': 'Ver PDF online',
     'project.galleryAlt': '{title} - imagem {n}',
     'project.lightbox.close': 'Fechar',
+    'project.playVideo': 'Reproduzir vídeo: {title}',
+    'project.videoTitle': '{title} - vídeo',
+    'project.watchTeaser': 'Ver o teaser',
+    'project.watchYoutube': 'Ver no YouTube',
 
     // --- Ligações "Voltar a ..." (o destino depende de onde vieste) ---
-    'back.template': '← Voltar aos {target}',
-    'back.work': 'Trabalhos',
-    'back.best': 'Melhores Projetos',
+    'back.template': '← Voltar {target}',
+    'back.work': 'aos Trabalhos',
+    'back.best': 'aos Melhores Projetos',
+    'back.home': 'ao Início',
 
     // --- Páginas de encomenda (partilhado por todos os casos de estudo) ---
     'commission.eyebrow': 'ENCOMENDA',
@@ -307,6 +382,7 @@ const TRANSLATIONS = {
     // --- Página da encomenda UrbanEyePT ---
     'urbaneyept.logoAlt': 'Logótipo da UrbanEyePT',
     'urbaneyept.body': 'A UrbanEyePT é uma plataforma para reportar e gerir problemas urbanos - não é apenas uma app, mas uma nova forma de gerir cidades. O trabalho para eles incluiu design de ícones para o produto e visuais 3D para redes sociais.',
+    'urbaneyept.date': 'julho de 2026',
     'urbaneyept.icons.tag': 'DESIGN GRÁFICO',
     'urbaneyept.icons.title': 'Biblioteca de Ícones',
     'urbaneyept.icons.cta': 'Ver no Behance ↗',
@@ -373,7 +449,12 @@ const I18N = (function initI18n() {
   function resolveLanguage() {
     const params = new URLSearchParams(window.location.search);
     const requested = (params.get('lang') || '').toLowerCase();
-    if (isSupported(requested)) return requested;
+    if (isSupported(requested)) {
+      // Remember it, or the very next click (whose link has no ?lang=)
+      // would fall back to the browser language.
+      storeLanguage(requested);
+      return requested;
+    }
 
     const stored = readStoredLanguage();
     if (isSupported(stored)) return stored;

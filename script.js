@@ -1,31 +1,3 @@
-/* ---------- Spline background: skip on mobile / reduced motion ----------
-   The interactive 3D background is by far the heaviest thing on this
-   site (a live WebGL scene, rendering continuously) - on phones
-   especially, that can mean real battery drain and jank, which is why
-   this only loads it for larger screens without a reduced-motion
-   preference. Everyone else gets the flat dark background + gradient
-   scrim underneath it instead (already designed to look intentional on
-   its own, not just a "fallback"). This check runs once, before
-   anything else, so mobile visitors never pay for the Spline script or
-   scene download at all - not even a paused/hidden copy of it. */
-(function initSplineBackground() {
-  const bg = document.querySelector('.spline-bg');
-  if (!bg) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isSmallScreen = window.matchMedia('(max-width: 850px)').matches;
-  if (prefersReducedMotion || isSmallScreen) return;
-
-  const script = document.createElement('script');
-  script.type = 'module';
-  script.src = 'https://cdn.spline.design/@splinetool/viewer@2.0.9/build/spline-viewer.js';
-  document.head.appendChild(script);
-
-  const viewer = document.createElement('spline-viewer');
-  viewer.setAttribute('url', 'https://prod.spline.design/R5h5fsEqatRWan44/scene.splinecode');
-  bg.insertBefore(viewer, bg.firstChild);
-})();
-
 /* ---------- Shared project data ----------
    Single source of truth for every project across the site. Used by the
    Work page's category grids, the project detail page, and the Best
@@ -67,6 +39,23 @@
    never be cropped (e.g. a wordmark/banner with transparent padding).
    Defaults to 'cover' (fills the tile, cropping as needed).
 
+   "video" is optional: a YouTube video ID (the part after watch?v= in
+   the address, e.g. 'I9UdgZKVZ8A'). The detail page then shows the
+   cover image with a play button in place of the plain cover; clicking
+   it loads the YouTube player right there (nothing is loaded from
+   YouTube until then), and a "Watch on YouTube" button is added.
+
+   "date" is optional but expected: when the project was made, as
+   'YYYY' ('2025'), 'YYYY-MM' ('2025-07'), or a range 'start/end' with
+   either form on each side ('2025/2026-04' -> "2025 - April 2026").
+   Shown on the project page (month names follow the site language) and
+   as a year on the tiles. npm run validate warns about projects
+   without one.
+
+   "hidden: true" is optional: keeps a draft in the file but out of the
+   site - no Work tile, no Best Projects/home tile, and its
+   project.html?id= page says "not found". Remove the line to publish.
+
    "downloadUrl" / "viewUrl" are optional: when either is set, the detail
    page shows extra buttons - one to download a file directly, one to
    open a link (e.g. a PDF preview) in a new tab.
@@ -82,6 +71,7 @@ const PROJECTS = {
   '3d': [
     {
       id: '3d-001',
+      date: '2025-07', // Rookies page: "Made in 21 July 2025"
       title: 'Tower - 001',
       tags: ['3D Modelling', 'Hard-Surface Modelling'],
       link: 'https://www.therookies.co/projects/103669',
@@ -96,6 +86,7 @@ const PROJECTS = {
     },
     {
       id: '3d-002',
+      date: '2025-08', // Rookies page: "Made in 4 August 2025"
       title: 'Pocket Clock - 002',
       tags: ['3D Modelling', 'Detail', 'Shading & Materials'],
       link: 'https://www.therookies.co/projects/103670',
@@ -110,6 +101,7 @@ const PROJECTS = {
     },
     {
       id: '3d-003',
+      date: '2025-08', // Rookies page: "Made in 14 Aug 2025"
       title: 'Star Destroyer - 003',
       tags: ['3D Animation', 'Geometry Nodes'],
       link: 'https://www.therookies.co/projects/104394',
@@ -123,6 +115,7 @@ const PROJECTS = {
     },
     {
       id: '3d-004',
+      hidden: true, // draft - not shown anywhere until this line is removed
       title: 'Project 004',
       tags: ['3D Modelling', 'Nature'],
       link: '',
@@ -137,6 +130,7 @@ const PROJECTS = {
     },
     {
       id: '3d-005',
+      hidden: true, // draft - not shown anywhere until this line is removed
       title: 'Project 005',
       tags: ['Game Asset'],
       link: '',
@@ -151,6 +145,7 @@ const PROJECTS = {
     },
     {
       id: '3d-006',
+      date: '2026-08', // Rookies page: "Made in 5 August 2026"
       title: 'Sand',
       tags: ['Environment', 'Procedural Shading'],
       link: 'https://www.therookies.co/projects/104813',
@@ -165,6 +160,7 @@ const PROJECTS = {
     },
     {
       id: '3d-007',
+      date: '2026-08', // Rookies publish date (25 Aug 2026) - no "made in" date given
       title: 'Medieval Library Interior',
       tags: ['3D Modelling', 'Interior', 'Compositing'],
       link: 'https://www.therookies.co/projects/105375',
@@ -179,6 +175,7 @@ const PROJECTS = {
     },
     {
       id: '3d-008',
+      date: '2026-06',
       title: 'Exposição - Telefones do Mundo',
       tags: ['3D Modelling', 'University Work'],
       link: '',
@@ -191,10 +188,31 @@ const PROJECTS = {
         },
       },
     },
+    {
+      id: '3d-009',
+      date: '2025/2026-04', // 1st semester of 3rd year (2025/26) -> final report, April 2026
+      title: 'Protocol - Marked',
+      tags: ['3D Animation', '3D Modelling', 'University Work'],
+      link: '',
+      video: 'I9UdgZKVZ8A', // youtube.com/watch?v=I9UdgZKVZ8A
+      downloadUrl: 'files/protocol-marked-final-report.pdf',
+      viewUrl: 'files/protocol-marked-final-report.pdf',
+      image: 'images/work/3d/project-009.webp',
+      images: ['images/work/3d/project-009-b.webp', 'images/work/3d/project-009-c.webp'],
+      description: "<p>My final degree project in Communication Design and Audiovisual (ESART/IPCB). A solo, original sci-fi 3D cinematic created as a game teaser trailer and submitted to the Casa da Anima\u00e7\u00e3o competition.</p>\n<p>Set in a hyper-surveilled future metropolis, the piece follows an AI hunting for the identity of a masked figure it can never quite pin down. The story unfolds through corrupted files and forgotten protocols.</p>",
+      caseStudy: "<h2>Pre-Production</h2>\n\n<h3>Idea &amp; Story</h3>\n<p>The character and world concept were developed during Illustration class. The narrative centres on invisibility inside a fully monitored society: an AI searches for a masked figure whose identity remains hidden behind corrupted files and forgotten protocols.</p>\n\n<h3>Script</h3>\n<p>A full screenplay was written and structured around the key narrative beats of the teaser.</p>\n\n<h3>Design</h3>\n<p>Extensive character studies defined the silhouette, armour details and a dark + red colour palette that communicates decades of combat experience and danger. Environment studies established a blue-dominated futuristic city with orange accents, large-scale architecture and artificial lighting.</p>\n\n<h2>Production</h2>\n\n<h3>Layout</h3>\n<p>Scene composition, camera framing and blocking for the three main environments (opening corridor, city, mysterious corridor) were developed using simple block-outs to lock scale, depth and staging.</p>\n\n<h3>Modelling</h3>\n<p>The entire world was modelled from scratch:</p>\n<ul>\n<li>Protagonist armour, accessories and weapon</li>\n<li>Hero spacecraft and six secondary ships</li>\n<li>Futuristic train and track</li>\n<li>15 unique buildings</li>\n</ul>\n<p>The city was populated with <strong>Geometry Nodes</strong> (weighted collections favouring shorter buildings for a natural skyline). Distant buildings were replaced by parallax cards to keep the scene light on limited hardware.</p>\n\n<h3>Texturing</h3>\n<p>Materials were hand-built with Blender\u2019s <strong>Shading Nodes</strong>, including a deliberately worn red metallic armour designed to visually tell the character\u2019s combat history.</p>\n\n<h3>Rigging</h3>\n<p>A custom armature was created and weighted by hand. <strong>Mixamo</strong> was then used to automate skinning and weight painting.</p>\n\n<h3>Animation</h3>\n<p>Mixamo walk and kneel-to-fire animations were retargeted via a Blender add-on. Ships were animated procedurally along a path with Geometry Nodes instead of hand-keying each one.</p>\n\n<h3>VFX</h3>\n<p>HUD and interface graphics suggesting the AI search were built directly in Blender, together with volumetric fog for atmosphere and scale.</p>\n\n<h3>Lighting</h3>\n<p>Minimal cinematic lighting (Spot, Sun and Area lights) was tuned for the night-city and mysterious-corridor moods.</p>\n\n<h3>Rendering</h3>\n<p><strong>Cycles</strong> was chosen over EEVEE for superior light, shadow and reflection quality. An external render farm was used because some frames exceeded 10 hours locally.</p>\n\n<h2>Post-Production</h2>\n\n<h3>Compositing</h3>\n<p>The <strong>Blender Compositor</strong> (glare/bloom and final image tuning) was applied consistently across every scene.</p>\n\n<h3>Editing &amp; 2D VFX</h3>\n<p>The final cut was assembled in <strong>Premiere Pro</strong>. A glitch-style VFX pass, colour grading with <strong>Lumetri</strong>, and timed transitions (cross-dissolves, volumetric rays, VR-leak, roll) were completed in <strong>After Effects</strong>.</p>\n\n<h3>Sound</h3>\n<p>The score was commissioned from an external composer. Sound effects were sourced and placed in Premiere Pro.</p>\n\n<h2>Physical Outcome</h2>\n<p>The character mesh was optimised, re-posed and prepared for 3D printing, producing the first physical miniatures of the project.</p>",
+      i18n: {
+        pt: {
+          description: "<p>O meu projeto final de licenciatura em Design de Comunica\u00e7\u00e3o e Audiovisual (ESART/IPCB). Um cinematic 3D original de fic\u00e7\u00e3o cient\u00edfica, feito a solo como teaser de videojogo e submetido ao concurso Casa da Anima\u00e7\u00e3o.</p>\n<p>Ambientado numa metr\u00f3pole futurista de vigil\u00e2ncia total, acompanha uma intelig\u00eancia artificial \u00e0 procura da identidade de uma figura mascarada que nunca consegue identificar por completo. A hist\u00f3ria revela-se atrav\u00e9s de ficheiros corrompidos e protocolos esquecidos.</p>",
+          caseStudy: "<h2>Pr\u00e9-Produ\u00e7\u00e3o</h2>\n\n<h3>Ideia &amp; Hist\u00f3ria</h3>\n<p>A personagem e o universo foram conceptualizados na cadeira de Ilustra\u00e7\u00e3o. A narrativa centra-se na invisibilidade dentro de uma sociedade totalmente monitorizada: uma IA procura uma figura mascarada cuja identidade permanece oculta por detr\u00e1s de ficheiros corrompidos e protocolos esquecidos.</p>\n\n<h3>Gui\u00e3o</h3>\n<p>Foi escrito um gui\u00e3o completo, estruturado em torno dos principais momentos narrativos do teaser.</p>\n\n<h3>Design</h3>\n<p>Estudos extensivos de personagem definiram a silhueta, os detalhes da armadura e uma paleta escura + vermelho que comunica d\u00e9cadas de combate e perigo. Estudos de ambiente estabeleceram uma cidade futurista dominada por azuis, com acentos a laranja, arquitetura de grande escala e ilumina\u00e7\u00e3o artificial.</p>\n\n<h2>Produ\u00e7\u00e3o</h2>\n\n<h3>Layout</h3>\n<p>A composi\u00e7\u00e3o de cenas, o enquadramento de c\u00e2mara e o blocking dos tr\u00eas ambientes principais (corredor inicial, cidade, corredor misterioso) foram desenvolvidos a partir de block-outs simples para fixar escala, profundidade e staging.</p>\n\n<h3>Modela\u00e7\u00e3o</h3>\n<p>O mundo completo foi modelado de raiz:</p>\n<ul>\n<li>Armadura, acess\u00f3rios e arma do protagonista</li>\n<li>Nave principal e seis naves secund\u00e1rias</li>\n<li>Comboio futurista e respetiva linha</li>\n<li>15 edif\u00edcios \u00fanicos</li>\n</ul>\n<p>A cidade foi preenchida com <strong>Geometry Nodes</strong> (cole\u00e7\u00f5es com pesos que privilegiam edif\u00edcios mais baixos para um horizonte natural). Os edif\u00edcios distantes foram substitu\u00eddos por cart\u00f5es de parallax para manter a cena leve no equipamento dispon\u00edvel.</p>\n\n<h3>Texturas</h3>\n<p>Os materiais foram constru\u00eddos \u00e0 m\u00e3o nos <strong>Shading Nodes</strong> do Blender, incluindo uma armadura met\u00e1lica vermelha propositadamente desgastada pensada para contar visualmente o hist\u00f3rico de combate da personagem.</p>\n\n<h3>Rigging</h3>\n<p>Foi criado e pesado manualmente um armature personalizado. O <strong>Mixamo</strong> foi depois usado para automatizar o skinning e o weight painting.</p>\n\n<h3>Anima\u00e7\u00f5es</h3>\n<p>As anima\u00e7\u00f5es de caminhada e ajoelhar-para-disparar do Mixamo foram retargetadas via add-on no Blender. As naves foram animadas de forma procedural ao longo de um percurso com Geometry Nodes, em vez de animar cada uma \u00e0 m\u00e3o.</p>\n\n<h3>VFX</h3>\n<p>Gr\u00e1ficos de HUD e interface que sugerem a procura da IA foram constru\u00eddos diretamente no Blender, juntamente com nevoeiro volum\u00e9trico para atmosfera e escala.</p>\n\n<h3>Ilumina\u00e7\u00e3o</h3>\n<p>Ilumina\u00e7\u00e3o cinematogr\u00e1fica minimalista (Spot, Sun e Area lights) foi ajustada para o ambiente noturno da cidade e para o corredor misterioso.</p>\n\n<h3>Renderiza\u00e7\u00e3o</h3>\n<p>O <strong>Cycles</strong> foi escolhido em vez do EEVEE pela superior qualidade de luz, sombras e reflexos. Foi utilizada uma render farm externa porque alguns frames ultrapassaram as 10 horas localmente.</p>\n\n<h2>P\u00f3s-Produ\u00e7\u00e3o</h2>\n\n<h3>Compositing</h3>\n<p>O <strong>Compositor do Blender</strong> (glare/bloom e ajustes finais de imagem) foi aplicado de forma consistente em todas as cenas.</p>\n\n<h3>Edi\u00e7\u00e3o &amp; VFX 2D</h3>\n<p>A montagem final foi feita no <strong>Premiere Pro</strong>. Uma passagem de VFX em estilo glitch, corre\u00e7\u00e3o de cor com <strong>Lumetri</strong> e transi\u00e7\u00f5es cronometradas (dissolu\u00e7\u00f5es cruzadas, raios volum\u00e9tricos, vazamento VR, rolagem) foram realizadas no <strong>After Effects</strong>.</p>\n\n<h3>Sonoriza\u00e7\u00e3o</h3>\n<p>A banda sonora foi encomendada a um compositor externo. Os efeitos sonoros foram obtidos e aplicados no Premiere Pro.</p>\n\n<h2>Resultado F\u00edsico</h2>\n<p>A malha da personagem foi otimizada, reposicionada e preparada para impress\u00e3o 3D, resultando nas primeiras miniaturas f\u00edsicas do projeto.</p>",
+        },
+      },
+    },
   ],
   graphic: [
     {
       id: 'graphic-icon-library',
+      date: '2026-07',
       title: 'Icon Library',
       tags: ['Icon Design'],
       link: 'https://www.behance.net/gallery/253470149/Icon-Library-UrbanEye',
@@ -213,13 +231,14 @@ const PROJECTS = {
   // than an outside site. The client name is a proper noun, so there's
   // nothing to translate here - the page itself carries the copy.
   commissions: [
-    { title: 'UrbanEyePT', tags: ['Graphic Design', '3D Modelling'], link: 'commission-urbaneyept.html', image: 'images/work/commissions/urbaneyept-mosaic.webp' },
+    { title: 'UrbanEyePT', date: '2026-07', tags: ['Graphic Design', '3D Modelling'], link: 'commission-urbaneyept.html', image: 'images/work/commissions/urbaneyept-mosaic.webp' },
   ],
   // One tile per row, full width - set up in styles.css via the
   // "grid-full" class applied automatically to this category below.
   contests: [
     {
       id: 'contests-jorge',
+      date: '2024-06', // Micro Jam 017: 28-30 June 2024
       title: 'Jorge',
       tags: ['Game Jam!'],
       link: 'https://fmag.itch.io/jorge',
@@ -239,13 +258,14 @@ const PROJECTS = {
   '3dprint': [
     {
       id: '3dprint-mysterybox',
+      date: '2025/2026-01', // 3rd year, 1st semester 2025/2026 (report Jan 2026)
       title: 'Mystery Box - Mystery Travel',
       tags: ['3D Printing', 'University Work'],
       link: '',
       image: 'images/work/3dprint/mysterybox.webp',
       images: ['images/work/3dprint/mysterybox-b.webp', 'images/work/3dprint/mysterybox-c.webp'],
       downloadUrl: 'files/mystery-box-project-report.pdf',
-      description: "A university project for Design de Interfaces e Usabilidade III (3rd year, Design Communication and Audiovisual, ESART), built with a 3-person team (João Teixeira and Tiago Crispim): Mystery Travel, a surprise travel service centred on a physical Mystery Box. The box holds a symbolic coin and an NFC tag that opens a companion app revealing the trip. I designed the box itself in Blender - including the world-map side panels and lid branding - and sent it out for 3D printing (PLA); I was also responsible for the transition from the visual design into the app prototype using Adobe XD.",
+      description: "A university project for Design de Interfaces e Usabilidade III (3rd year, Communication Design and Audiovisual, ESART), built with a 3-person team (João Teixeira and Tiago Crispim): Mystery Travel, a surprise travel service centred on a physical Mystery Box. The box holds a symbolic coin and an NFC tag that opens a companion app revealing the trip. I designed the box itself in Blender - including the world-map side panels and lid branding - and sent it out for 3D printing (PLA); I was also responsible for the transition from the visual design into the app prototype using Adobe XD.",
       i18n: {
         pt: {
           description: 'Um projeto académico para Design de Interfaces e Usabilidade III (3.º ano, Design de Comunicação e Audiovisual, ESART), feito com uma equipa de 3 pessoas (João Teixeira e Tiago Crispim): Mystery Travel, um serviço de viagens surpresa centrado numa Mystery Box física. A caixa contém uma moeda simbólica e uma tag NFC que abre uma app complementar a revelar a viagem. Desenhei a própria caixa em Blender - incluindo os painéis laterais com o mapa-múndi e a marca na tampa - e enviei-a para impressão 3D (PLA); fui também responsável pela transição do design visual para o protótipo da app em Adobe XD.',
@@ -254,6 +274,13 @@ const PROJECTS = {
     },
   ],
 };
+
+// Drafts marked "hidden: true" are dropped here, once, so every page
+// below (Work grid, project.html, Best Projects, home) simply never sees
+// them.
+Object.keys(PROJECTS).forEach((category) => {
+  PROJECTS[category] = PROJECTS[category].filter((project) => !project.hidden);
+});
 
 /* ---------- Best Projects (best-projects.html) ----------
    A short, hand-picked list for the "See my best projects" page.
@@ -269,13 +296,14 @@ const PROJECTS = {
    used on that commission page (straight to Instagram, new tab). It
    takes the same optional "i18n" block as a normal project. */
 const BEST_PROJECTS = {
-  '3d': ['3d-007', '3d-006', '3d-003'],
+  '3d': ['3d-009', '3d-007', '3d-006', '3d-003'],
   graphic: ['graphic-icon-library'],
 };
 const BEST_PROJECTS_EXTRA = {
   '3d': [
     {
       title: 'UrbanEyePT - Instagram Post',
+      date: '2026-07',
       tags: ['3D Modelling'],
       image: 'images/work/commissions/urbaneyept-mosaic.webp',
       link: 'https://www.instagram.com/urbaneyept/',
@@ -285,9 +313,18 @@ const BEST_PROJECTS_EXTRA = {
   graphic: [],
 };
 
+/* ---------- Homepage: selected work ----------
+   The three tiles under the hero on index.html, in order - the first
+   one is shown large. Ids from PROJECTS (picked from BEST_PROJECTS: an
+   interior environment, a procedural animation and a graphic design
+   piece, to show range). */
+const HOME_FEATURED = ['3d-007', '3d-003', 'graphic-icon-library'];
+
 const ICONS = {
   download:
     '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>',
+  play:
+    '<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>',
   view:
     '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>',
 };
@@ -308,7 +345,32 @@ const t = (key, vars) => I18N.t(key, vars);
 const localized = (project) => (project.i18n && project.i18n[I18N.language]) || {};
 const titleOf = (project) => localized(project).title || project.title;
 const descriptionOf = (project) => localized(project).description || project.description;
+const caseStudyOf = (project) => localized(project).caseStudy || project.caseStudy || '';
 const tagsOf = (project) => (project.tags || []).map((tag) => I18N.tTag(tag));
+
+// "date" -> readable text in the current language. Accepts 'YYYY',
+// 'YYYY-MM' or a range 'start/end' (see "date" in PROJECTS above).
+//   dateOf(p)        "July 2025" / "julho de 2025", "2025 – April 2026"
+//   dateOf(p, true)  years only, for tiles: "2025", "2025–2026"
+const DATE_LOCALES = { en: 'en-GB', pt: 'pt-PT' };
+function dateOf(project, yearsOnly = false) {
+  if (!project.date) return '';
+  const parts = String(project.date).split('/').map((part) => {
+    const [year, month] = part.split('-').map(Number);
+    return { year, month };
+  });
+  const monthYear = new Intl.DateTimeFormat(DATE_LOCALES[I18N.language] || I18N.language, {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+  const one = ({ year, month }) =>
+    yearsOnly || !month ? String(year) : monthYear.format(new Date(Date.UTC(year, month - 1, 1)));
+  if (parts.length === 1) return one(parts[0]);
+  const [from, to] = parts;
+  if (yearsOnly) return from.year === to.year ? String(from.year) : `${from.year}–${to.year}`;
+  return `${one(from)} – ${one(to)}`;
+}
 
 const languageListeners = [];
 function onLanguageChange(render) {
@@ -415,7 +477,11 @@ function toThumbPath(imagePath) {
 const galleryGrid = document.querySelector('[data-gallery-grid]');
 
 if (galleryGrid) {
-  const tabs = document.querySelectorAll('[data-tab]');
+  // A tab marked "hidden" in work.html (currently Games, until it has
+  // projects) is skipped entirely - it can't be opened, not even with
+  // ?tab=games or a remembered choice. Remove the attribute to bring it back.
+  const tabs = document.querySelectorAll('[data-tab]:not([hidden])');
+  const availableCategories = [...tabs].map((tab) => tab.dataset.tab);
   const searchInput = document.querySelector('[data-gallery-search]');
   const tagOptions = document.getElementById('tag-options');
 
@@ -428,11 +494,11 @@ if (galleryGrid) {
 
   const params = new URLSearchParams(window.location.search);
   const requestedCategory = params.get('tab');
+  const isAvailable = (category) => Boolean(category && PROJECTS[category] && availableCategories.includes(category));
   let activeCategory =
-    (requestedCategory && PROJECTS[requestedCategory] ? requestedCategory : null) ||
-    session.get('activeWorkCategory') ||
+    (isAvailable(requestedCategory) ? requestedCategory : null) ||
+    (isAvailable(session.get('activeWorkCategory')) ? session.get('activeWorkCategory') : null) ||
     '3d';
-  if (!PROJECTS[activeCategory]) activeCategory = '3d';
 
   function isExternalLink(link) {
     return /^https?:\/\//i.test(link);
@@ -463,7 +529,7 @@ if (galleryGrid) {
       el.innerHTML = `
         ${visual}
         <span class="gallery-tag">${esc(tags)}</span>
-        <div class="gallery-caption"><h3>${esc(title)}</h3><p>${esc(t('gallery.viewDetails'))}</p></div>
+        <div class="gallery-caption"><h3>${esc(title)}</h3><p>${esc([dateOf(project, true), t('gallery.viewDetails')].filter(Boolean).join(' · '))}</p></div>
       `;
       return el;
     }
@@ -489,6 +555,7 @@ if (galleryGrid) {
     if (hasLink) {
       caption = isExternalLink(project.link) ? t('gallery.viewProject') : t('gallery.viewCase');
     }
+    caption = [dateOf(project, true), caption].filter(Boolean).join(' · ');
 
     el.innerHTML = `
       ${visual}
@@ -620,9 +687,13 @@ if (galleryGrid) {
 
   const eyebrowEl = document.querySelector('[data-project-eyebrow]');
   const skillsEl = document.querySelector('[data-project-skills]');
+  const dateWrapEl = document.querySelector('[data-project-date-wrap]');
+  const dateEl = document.querySelector('[data-project-date]');
   const coverWrapEl = document.querySelector('[data-project-cover-wrap]');
   const coverEl = document.querySelector('[data-project-cover]');
   const descEl = document.querySelector('[data-project-description]');
+  const caseStudyWrapEl = document.querySelector('[data-project-casestudy-wrap]');
+  const caseStudyEl = document.querySelector('[data-project-casestudy]');
   const galleryEl = document.querySelector('[data-project-gallery]');
   const actionsEl = document.querySelector('[data-project-actions]');
 
@@ -639,6 +710,47 @@ if (galleryGrid) {
     });
   });
 
+  // YouTube video in the cover slot. Until someone presses play it's
+  // just the cover image with a play button - no YouTube player, scripts
+  // or cookies are loaded, so the page stays as light as any other.
+  // Pressing play swaps in the (privacy-enhanced) embed, already playing.
+  function renderVideo(project, title) {
+    coverWrapEl.style.display = '';
+    coverWrapEl.classList.add('is-video');
+    coverEl.hidden = true;
+
+    // A language switch re-runs render(); don't stop a video mid-play.
+    const playing = coverWrapEl.querySelector('iframe');
+    if (playing) {
+      playing.title = t('project.videoTitle', { title });
+      return;
+    }
+
+    let facade = coverWrapEl.querySelector('.video-facade');
+    if (!facade) {
+      facade = document.createElement('button');
+      facade.type = 'button';
+      facade.className = 'video-facade';
+      facade.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(project.video)}?autoplay=1&rel=0`;
+        iframe.title = t('project.videoTitle', { title: titleOf(project) });
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        facade.replaceWith(iframe);
+        iframe.focus();
+      });
+      coverWrapEl.appendChild(facade);
+    }
+    facade.setAttribute('aria-label', t('project.playVideo', { title }));
+    facade.innerHTML = `
+      ${project.image ? `<img class="video-poster" src="${esc(project.image)}" alt="" decoding="async">` : ''}
+      <span class="video-play">${ICONS.play}</span>
+      <span class="video-label">${esc(t('project.watchTeaser'))}</span>
+    `;
+  }
+
   // Everything added by the last run, so a language switch doesn't
   // stack a second set of buttons or skill pills on top of the first.
   function resetActions() {
@@ -653,29 +765,51 @@ if (galleryGrid) {
     skillsEl.innerHTML = '';
     const backBtn = resetActions();
 
+    // This page sets its own description (per project, per language), so
+    // its <meta name="description"> has no data-i18n-attr for i18n.js to
+    // overwrite.
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.content = t('meta.project.desc');
+
     if (!found) {
       document.title = t('meta.project.title');
       eyebrowEl.textContent = t('project.eyebrow');
       titleEl.textContent = t('project.notFound.title');
-      descEl.textContent = t('project.notFound.body');
+      descEl.innerHTML = t('project.notFound.body');
       coverWrapEl.style.display = 'none';
       skillsEl.style.display = 'none';
+      if (dateWrapEl) dateWrapEl.hidden = true;
+      if (caseStudyWrapEl) caseStudyWrapEl.style.display = 'none';
       if (galleryEl) galleryEl.style.display = 'none';
       return;
     }
 
     const title = titleOf(found);
     document.title = `${title} - Ruben Alves`;
+    // Search engines run this page's script, so give each project its own
+    // description (first ~155 characters of its text) instead of the
+    // generic one.
+    if (metaDesc) {
+      const plain = String(descriptionOf(found) || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (plain) metaDesc.content = plain.length > 155 ? `${plain.slice(0, 152).replace(/\s+\S*$/, '')}...` : plain;
+    }
     eyebrowEl.textContent = t(`cat.${foundCategory}`).toUpperCase();
     titleEl.textContent = title;
 
-    if (found.image) {
+    if (found.video) {
+      renderVideo(found, title);
+    } else if (found.image) {
       coverWrapEl.style.display = '';
       coverEl.src = found.image;
       coverEl.alt = title;
       coverEl.classList.toggle('contain', found.fit === 'contain');
     } else {
       coverWrapEl.style.display = 'none';
+    }
+
+    if (dateWrapEl) {
+      dateEl.textContent = dateOf(found);
+      dateWrapEl.hidden = !found.date;
     }
 
     skillsEl.style.display = '';
@@ -706,7 +840,18 @@ if (galleryGrid) {
       galleryEl.style.display = extraImages.length > 0 ? '' : 'none';
     }
 
-    descEl.textContent = descriptionOf(found) || t('project.descFallback');
+    descEl.innerHTML = descriptionOf(found) || t('project.descFallback');
+
+    const caseStudyHtml = caseStudyOf(found);
+    if (caseStudyEl && caseStudyWrapEl) {
+      if (caseStudyHtml) {
+        caseStudyEl.innerHTML = caseStudyHtml;
+        caseStudyWrapEl.style.display = '';
+      } else {
+        caseStudyEl.innerHTML = '';
+        caseStudyWrapEl.style.display = 'none';
+      }
+    }
 
     // Extra buttons inserted before the existing "Back to ..." button:
     // the outside link (if any), then download/view for an attached doc.
@@ -718,6 +863,15 @@ if (galleryGrid) {
       linkBtn.rel = 'noopener';
       linkBtn.innerHTML = `${esc(t('project.viewFull'))} <span>↗</span>`;
       actionsEl.insertBefore(linkBtn, backBtn);
+    }
+    if (found.video) {
+      const ytBtn = document.createElement('a');
+      ytBtn.className = 'button button-light';
+      ytBtn.href = `https://www.youtube.com/watch?v=${encodeURIComponent(found.video)}`;
+      ytBtn.target = '_blank';
+      ytBtn.rel = 'noopener';
+      ytBtn.innerHTML = `${esc(t('project.watchYoutube'))} <span>↗</span>`;
+      actionsEl.insertBefore(ytBtn, backBtn);
     }
     if (found.downloadUrl) {
       const dlBtn = document.createElement('a');
@@ -766,7 +920,7 @@ if (galleryGrid) {
     return found;
   }
 
-  function buildBestTile({ title, tags, image, href, external }, index) {
+  function buildBestTile({ title, tags, image, href, external, year }, index) {
     const variant = VARIANTS[index % VARIANTS.length];
     const el = document.createElement('a');
     el.className = 'gallery-item';
@@ -778,7 +932,7 @@ if (galleryGrid) {
     const visual = image
       ? `<img class="gallery-img" src="${esc(toThumbPath(image))}" alt="${esc(title)}" loading="lazy" decoding="async">`
       : `<div class="gallery-visual ${variant}"><div class="gallery-shape"></div></div>`;
-    const caption = external ? t('gallery.viewProject') : t('gallery.viewDetails');
+    const caption = [year, external ? t('gallery.viewProject') : t('gallery.viewDetails')].filter(Boolean).join(' · ');
     el.innerHTML = `
       ${visual}
       <span class="gallery-tag">${esc(tags.join(' · '))}</span>
@@ -802,6 +956,7 @@ if (galleryGrid) {
             image: project.image,
             href: `project.html?id=${encodeURIComponent(project.id)}`,
             external: false,
+            year: dateOf(project, true),
           },
           index++
         )
@@ -810,7 +965,7 @@ if (galleryGrid) {
     (BEST_PROJECTS_EXTRA[category] || []).forEach((item) => {
       grid.appendChild(
         buildBestTile(
-          { title: titleOf(item), tags: tagsOf(item), image: item.image, href: item.link, external: true },
+          { title: titleOf(item), tags: tagsOf(item), image: item.image, href: item.link, external: true, year: dateOf(item, true) },
           index++
         )
       );
@@ -820,6 +975,62 @@ if (galleryGrid) {
   function render() {
     renderSection(threeDGrid, '3d');
     renderSection(graphicGrid, 'graphic');
+  }
+
+  render();
+  onLanguageChange(render);
+})();
+
+/* ---------- Homepage: selected work (index.html) ----------
+   Three tiles from HOME_FEATURED: the first large on the left, the
+   other two stacked beside it (one column on phones). Each opens its
+   project page, and "Back to ..." there then returns to Home. */
+(function renderHomeFeatured() {
+  const grid = document.querySelector('[data-home-featured]');
+  if (!grid) return;
+
+  function find(id) {
+    for (const [category, list] of Object.entries(PROJECTS)) {
+      const project = list.find((p) => p.id === id);
+      if (project) return { project, category };
+    }
+    return null;
+  }
+
+  grid.addEventListener('click', (event) => {
+    if (!event.target.closest('.featured-item')) return;
+    session.set('lastListPage', 'index.html');
+    session.set('lastListLabelKey', 'back.home');
+  });
+
+  function render() {
+    grid.innerHTML = '';
+    HOME_FEATURED.map(find).filter(Boolean).forEach(({ project, category }, i) => {
+      const title = titleOf(project);
+      const isMain = i === 0;
+      const el = document.createElement('a');
+      el.className = `featured-item${isMain ? ' featured-main' : ''}`;
+      el.href = `project.html?id=${encodeURIComponent(project.id)}`;
+      // Thumbnail (640px) or full image (1400px) - the browser picks by
+      // the tile's on-screen size, so the big tile stays sharp and the
+      // small ones stay light.
+      const image = project.image
+        ? `<img src="${esc(toThumbPath(project.image))}"
+             srcset="${esc(toThumbPath(project.image))} 640w, ${esc(project.image)} 1400w"
+             sizes="${isMain ? '(max-width: 850px) 100vw, 58vw' : '(max-width: 850px) 100vw, 36vw'}"
+             alt="" loading="lazy" decoding="async">`
+        : '';
+      el.innerHTML = `
+        ${image}
+        <span class="featured-arrow" aria-hidden="true">↗</span>
+        <div class="featured-caption">
+          <p class="featured-index">${esc([String(i + 1).padStart(2, '0'), t(`cat.${category}`), dateOf(project, true)].filter(Boolean).join(' · '))}</p>
+          <h3>${esc(title)}</h3>
+          <p class="featured-tags">${esc(tagsOf(project).join(' · '))}</p>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
   }
 
   render();
@@ -854,7 +1065,7 @@ if (galleryGrid) {
   }
 
   document.addEventListener('click', (e) => {
-    const clickedImg = e.target.closest('[data-project-cover-wrap] img, .project-gallery-item img');
+    const clickedImg = e.target.closest('[data-project-cover-wrap] img:not(.video-poster), .project-gallery-item img');
     // Gallery tiles show a thumbnail but zoom to the full-size file.
     if (clickedImg) openLightbox(clickedImg.dataset.full || clickedImg.src, clickedImg.alt);
   });
@@ -866,4 +1077,32 @@ if (galleryGrid) {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeLightbox();
   });
+})();
+
+/* ---------- Visitor stats (GoatCounter) - off until a code is set ----------
+   GoatCounter (goatcounter.com) is a free, open-source counter for
+   personal sites: no cookies, no personal data, no consent banner
+   needed for it. It shows which pages and projects get opened, and
+   where visitors came from (LinkedIn, Behance...).
+
+   To turn it on: sign up at https://www.goatcounter.com/signup, pick a
+   code (e.g. "rubenalves" -> rubenalves.goatcounter.com), and put that
+   code between the quotes below. Leave it empty and nothing is loaded.
+
+   Each project counts separately (project.html?id=3d-009 etc), and
+   local test copies (localhost, file://) are never counted. To stop
+   your own visits being counted, open the site once with
+   #toggle-goatcounter at the end of the address. */
+const GOATCOUNTER_CODE = '';
+
+(function visitorStats() {
+  if (!GOATCOUNTER_CODE) return;
+  if (window.location.protocol === 'file:' || /^(localhost|127\.|\[::1\])/.test(window.location.hostname)) return;
+  // Count project pages by their ?id=, not as one "project.html".
+  window.goatcounter = { path: () => window.location.pathname + window.location.search };
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://gc.zgo.at/count.js';
+  script.dataset.goatcounter = new URL('/count', 'https://' + GOATCOUNTER_CODE + '.goatcounter.com').href;
+  document.body.appendChild(script);
 })();

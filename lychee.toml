@@ -18,4 +18,8 @@ accept = ["200..=299", "429", "999"]
 exclude = [
   '^https?://(www\.)?instagram\.com',
   '^https?://(www\.)?linkedin\.com',
+  # Built in script.js from the project's "video" ID at runtime - these
+  # prefixes are code, not real links.
+  '^https://www\.youtube-nocookie\.com/embed/',
+  '^https://www\.youtube\.com/watch\?v=\$',
 ]
