@@ -4,15 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" data-i18n-attr="content:meta.about.desc" content="About Ruben Alves - 3D artist and graphic designer based in Castelo Branco, Portugal.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ruben Alves">
+  <meta property="og:title" content="About - Ruben Alves">
+  <meta property="og:description" content="About Ruben Alves - 3D artist and graphic designer based in Castelo Branco, Portugal.">
+  <meta property="og:image" content="images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ruben Alves - 3D artist and graphic designer: selected renders">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
   <title data-i18n="meta.about.title">About - Ruben Alves</title>
   <link rel="stylesheet" href="styles.css">
   <script src="i18n.js"></script>
+  <script src="display-mode.js"></script>
 </head>
 <body>
   <div class="noise" aria-hidden="true"></div>
 
-  <div class="spline-bg" aria-hidden="true">
-    <div class="spline-scrim"></div>
+  <div class="page-bg" aria-hidden="true">
+    <div class="page-bg-scrim"></div>
   </div>
 
   <header class="site-header">
@@ -32,35 +44,105 @@
       </div>
     </nav>
     <button type="button" class="menu-toggle" data-i18n-attr="aria-label:nav.aria.menu" aria-label="Open menu" aria-expanded="false">☰</button>
+    <div class="display-settings">
+      <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="display-panel" data-i18n-attr="aria-label:settings.aria.open" aria-label="Display settings">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M19.14 12.94c.04-.31.06-.62.06-.94s-.02-.63-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7.03 7.03 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.48.48 0 0 0-.47.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.31-.07.63-.07.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>
+      </button>
+      <div class="settings-panel" id="display-panel" hidden>
+        <p class="eyebrow" data-i18n="settings.title">Display</p>
+        <div class="mode-row">
+          <span id="mode-switch-label" data-i18n="settings.full">Full experience</span>
+          <button type="button" class="mode-switch" role="switch" aria-checked="true" aria-labelledby="mode-switch-label"><span class="mode-switch-knob"></span></button>
+        </div>
+        <p class="mode-note mode-note-full" data-i18n="settings.note.full">Animations on.</p>
+        <p class="mode-note mode-note-lite" data-i18n="settings.note.lite">Lite mode: no animations - easier on your battery.</p>
+      </div>
+    </div>
   </header>
 
   <main>
     <section class="about-page">
       <div class="about-solo">
         <p class="eyebrow" data-i18n="about.eyebrow">ABOUT</p>
-        <h2><span data-i18n="about.title.line1">3D thinking.</span><br><em data-i18n="about.title.line2">Graphic discipline.</em></h2>
-        <p class="large-copy" data-i18n="about.lead">I'm Ruben Alves, a 3D artist and graphic designer based in Castelo Branco, Portugal.</p>
-        <p data-i18n="about.body">My focus is on 3D work - particularly product visualization - alongside graphic design. I enjoy taking a concept from first sketch through modelling, materials, lighting and final delivery.</p>
+        <h1><span data-i18n="about.title.line1">3D thinking.</span><br><em data-i18n="about.title.line2">Graphic discipline.</em></h1>
+        <p class="large-copy" data-i18n="about.lead">I'm Ruben Alves, a 3D artist and graphic designer based in Castelo Branco, Portugal, and a recent graduate in Communication Design and Audiovisual.</p>
+        <p data-i18n="about.body">I'm most interested in where graphic design meets 3D art. Through my degree I built skills in poster design, 3D modelling and animation, cinematics, packaging prototyping and 3D printing - taking ideas from first sketch to final render, print or object.</p>
+      </div>
 
-        <div class="facts-row">
-          <div><strong data-i18n="about.facts.basedIn">Based in</strong><span data-i18n="about.facts.basedInValue">Castelo Branco, Portugal</span></div>
-          <div><strong data-i18n="about.facts.availableFor">Available for</strong><span data-i18n="about.facts.availableForValue">Freelance</span></div>
-          <div><strong data-i18n="about.facts.focus">Focus</strong><span data-i18n="about.facts.focusValue">3D Product Visualization · Graphic Design · 3D Game Assets Creator</span></div>
+      <div class="facts-row">
+        <div><strong data-i18n="about.facts.basedIn">Based in</strong><span data-i18n="about.facts.basedInValue">Castelo Branco, Portugal</span></div>
+        <div><strong data-i18n="about.facts.availableFor">Available for</strong><span data-i18n="about.facts.availableForValue">Freelance</span></div>
+        <div><strong data-i18n="about.facts.focus">Focus</strong><span data-i18n="about.facts.focusValue">3D Product Visualization · Graphic Design · 3D Game Assets Creator</span></div>
+        <div><strong data-i18n="about.facts.languages">Languages</strong><span data-i18n="about.facts.languagesValue">Portuguese (native) · English (B2)</span></div>
+      </div>
+
+      <div class="about-columns">
+        <div class="about-block">
+          <h4 data-i18n="about.edu.title">Education</h4>
+          <ol class="cv-list">
+            <li class="cv-item">
+              <span class="cv-years">2023 – 2026</span>
+              <div>
+                <strong data-i18n="about.edu.degree">BA in Communication Design and Audiovisual</strong>
+                <span data-i18n="about.edu.degreeSchool">Polytechnic Institute of Castelo Branco - ESART</span>
+                <a class="text-link" href="project.html?id=3d-009" data-i18n="about.edu.finalProject">Final project: Protocol - Marked ↗</a>
+              </div>
+            </li>
+            <li class="cv-item">
+              <span class="cv-years">2019 – 2023</span>
+              <div>
+                <strong data-i18n="about.edu.secondary">Visual Arts (secondary school)</strong>
+                <span>Agrupamento de Escolas Amato Lusitano</span>
+              </div>
+            </li>
+          </ol>
         </div>
 
+        <div class="about-block">
+          <h4 data-i18n="about.beyond.title">Beyond the degree</h4>
+          <ul class="cv-list">
+            <li class="cv-item">
+              <span class="cv-years">48h</span>
+              <div>
+                <strong>Micro Jam 017: Islands</strong>
+                <span data-i18n="about.beyond.jam">Game jam - 2D art in Aseprite for a game made as a team.</span>
+                <a class="text-link" href="project.html?id=contests-jorge" data-i18n="about.beyond.jamLink">See the game: Jorge ↗</a>
+              </div>
+            </li>
+            <li class="cv-item">
+              <span class="cv-years">CTA</span>
+              <div><strong data-i18n="about.beyond.cta">Treasurer - Academic Traditions Committee</strong></div>
+            </li>
+            <li class="cv-item">
+              <span class="cv-years">AE</span>
+              <div><strong data-i18n="about.beyond.ae">Students' Union - helped organise academic events</strong></div>
+            </li>
+            <li class="cv-item">
+              <span class="cv-years">ESARTuna</span>
+              <div><strong data-i18n="about.beyond.tuna">Active member of the academic tuna</strong></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="about-tools">
         <div class="tools-group">
-          <h4 data-i18n="about.tools.familiar">Familiar with</h4>
+          <h4 data-i18n="about.tools.familiar">Main tools</h4>
           <div class="tools-row">
             <span class="tool-pill">Blender</span>
-            <span class="tool-pill">Photoshop</span>
             <span class="tool-pill">Illustrator</span>
           </div>
         </div>
 
         <div class="tools-group">
-          <h4 data-i18n="about.tools.some">Some experience with</h4>
+          <h4 data-i18n="about.tools.some">Also use</h4>
           <div class="tools-row">
+            <span class="tool-pill some-experience">Photoshop</span>
+            <span class="tool-pill some-experience">Premiere Pro</span>
+            <span class="tool-pill some-experience">After Effects</span>
             <span class="tool-pill some-experience">DaVinci Resolve</span>
+            <span class="tool-pill some-experience">Aseprite</span>
+            <span class="tool-pill some-experience">GitHub</span>
           </div>
         </div>
 

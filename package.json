@@ -1,6 +1,7 @@
 {
   "name": "rubenalvesportefolio",
   "private": true,
+  "homepage": "https://rubenalvesportefolio.github.io/hub-portfolio/",
   "description": "Ruben Alves - portfolio (static site). Tooling only; the site itself has no build step.",
   "type": "module",
   "engines": {

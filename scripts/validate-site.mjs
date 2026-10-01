@@ -18,11 +18,12 @@ const BUDGET = {
   fileMB: 10,    // anything else (e.g. PDFs in files/) - warning only
 };
 const KNOWN_PROJECT_KEYS = new Set([
-  'id', 'title', 'tags', 'link', 'image', 'images', 'description', 'fit', 'downloadUrl', 'viewUrl', 'i18n',
+  'id', 'title', 'tags', 'link', 'image', 'images', 'description', 'caseStudy', 'fit', 'downloadUrl', 'viewUrl', 'i18n',
+  'video', 'hidden', 'date',
 ]);
 // The only per-project fields worth translating - tags are shared
 // vocabulary and live in i18n.js instead.
-const TRANSLATABLE_PROJECT_KEYS = new Set(['title', 'description']);
+const TRANSLATABLE_PROJECT_KEYS = new Set(['title', 'description', 'caseStudy']);
 const EXTERNAL = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i; // http:, mailto:, data:, //cdn...
 const PLACEHOLDER_HTML = /\[(?:[A-Z][A-Za-z0-9 '&.-]{1,60}|https?:\/\/[^\]\s]+)\]/g;
 const PLACEHOLDER_TEXT = /\[[^\]]{3,}\]/;
@@ -58,6 +59,14 @@ const files = new Set();
 const read = (rel) => readFileSync(path.join(SITE, rel), 'utf8');
 const sizeKB = (rel) => statSync(path.join(SITE, rel)).size / 1024;
 const referenced = new Set();
+// The live address (package.json "homepage"), used to recognise this
+// site's own absolute URLs - e.g. share-preview images after the build.
+let HOMEPAGE = '';
+try {
+  HOMEPAGE = (JSON.parse(readFileSync('package.json', 'utf8')).homepage || '').trim().replace(/\/?$/, '/');
+} catch {
+  /* no package.json next to the site - absolute URLs are just treated as external */
+}
 // key -> first place it's used, so a missing translation can be pointed at.
 const i18nUsage = new Map();
 
@@ -82,6 +91,7 @@ for (const page of pages) {
     const url = (m[2] ?? m[3]).trim();
     const line = lineAt(html, m.index);
     if (!url || url.startsWith('#')) continue; // e.g. <img src=""> filled in by script.js
+    if (/<base\s[^>]*$/i.test(html.slice(Math.max(0, m.index - 40), m.index))) continue; // 404.html's <base href="/hub-portfolio/">
 
     if (/^https?:\/\/(www\.)?instagram\.com\/?$/i.test(url)) {
       report('warning', page, line, 'Instagram link points at instagram.com itself, not a profile.');
@@ -92,6 +102,21 @@ for (const page of pages) {
     if (!target) continue;
     referenced.add(target);
     if (!files.has(target)) report('error', page, line, `Broken link: "${url}" (${target} is not in the site).`);
+  }
+
+  // Share-preview image: absolute after the build (see "homepage" in
+  // package.json), so map it back to a file in the site and check it.
+  const ogImage = html.match(/<meta property="og:image" content="([^"]+)"/);
+  if (ogImage) {
+    const url = ogImage[1];
+    const rel = HOMEPAGE && url.startsWith(HOMEPAGE) ? url.slice(HOMEPAGE.length) : EXTERNAL.test(url) ? null : url;
+    if (rel !== null) {
+      const target = resolveLocal(rel, page);
+      referenced.add(target);
+      if (!files.has(target)) report('error', page, lineAt(html, ogImage.index), `Share-preview image "${url}" isn't in the site.`);
+    } else {
+      report('warning', page, lineAt(html, ogImage.index), `Share-preview image "${url}" is outside this site - check it's what you meant.`);
+    }
   }
 
   for (const m of html.matchAll(PLACEHOLDER_HTML)) {
@@ -129,6 +154,18 @@ for (const page of pages) {
   }
   if (!html.includes('class="lang-switch"')) {
     report('error', page, undefined, 'page has no .lang-switch in its header, so visitors cannot change language from it.');
+  }
+
+  // Lite / full display mode (display-mode.js). It has to load in <head>
+  // so the saved mode is applied before the page is drawn.
+  const modeTag = html.indexOf('src="display-mode.js"');
+  if (modeTag === -1) {
+    report('error', page, undefined, 'page never loads display-mode.js, so the lite/full switch does nothing on it.');
+  } else if (modeTag > html.indexOf('</head>')) {
+    report('error', page, lineAt(html, modeTag), 'display-mode.js must load inside <head>, or lite mode flashes the animated page first.');
+  }
+  if (!html.includes('class="display-settings"')) {
+    report('error', page, undefined, 'page has no .display-settings (gear) in its header, so visitors cannot switch to lite mode from it.');
   }
 }
 
@@ -270,6 +307,7 @@ if (!files.has(SCRIPT)) {
 
 function checkProjects(projects, src) {
   const seenIds = new Map();
+  const visibleIds = new Set();
   const workHtml = files.has('work.html') ? read('work.html') : '';
   const tabs = new Set([...workHtml.matchAll(/data-tab="([^"]+)"/g)].map((m) => m[1]));
 
@@ -293,11 +331,31 @@ function checkProjects(projects, src) {
       const label = `PROJECTS.${category}[${i}]${p?.title ? ` "${p.title}"` : ''}`;
       const line = lineOf(src, p?.id ? `'${p.id}'` : `'${p?.title}'`);
       const err = (msg) => report('error', SCRIPT, line, `${label}: ${msg}`);
-      const warn = (msg) => report('warning', SCRIPT, line, `${label}: ${msg}`);
+      // A hidden draft isn't on the site, so unfinished copy in it isn't
+      // worth a warning - but it's still checked for real errors.
+      const warn = (msg) => { if (!p?.hidden) report('warning', SCRIPT, line, `${label}: ${msg}`); };
 
       if (!p || typeof p !== 'object') return err('entry is not an object.');
       for (const k of Object.keys(p)) if (!KNOWN_PROJECT_KEYS.has(k)) warn(`unknown field "${k}" (typo?) - it will be ignored.`);
       if (typeof p.title !== 'string' || !p.title.trim()) err('missing "title".');
+      if (p.hidden !== undefined && typeof p.hidden !== 'boolean') err('"hidden" must be true or false.');
+      if (p.video !== undefined && !/^[A-Za-z0-9_-]{11}$/.test(String(p.video))) {
+        err(`"video" must be a YouTube video ID - the 11 characters after watch?v= (got "${p.video}").`);
+      }
+      if (!p.hidden && p.id) visibleIds.add(p.id);
+      if (p.date === undefined) {
+        warn('has no "date" - add when it was made (e.g. date: \'2025-07\').');
+      } else {
+        const part = /^(\d{4})(?:-(0[1-9]|1[0-2]))?$/;
+        const sides = String(p.date).split('/');
+        const parsed = sides.map((side) => side.match(part));
+        if (sides.length > 2 || parsed.some((m) => !m)) {
+          err(`"date" must be 'YYYY', 'YYYY-MM' or a range like '2025-09/2026-04' (got "${p.date}").`);
+        } else if (parsed.length === 2) {
+          const key = (m) => Number(m[1]) * 12 + Number(m[2] || 1);
+          if (key(parsed[0]) > key(parsed[1])) err(`"date" range "${p.date}" ends before it starts.`);
+        }
+      }
       if (!Array.isArray(p.tags) || p.tags.length === 0) warn('has no tags, so search can never find it.');
       else p.tags.forEach((tag) => usedTags.add(tag));
 
@@ -330,10 +388,16 @@ function checkProjects(projects, src) {
       }
       // English prose with no translation falls back to English on screen.
       for (const locale of LOCALES) {
-        if (locale === DEFAULT_LOCALE || !p.description) continue;
-        if (!p.i18n || !p.i18n[locale] || !p.i18n[locale].description) {
-          warn(`has no "${locale}" description, so it stays in ${DEFAULT_LOCALE} when the site is read in ${locale}.`);
+        if (locale === DEFAULT_LOCALE) continue;
+        for (const field of ['description', 'caseStudy']) {
+          if (!p[field]) continue;
+          if (!p.i18n || !p.i18n[locale] || !p.i18n[locale][field]) {
+            warn(`has no "${locale}" ${field}, so it stays in ${DEFAULT_LOCALE} when the site is read in ${locale}.`);
+          }
         }
+      }
+      if (p.caseStudy !== undefined && (typeof p.caseStudy !== 'string' || !p.caseStudy.trim())) {
+        err('"caseStudy" must be a non-empty HTML string (or left out).');
       }
 
       // id - required everywhere except commissions, must be unique + URL-safe
@@ -397,6 +461,30 @@ function checkProjects(projects, src) {
         warn('description is still placeholder text - visitors will see it.');
       }
     });
+  }
+
+  // Homepage tiles and the Best Projects page pick projects by id - an id
+  // that's missing or hidden would just silently leave a gap.
+  const picks = [];
+  const homeMatch = src.match(/const HOME_FEATURED = (\[[^\]]*\])/);
+  if (homeMatch) {
+    try {
+      vm.runInNewContext(homeMatch[1], {}, { timeout: 1000 }).forEach((id) => picks.push(['HOME_FEATURED', id]));
+    } catch (e) {
+      report('error', SCRIPT, lineOf(src, 'const HOME_FEATURED'), `HOME_FEATURED could not be evaluated: ${e.message}`);
+    }
+  }
+  const bestLiteral = extractObjectLiteral(src, 'const BEST_PROJECTS =');
+  if (bestLiteral) {
+    try {
+      Object.values(vm.runInNewContext(`(${bestLiteral})`, {}, { timeout: 1000 })).flat().forEach((id) => picks.push(['BEST_PROJECTS', id]));
+    } catch (e) {
+      report('error', SCRIPT, lineOf(src, 'const BEST_PROJECTS'), `BEST_PROJECTS could not be evaluated: ${e.message}`);
+    }
+  }
+  for (const [list, id] of picks) {
+    if (!seenIds.has(id)) report('error', SCRIPT, lineOf(src, `const ${list}`), `${list} lists "${id}", which isn't a project id.`);
+    else if (!visibleIds.has(id)) report('error', SCRIPT, lineOf(src, `const ${list}`), `${list} lists "${id}", which is hidden - it won't show up.`);
   }
 
   // A tag translation whose English side no longer exists never applies.

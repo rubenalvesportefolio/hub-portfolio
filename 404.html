@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="A project by Ruben Alves.">
+  <meta name="description" data-i18n-attr="content:meta.404.desc" content="This page doesn't exist on Ruben Alves's portfolio.">
+  <meta name="robots" content="noindex">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ruben Alves">
-  <meta property="og:title" content="Project - Ruben Alves">
-  <meta property="og:description" content="A project by Ruben Alves.">
+  <meta property="og:title" content="Page not found - Ruben Alves">
+  <meta property="og:description" content="This page doesn't exist on Ruben Alves's portfolio.">
   <meta property="og:image" content="images/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -15,7 +16,7 @@
   <meta property="og:locale" content="en_GB">
   <meta property="og:locale:alternate" content="pt_PT">
   <meta name="twitter:card" content="summary_large_image">
-  <title>Project - Ruben Alves</title>
+  <title data-i18n="meta.404.title">Page not found - Ruben Alves</title>
   <link rel="stylesheet" href="styles.css">
   <script src="i18n.js"></script>
   <script src="display-mode.js"></script>
@@ -61,59 +62,18 @@
   </header>
 
   <main>
-    <section class="commission-page">
-      <a class="back-link" href="work.html" data-smart-back>← Back to Work</a>
-
-      <p class="eyebrow" data-project-eyebrow>PROJECT</p>
-      <h1 data-project-title>Loading...</h1>
-
-      <div class="project-detail">
-        <div class="commission-cover" data-project-cover-wrap>
-          <img data-project-cover src="data:," alt="">
+    <section class="home-hero notfound">
+      <div class="home-hero-content">
+        <p class="eyebrow" data-i18n="notfound.eyebrow">ERROR 404</p>
+        <h1><span data-i18n="notfound.title.line1">Nothing here</span><br><em data-i18n="notfound.title.line2">to render.</em></h1>
+        <p class="hero-text" data-i18n="notfound.text">This page doesn't exist - it may have moved, or the link has a typo. The work is still where it was.</p>
+        <div class="hero-actions">
+          <a class="button button-dark wave-cta" href="index.html"><span data-i18n="notfound.home">Back to Home</span> <span>↗</span></a>
+          <a class="button button-light" href="work.html"><span data-i18n="notfound.work">See the work</span> <span>↗</span></a>
         </div>
-
-        <div class="project-detail-info">
-          <div class="commission-body">
-            <div class="project-overview" data-project-description></div>
-          </div>
-
-          <div class="project-date-block" data-project-date-wrap hidden>
-            <p class="eyebrow" data-i18n="project.date">Date</p>
-            <p class="project-date" data-project-date></p>
-          </div>
-
-          <div class="skills-block">
-            <p class="eyebrow" data-i18n="project.skills">Skills Applied</p>
-            <div class="tools-row" data-project-skills></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-case-study-wrap" data-project-casestudy-wrap>
-        <div class="project-case-study" data-project-casestudy></div>
-      </div>
-
-      <div class="project-gallery" data-project-gallery></div>
-
-      <div class="commission-actions" data-project-actions>
-        <a class="button button-light" href="work.html" data-smart-back>← Back to Work</a>
       </div>
     </section>
-
-    <footer class="page-footer">
-      <a class="back-link" href="work.html" data-smart-back>← Back to Work</a>
-      <div>
-        <a href="index.html" data-i18n="nav.home">Home</a>
-        <a href="about.html" data-i18n="nav.about">About</a>
-        <a href="contact.html" data-i18n="nav.contact">Contact</a>
-      </div>
-    </footer>
   </main>
-
-  <div class="lightbox" data-lightbox>
-    <button type="button" class="lightbox-close" data-lightbox-close data-i18n-attr="aria-label:project.lightbox.close" aria-label="Close">✕</button>
-    <img data-lightbox-img src="data:," alt="">
-  </div>
 
   <script src="script.js"></script>
 </body>
