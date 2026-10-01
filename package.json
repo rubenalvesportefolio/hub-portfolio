@@ -15,6 +15,6 @@
     "serve": "npm run build && npx --yes http-server _site -c-1 -p 8080 -o"
   },
   "devDependencies": {
-    "html-validate": "^11.15.0"
+    "html-validate": "^11.16.1"
   }
 }
