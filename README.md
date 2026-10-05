@@ -33,9 +33,14 @@ experience** and a **lite** mode (see "Display mode" below).
   A project can also carry a longer, full-width case study below the
   cover (see `caseStudy` below - used by Protocol - Marked). Clicking the
   cover image or any image in a project's extra gallery opens it larger
-  in a lightbox (click outside it, the ✕, or press Esc to close). A
-  project with a `video` shows a play button on its cover instead (see
-  `video` below - used by Protocol - Marked).
+  in a lightbox (see "Image lightbox" below). A project with a `video`
+  shows a play button on its cover instead (see `video` below - used by
+  Protocol - Marked and Star Destroyer). Skill tags link to the Work page
+  filtered to that tag, a "Software" row lists the programs used, and
+  "previous / next project" cards at the bottom walk through the
+  projects in Work-page order (wrapping around at the ends).
+  On the live site each project also gets its own page,
+  `project-<id>.html` - see "Search, sharing and stats".
 - `best-projects.html` - a short, hand-picked list of your strongest
   work, split into just two sections (3D and Graphic Design), nothing
   else - see "Best Projects page" below.
@@ -52,9 +57,13 @@ experience** and a **lite** mode (see "Display mode" below).
 
 Open `script.js` and find the `PROJECTS` object right at the top of the
 file (it's shared by `project.html` and `best-projects.html` too, not
-just the Work page grids). Each category is a plain array - add, remove,
-or reorder entries and the grid updates to match exactly (no empty
-placeholder tiles are ever generated beyond what you list).
+just the Work page grids). Each category is a plain array - add or
+remove entries and the grid updates to match exactly (no empty
+placeholder tiles are ever generated beyond what you list). The Work
+grid shows each tab **newest first** by `date` (the end of a range
+counts; undated projects go last), so the order inside the array
+doesn't matter there. Best Projects and the homepage keep the order you
+give them.
 
 ```js
 '3d': [
@@ -119,6 +128,10 @@ placeholder tiles are ever generated beyond what you list).
   show the year(s). Leave it out and nothing is shown -
   `npm run validate` warns about every visible project without one, and
   fails on a badly written date.
+- `software` - optional. The programs used, e.g. `['Blender',
+  'Photoshop']` - shown as its own "Software" row on the project page,
+  separate from the skill tags. Names, so never translated. Every
+  visible project has it set.
 - `video` - optional. A YouTube video ID - the 11 characters after
   `watch?v=` in the address (Protocol - Marked: `'I9UdgZKVZ8A'`). The
   detail page then shows the cover image with a play button in the
@@ -155,7 +168,7 @@ projects; to bring it back, remove `hidden` from its
 
 ### What's on the site right now
 
-**3D** has 9 projects (7 visible), with cover images in `images/work/3d/`:
+**3D** has 10 projects (8 visible), with cover images in `images/work/3d/`:
 
 - 001 Tower, 002 Pocket Clock, 003 Star Destroyer, 006 Sand and 007
   Medieval Library Interior have real titles, descriptions and skill
@@ -173,6 +186,23 @@ projects; to bring it back, remove `hidden` from its
   cover slot), the final report as a PDF (download + view buttons) and
   a 2-image gallery (the rigged character in Blender, and a viewport
   shot of the city scene). It's also the first pick on Best Projects.
+
+**Added from PDFs** (published after Ruben reviewed them). Text, images
+and dates were taken from the PDFs Ruben supplied; the PDFs themselves
+are not on the site.
+
+| Project | Category | Date | Source / notes |
+| --- | --- | --- | --- |
+| Themed Scenes - 3ds Max (`3d-010`) | 3D | January 2025 | 6 final renders; final-images PDF created 19 Jan 2025. Made in 3ds Max for a university course |
+| Nunca Percas Uma Boa Aposta - Campaign (`graphic-nunca-percas`) | Graphic Design | June 2025 | Group 10 report (Integrated Communication Design). Team of 3; Ruben did the casino-style 3D effects |
+| IMPERIUM - Logo & Symbol (`graphic-imperium`) | Graphic Design | November 2024 | Exercise 3 PDF (5 Nov 2024). Logotype + symbol given in the brief; Ruben made the lockups and tests |
+| GameStorming - Logo (`graphic-gamestorming`) | Graphic Design | October 2024 | Exercise 2 PDF (28 Oct 2024). Logo, process and tests |
+
+New tags (translated in `TAG_TRANSLATIONS`): `Logo Design`, `Brand
+Identity`, `Advertising Campaign`, `3D Effects`; `3ds Max` is a name
+and stays as written. Logo covers were rebuilt from the clean logo
+artwork inside the PDFs, centred on white; gallery images are PDF pages
+trimmed to their content.
 
 **Dates** (`date` field) and where each one came from:
 
@@ -194,8 +224,9 @@ The UrbanEyePT case-study page is plain HTML, so its date is written
 there directly (`urbaneyept.date` in `i18n.js`) - change both it and the
 `date` in `PROJECTS.commissions` if it ever needs correcting.
 
-**Graphic Design** has one entry, the UrbanEyePT Icon Library (linking
-to Behance) - the same work also appears on the UrbanEyePT commission
+**Graphic Design** has four entries: the GameStorming and IMPERIUM logo
+exercises, the "Nunca Percas Uma Boa Aposta" campaign (see the table
+below), and the UrbanEyePT Icon Library (linking to Behance) - the same work also appears on the UrbanEyePT commission
 page.
 
 **3D Printable** is a new category for physical/3D-printed objects,
@@ -212,9 +243,13 @@ plus its descriptive-memory PDF (in `files/`) via `downloadUrl`/`viewUrl`.
 
 ## Image lightbox
 
-On `project.html`, clicking the cover image or any image in a project's
+On a project page, clicking the cover image or any image in a project's
 extra gallery (`images` field) opens it larger in a full-screen overlay -
 close it by clicking outside the image, the ✕ button, or pressing Esc.
+With more than one image it steps through all of them in page order:
+the ‹ › buttons, the keyboard's left/right arrows, or a swipe on a
+phone, with an "n / total" counter at the bottom. A video cover isn't
+part of the set (it plays in place instead).
 This is handled once, globally, in `script.js` (`projectLightbox()`)
 using event delegation, so it automatically applies to every current and
 future project - no per-project setup needed, and it keeps working even
@@ -616,22 +651,30 @@ the CV). `npm run build` uses it to:
 
 - make the share-preview image URL absolute (link previews need a full
   URL),
+- write **one page per visible project**, `project-<id>.html` - a copy of
+  `project.html` with that project's own `<title>`, description and
+  share image - and switch every link on the site to them
+  (`PRETTY_PROJECT_URLS` in `script.js` is flipped to `true` in the
+  built copy only, so the source still works without a build). An old
+  `project.html?id=...` link forwards to the new page,
 - add a canonical link and `og:url` to every page except `project.html`
-  (one file serving many projects - a single canonical would tell
-  search engines every project is the same page),
+  (which now only forwards),
 - give `404.html` a `<base href="/hub-portfolio/">`, so its styles and
   links work at any wrong address, however deep,
-- write `sitemap.xml`: every page plus one `project.html?id=...` per
-  visible project.
+- write `sitemap.xml`: every page, including each `project-<id>.html`.
 
 If the site moves (e.g. a custom domain), change `"homepage"` and
 everything follows.
 
 **Link previews** (LinkedIn, WhatsApp, X, Facebook, Slack...): every
 page has Open Graph / Twitter tags and shares `images/og-image.jpg`
-(1200x630 - name, headline and three renders). Project pages share the
-same card, because previews are read without running JavaScript.
-`npm run validate` fails if the preview image is missing.
+(1200x630 - name, headline and three renders). Each project page shows
+**its own card** instead: its title, the start of its description and
+`images/og/<id>.jpg` (a 1200x630 JPG crop of its cover; UrbanEyePT's
+case-study page uses `images/og/urbaneyept.jpg`). When you add a
+project, add its `images/og/<id>.jpg` too - without one it falls back to
+the site-wide card, and `npm run validate` warns about it. The validator
+fails if a page's preview image is missing.
 
 **Headings and descriptions for search engines**: every page has
 exactly one `<h1>` (its main title; on Contact, a hidden "Contact" one
