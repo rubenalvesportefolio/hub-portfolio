@@ -412,6 +412,34 @@ em{
   transition:box-shadow .2s,border-color .2s;
 }
 .lightbox-close:hover{border-color:rgba(255,255,255,.6);box-shadow:var(--glow-silver)}
+/* Previous / next image + counter (shown only with 2+ images). */
+.lightbox-nav{
+  position:fixed;top:50%;width:48px;height:48px;margin-top:-24px;border-radius:50%;z-index:2;
+  border:1px solid var(--line-strong);background:rgba(10,10,10,.7);color:var(--ink);
+  font-size:26px;line-height:1;padding-bottom:3px;cursor:pointer;display:grid;place-items:center;
+  transition:box-shadow .2s,border-color .2s;
+}
+.lightbox-nav[hidden]{display:none}
+.lightbox-nav:hover{border-color:rgba(255,255,255,.6);box-shadow:var(--glow-silver)}
+.lightbox-prev{left:20px}
+.lightbox-next{right:20px}
+.lightbox-counter{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);margin:0;font:500 11px "DM Mono",monospace;letter-spacing:.12em;color:var(--muted)}
+.lightbox-counter[hidden]{display:none}
+
+/* Skill tags on a project page link to Work, filtered to that tag. */
+a.tool-link{transition:border-color .2s,background-color .2s}
+a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.08)}
+
+/* "Previous / next project" cards at the bottom of a project page. */
+.project-pager{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px 0 8px;border-top:1px solid var(--line);padding-top:28px}
+.project-pager[hidden]{display:none}
+.pager-card{display:flex;align-items:center;gap:16px;padding:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .25s,background-color .25s;min-width:0}
+.pager-card:hover,.pager-card:focus-visible{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.05)}
+.pager-card img{width:96px;aspect-ratio:16/10;object-fit:cover;flex-shrink:0;border:1px solid var(--line)}
+.pager-next{flex-direction:row-reverse;text-align:right}
+.pager-text{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pager-label{font:500 10px "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pager-title{font-size:15px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .commission-body{width:100%}
 .commission-body p,.project-overview p{color:var(--muted);font-size:14px;line-height:1.75}
@@ -505,6 +533,11 @@ em{
   .commission-works{grid-template-columns:1fr}
   .project-detail{grid-template-columns:1fr;gap:26px}
   .project-gallery{grid-template-columns:1fr}
+  .project-pager{grid-template-columns:1fr}
+  .pager-card img{width:72px}
+  .lightbox-prev{left:8px}
+  .lightbox-next{right:8px}
+  .lightbox-nav{width:42px;height:42px;margin-top:-21px}
   .client-badge{flex-wrap:wrap}
 
   .about-solo .large-copy{font-size:20px}

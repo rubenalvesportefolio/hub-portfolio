@@ -19,7 +19,7 @@ const BUDGET = {
 };
 const KNOWN_PROJECT_KEYS = new Set([
   'id', 'title', 'tags', 'link', 'image', 'images', 'description', 'caseStudy', 'fit', 'downloadUrl', 'viewUrl', 'i18n',
-  'video', 'hidden', 'date',
+  'video', 'hidden', 'date', 'software',
 ]);
 // The only per-project fields worth translating - tags are shared
 // vocabulary and live in i18n.js instead.
@@ -343,6 +343,13 @@ function checkProjects(projects, src) {
         err(`"video" must be a YouTube video ID - the 11 characters after watch?v= (got "${p.video}").`);
       }
       if (!p.hidden && p.id) visibleIds.add(p.id);
+      if (p.software !== undefined && (!Array.isArray(p.software) || p.software.some((x) => typeof x !== 'string' || !x.trim()))) {
+        err('"software" must be a list of program names, e.g. [\'Blender\', \'Photoshop\'].');
+      }
+      // Its own link-preview image (see the per-project pages in scripts/build.mjs).
+      if (!isCommission && p.id && !p.hidden && !files.has(`images/og/${p.id}.jpg`)) {
+        warn(`has no share image (images/og/${p.id}.jpg, 1200x630 JPG) - shared links will show the general site card.`);
+      }
       if (p.date === undefined) {
         warn('has no "date" - add when it was made (e.g. date: \'2025-07\').');
       } else {
