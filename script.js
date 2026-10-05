@@ -52,6 +52,10 @@
    as a year on the tiles. npm run validate warns about projects
    without one.
 
+   "software" is optional: programs used, e.g. ['Blender', 'Photoshop'].
+   Shown as its own "Software" row on the project page, separate from
+   the skill tags (names, so never translated). Left out = row hidden.
+
    "hidden: true" is optional: keeps a draft in the file but out of the
    site - no Work tile, no Best Projects/home tile, and its
    project.html?id= page says "not found". Remove the line to publish.
@@ -71,6 +75,7 @@ const PROJECTS = {
   '3d': [
     {
       id: '3d-001',
+      software: ['Blender'],
       date: '2025-07', // Rookies page: "Made in 21 July 2025"
       title: 'Tower - 001',
       tags: ['3D Modelling', 'Hard-Surface Modelling'],
@@ -86,6 +91,7 @@ const PROJECTS = {
     },
     {
       id: '3d-002',
+      software: ['Blender'],
       date: '2025-08', // Rookies page: "Made in 4 August 2025"
       title: 'Pocket Clock - 002',
       tags: ['3D Modelling', 'Detail', 'Shading & Materials'],
@@ -101,6 +107,8 @@ const PROJECTS = {
     },
     {
       id: '3d-003',
+      software: ['Blender'],
+      video: 'mLVqyRMPUA8', // youtu.be/mLVqyRMPUA8
       date: '2025-08', // Rookies page: "Made in 14 Aug 2025"
       title: 'Star Destroyer - 003',
       tags: ['3D Animation', 'Geometry Nodes'],
@@ -145,6 +153,7 @@ const PROJECTS = {
     },
     {
       id: '3d-006',
+      software: ['Blender', 'Photoshop'],
       date: '2026-08', // Rookies page: "Made in 5 August 2026"
       title: 'Sand',
       tags: ['Environment', 'Procedural Shading'],
@@ -160,6 +169,7 @@ const PROJECTS = {
     },
     {
       id: '3d-007',
+      software: ['Blender'],
       date: '2026-08', // Rookies publish date (25 Aug 2026) - no "made in" date given
       title: 'Medieval Library Interior',
       tags: ['3D Modelling', 'Interior', 'Compositing'],
@@ -175,6 +185,7 @@ const PROJECTS = {
     },
     {
       id: '3d-008',
+      software: ['Blender'],
       date: '2026-06',
       title: 'Exposição - Telefones do Mundo',
       tags: ['3D Modelling', 'University Work'],
@@ -190,6 +201,7 @@ const PROJECTS = {
     },
     {
       id: '3d-009',
+      software: ['Blender', 'Mixamo', 'Premiere Pro', 'After Effects'],
       date: '2025/2026-04', // 1st semester of 3rd year (2025/26) -> final report, April 2026
       title: 'Protocol - Marked',
       tags: ['3D Animation', '3D Modelling', 'University Work'],
@@ -208,10 +220,34 @@ const PROJECTS = {
         },
       },
     },
+    {
+      id: '3d-010',
+      software: ['3ds Max'],
+      date: '2025-01', // final images PDF created 19 Jan 2025
+      title: 'Themed Scenes - 3ds Max',
+      tags: ['3D Modelling', 'Environment', '3ds Max', 'University Work'],
+      link: '',
+      image: 'images/work/3d/project-010.webp',
+      images: [
+        'images/work/3d/project-010-b.webp',
+        'images/work/3d/project-010-c.webp',
+        'images/work/3d/project-010-d.webp',
+        'images/work/3d/project-010-e.webp',
+        'images/work/3d/project-010-f.webp',
+      ],
+      description: 'A university exercise made in Autodesk 3ds Max: six scenes built around the same armoured robot, each set in a different theme - Electric Energy, Science Fiction, Classical Music, Pollution, Robots and Horror. Each scene uses its own environment, lighting and 3D title text to get its theme across at a glance.',
+      i18n: {
+        pt: {
+          title: 'Cenas Temáticas - 3ds Max',
+          description: 'Um exercício académico feito em Autodesk 3ds Max: seis cenas construídas à volta do mesmo robô de armadura, cada uma num tema diferente - Energia Elétrica, Ficção Científica, Música Clássica, Poluição, Robôs e Terror. Cada cena usa o seu próprio ambiente, iluminação e título em texto 3D para transmitir o tema à primeira vista.',
+        },
+      },
+    },
   ],
   graphic: [
     {
       id: 'graphic-icon-library',
+      software: ['Illustrator'],
       date: '2026-07',
       title: 'Icon Library',
       tags: ['Icon Design'],
@@ -222,6 +258,67 @@ const PROJECTS = {
         pt: {
           title: 'Biblioteca de Ícones',
           description: 'Um conjunto de ícones de interface desenhado à medida para o produto da UrbanEyePT, cobrindo ações como edição, partilha, carregamento de imagens, notificações e vistas de layout.',
+        },
+      },
+    },
+    {
+      id: 'graphic-nunca-percas',
+      software: ['Illustrator'],
+      date: '2025-06', // report dated June 2025
+      title: 'Nunca Percas Uma Boa Aposta - Campaign',
+      tags: ['Advertising Campaign', '3D Effects', 'University Work'],
+      link: '',
+      image: 'images/work/graphic/nunca-percas.webp',
+      images: ['images/work/graphic/nunca-percas-b.webp'],
+      description: 'An awareness campaign against gambling addiction among 16 to 25-year-olds, made for the Integrated Communication Design course in a team of three (with Tiago Crispim and João Teixeira) for the Instituto de Apoio ao Jogador. The slogan borrows the language of betting ads and turns it around - the best bet is the one you make on yourself. My part was the casino-style 3D effects, built to mimic the look of real betting adverts. The A3 poster was then adapted to A4, an outdoor banner, flyers, pocket cards, social media posts and web banners.',
+      i18n: {
+        pt: {
+          title: 'Nunca Percas Uma Boa Aposta - Campanha',
+          description: 'Uma campanha de sensibilização contra o vício do jogo a dinheiro entre jovens dos 16 aos 25 anos, feita para a unidade curricular de Design de Comunicação Integrada numa equipa de três (com o Tiago Crispim e o João Teixeira) para o Instituto de Apoio ao Jogador. O slogan apropria-se da linguagem das casas de apostas e inverte-a - a melhor aposta é a que fazes em ti. A minha parte foram os efeitos 3D ao estilo dos casinos, pensados para imitar o visual da publicidade real das casas de apostas. O cartaz A3 foi depois adaptado a A4, outdoor, flyers, cartões de bolso, publicações para redes sociais e banners web.',
+        },
+      },
+    },
+    {
+      id: 'graphic-imperium',
+      software: ['Illustrator'],
+      date: '2024-11', // Exercise 3 PDF, 5 Nov 2024
+      title: 'IMPERIUM - Logo & Symbol',
+      tags: ['Logo Design', 'Brand Identity', 'University Work'],
+      link: '',
+      image: 'images/work/graphic/imperium.webp',
+      images: [
+        'images/work/graphic/imperium-b.webp',
+        'images/work/graphic/imperium-c.webp',
+        'images/work/graphic/imperium-d.webp',
+        'images/work/graphic/imperium-e.webp',
+      ],
+      description: 'A university exercise in brand systems: the IMPERIUM logotype and symbol were given in the brief, and the task was to combine them into working lockups and put them to the test. I built horizontal and vertical versions and checked them for balance, monochrome use on black and white, scalability, flexible formats, blur, pixelation, fragmentation and how they hold up next to other brands.',
+      i18n: {
+        pt: {
+          title: 'IMPERIUM - Logótipo e Símbolo',
+          description: 'Um exercício académico sobre sistemas de marca: o logótipo e o símbolo IMPERIUM vinham no briefing, e o objetivo era juntá-los em composições funcionais e pô-las à prova. Criei versões horizontais e verticais e testei-as quanto a equilíbrio, uso monocromático em preto e branco, escalabilidade, formatos flexíveis, desfoque, pixelização, fragmentação e convivência com outras marcas.',
+        },
+      },
+    },
+    {
+      id: 'graphic-gamestorming',
+      software: ['Illustrator'],
+      date: '2024-10', // Exercise 2 PDF, 28 Oct 2024
+      title: 'GameStorming - Logo',
+      tags: ['Logo Design', 'Brand Identity', 'University Work'],
+      link: '',
+      image: 'images/work/graphic/gamestorming.webp',
+      images: [
+        'images/work/graphic/gamestorming-b.webp',
+        'images/work/graphic/gamestorming-c.webp',
+        'images/work/graphic/gamestorming-d.webp',
+        'images/work/graphic/gamestorming-e.webp',
+      ],
+      description: 'A university exercise: design a logo for one of the names in the brief - I chose GameStorming - showing the creative process and testing the result. After exploring several typefaces and lockups, the final logo splits the name into a black block and a red block. It was then tested for balance, monochrome versions, colour blindness (deuteranomaly, protanopia and tritanopia), scalability, horizontal and vertical formats, blur, pixelation, fragmentation and contrast next to well-known brands.',
+      i18n: {
+        pt: {
+          title: 'GameStorming - Logótipo',
+          description: 'Um exercício académico: criar um logótipo para um dos nomes do briefing - escolhi GameStorming - mostrando o processo criativo e testando o resultado. Depois de explorar várias tipografias e composições, o logótipo final divide o nome num bloco preto e num bloco vermelho. Foi depois testado quanto a equilíbrio, versões monocromáticas, daltonismo (deuteranomalia, protanopia e tritanopia), escalabilidade, formatos horizontais e verticais, desfoque, pixelização, fragmentação e contraste junto de marcas conhecidas.',
         },
       },
     },
@@ -238,6 +335,7 @@ const PROJECTS = {
   contests: [
     {
       id: 'contests-jorge',
+      software: ['Aseprite'],
       date: '2024-06', // Micro Jam 017: 28-30 June 2024
       title: 'Jorge',
       tags: ['Game Jam!'],
@@ -258,6 +356,7 @@ const PROJECTS = {
   '3dprint': [
     {
       id: '3dprint-mysterybox',
+      software: ['Blender', 'Adobe XD'],
       date: '2025/2026-01', // 3rd year, 1st semester 2025/2026 (report Jan 2026)
       title: 'Mystery Box - Mystery Travel',
       tags: ['3D Printing', 'University Work'],
@@ -371,6 +470,32 @@ function dateOf(project, yearsOnly = false) {
   if (yearsOnly) return from.year === to.year ? String(from.year) : `${from.year}–${to.year}`;
   return `${one(from)} – ${one(to)}`;
 }
+
+// Newest first, by the END of a date range ('2025/2026-04' sorts as
+// April 2026); a year without a month counts as December; projects
+// without a date go last, in their original order.
+function dateSortKey(project) {
+  if (!project.date) return -1;
+  const end = String(project.date).split('/').pop();
+  const [year, month] = end.split('-').map(Number);
+  return year * 12 + (month || 12);
+}
+const newestFirst = (list) =>
+  list.map((project, index) => ({ project, index }))
+    .sort((a, b) => dateSortKey(b.project) - dateSortKey(a.project) || a.index - b.index)
+    .map(({ project }) => project);
+
+// Each project's own address. The source files use project.html?id=...
+// (works with no build step); `npm run build` flips this to true and
+// writes one real page per project (project-<id>.html) with its own
+// title, description and share image - so a shared link shows that
+// project's preview card. See scripts/build.mjs.
+const PRETTY_PROJECT_URLS = false;
+const projectUrl = (id) => (PRETTY_PROJECT_URLS ? `project-${id}.html` : `project.html?id=${encodeURIComponent(id)}`);
+
+// Work-page tab order, used for "next / previous project" so it walks
+// the projects in the same order a visitor sees them on Work.
+const WORK_CATEGORY_ORDER = ['3d', 'graphic', '3dprint', 'contests', 'games'];
 
 const languageListeners = [];
 function onLanguageChange(render) {
@@ -525,7 +650,7 @@ if (galleryGrid) {
     if (DETAIL_PAGE_CATEGORIES.includes(category) && project.id) {
       const el = document.createElement('a');
       el.className = 'gallery-item';
-      el.href = `project.html?id=${encodeURIComponent(project.id)}`;
+      el.href = projectUrl(project.id);
       el.innerHTML = `
         ${visual}
         <span class="gallery-tag">${esc(tags)}</span>
@@ -597,7 +722,7 @@ if (galleryGrid) {
       .split(',')
       .map((term) => term.trim().toLowerCase())
       .filter(Boolean);
-    const allProjects = PROJECTS[activeCategory] || [];
+    const allProjects = newestFirst(PROJECTS[activeCategory] || []);
     const projects = allProjects.filter((project) => matchesQuery(project, terms));
 
     if (allProjects.length === 0) {
@@ -656,11 +781,16 @@ if (galleryGrid) {
   // so refreshing the page doesn't keep re-appending ?tab=...
   rememberCategory();
   syncTabs();
-  if (requestedCategory) {
+  // ?tag= comes from a clicked skill tag on a project page. It carries
+  // the tag's English name, so it's translated here to match the tags
+  // as shown in the current language before filling the search box.
+  const requestedTag = params.get('tag');
+  if (requestedCategory || requestedTag) {
     window.history.replaceState({}, '', window.location.pathname);
   }
 
   updateTagSuggestions(activeCategory);
+  if (requestedTag && searchInput) searchInput.value = I18N.tTag(requestedTag);
   renderGallery();
 
   // A tag typed in one language won't match the other, so the box is
@@ -697,7 +827,12 @@ if (galleryGrid) {
   const galleryEl = document.querySelector('[data-project-gallery]');
   const actionsEl = document.querySelector('[data-project-actions]');
 
-  const id = new URLSearchParams(window.location.search).get('id');
+  // project.html?id=... in the source; the per-project pages the build
+  // writes (project-<id>.html) carry it on <body data-project-id>.
+  const id = new URLSearchParams(window.location.search).get('id') || document.body.dataset.projectId;
+  const softwareWrapEl = document.querySelector('[data-project-software-wrap]');
+  const softwareEl = document.querySelector('[data-project-software]');
+  const pagerEl = document.querySelector('[data-project-pager]');
 
   let found = null;
   let foundCategory = null;
@@ -747,8 +882,33 @@ if (galleryGrid) {
     facade.innerHTML = `
       ${project.image ? `<img class="video-poster" src="${esc(project.image)}" alt="" decoding="async">` : ''}
       <span class="video-play">${ICONS.play}</span>
-      <span class="video-label">${esc(t('project.watchTeaser'))}</span>
+      <span class="video-label">${esc(t('project.watchVideo'))}</span>
     `;
+  }
+
+  // "Previous / next project" cards, in the same order as the Work page
+  // (tab order, newest first inside each tab), wrapping around at the
+  // ends. Commissions are left out - they have their own pages.
+  function renderPager() {
+    if (!pagerEl) return;
+    const order = WORK_CATEGORY_ORDER.flatMap((category) => newestFirst(PROJECTS[category] || []));
+    const at = order.indexOf(found);
+    if (at === -1 || order.length < 2) {
+      pagerEl.hidden = true;
+      return;
+    }
+    const prev = order[(at - 1 + order.length) % order.length];
+    const next = order[(at + 1) % order.length];
+    const card = (project, dir) => `
+      <a class="pager-card pager-${dir}" href="${esc(projectUrl(project.id))}">
+        ${project.image ? `<img src="${esc(toThumbPath(project.image))}" alt="" loading="lazy" decoding="async">` : ''}
+        <span class="pager-text">
+          <span class="pager-label">${dir === 'prev' ? `← ${esc(t('project.prev'))}` : `${esc(t('project.next'))} →`}</span>
+          <span class="pager-title">${esc(titleOf(project))}</span>
+        </span>
+      </a>`;
+    pagerEl.innerHTML = card(prev, 'prev') + card(next, 'next');
+    pagerEl.hidden = false;
   }
 
   // Everything added by the last run, so a language switch doesn't
@@ -759,6 +919,13 @@ if (galleryGrid) {
       if (child !== backBtn) child.remove();
     });
     return backBtn;
+  }
+
+  // On the built site every project has its own page; an old
+  // project.html?id=... link forwards there (same tab, no history entry).
+  if (PRETTY_PROJECT_URLS && found && !document.body.dataset.projectId) {
+    window.location.replace(projectUrl(found.id) + window.location.hash);
+    return;
   }
 
   function render() {
@@ -779,6 +946,8 @@ if (galleryGrid) {
       coverWrapEl.style.display = 'none';
       skillsEl.style.display = 'none';
       if (dateWrapEl) dateWrapEl.hidden = true;
+      if (softwareWrapEl) softwareWrapEl.hidden = true;
+      if (pagerEl) pagerEl.hidden = true;
       if (caseStudyWrapEl) caseStudyWrapEl.style.display = 'none';
       if (galleryEl) galleryEl.style.display = 'none';
       return;
@@ -812,13 +981,31 @@ if (galleryGrid) {
       dateWrapEl.hidden = !found.date;
     }
 
+    // Each skill tag links to the Work page, on this project's tab,
+    // filtered to that tag. The link carries the English tag name; the
+    // Work page translates it for whichever language is active there.
     skillsEl.style.display = '';
-    tagsOf(found).forEach((tag) => {
-      const pill = document.createElement('span');
-      pill.className = 'tool-pill';
-      pill.textContent = tag;
+    (found.tags || []).forEach((tag) => {
+      const pill = document.createElement('a');
+      pill.className = 'tool-pill tool-link';
+      pill.href = `work.html?tab=${encodeURIComponent(foundCategory)}&tag=${encodeURIComponent(tag)}`;
+      pill.textContent = I18N.tTag(tag);
+      pill.title = t('project.tagLink', { tag: I18N.tTag(tag) });
       skillsEl.appendChild(pill);
     });
+
+    if (softwareWrapEl) {
+      softwareEl.innerHTML = '';
+      (found.software || []).forEach((name) => {
+        const pill = document.createElement('span');
+        pill.className = 'tool-pill';
+        pill.textContent = name;
+        softwareEl.appendChild(pill);
+      });
+      softwareWrapEl.hidden = !(found.software || []).length;
+    }
+
+    renderPager();
 
     if (galleryEl) {
       galleryEl.innerHTML = '';
@@ -954,7 +1141,7 @@ if (galleryGrid) {
             title: titleOf(project),
             tags: tagsOf(project),
             image: project.image,
-            href: `project.html?id=${encodeURIComponent(project.id)}`,
+            href: projectUrl(project.id),
             external: false,
             year: dateOf(project, true),
           },
@@ -1010,7 +1197,7 @@ if (galleryGrid) {
       const isMain = i === 0;
       const el = document.createElement('a');
       el.className = `featured-item${isMain ? ' featured-main' : ''}`;
-      el.href = `project.html?id=${encodeURIComponent(project.id)}`;
+      el.href = projectUrl(project.id);
       // Thumbnail (640px) or full image (1400px) - the browser picks by
       // the tile's on-screen size, so the big tile stays sharp and the
       // small ones stay light.
@@ -1039,9 +1226,12 @@ if (galleryGrid) {
 
 /* ---------- Project image lightbox ----------
    On project.html, clicking the cover image or any image in the extra
-   gallery opens it larger in an overlay. Uses event delegation on
-   document so it works no matter when those images get added to the
-   page (they're inserted dynamically by renderProjectDetail above). */
+   gallery opens it larger in an overlay. With more than one image, the
+   overlay steps through all of them in page order: on-screen arrows,
+   the keyboard's left/right arrows, or a swipe on touch screens, plus
+   an "n / total" counter. Uses event delegation on document, so it
+   works no matter when those images get added to the page (they're
+   inserted by renderProjectDetail above). */
 (function projectLightbox() {
   const lightbox = document.querySelector('[data-lightbox]');
   if (!lightbox) return;
@@ -1049,10 +1239,30 @@ if (galleryGrid) {
   lightbox.setAttribute('aria-hidden', 'true');
   const lightboxImg = lightbox.querySelector('[data-lightbox-img]');
   const closeBtn = lightbox.querySelector('[data-lightbox-close]');
+  const prevBtn = lightbox.querySelector('[data-lightbox-prev]');
+  const nextBtn = lightbox.querySelector('[data-lightbox-next]');
+  const counter = lightbox.querySelector('[data-lightbox-counter]');
+  const ZOOMABLE = '[data-project-cover-wrap] img:not(.video-poster):not([hidden]), .project-gallery-item img';
 
-  function openLightbox(src, alt) {
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+  let images = [];
+  let index = 0;
+
+  function show(i) {
+    index = (i + images.length) % images.length;
+    const img = images[index];
+    // Gallery tiles show a thumbnail but zoom to the full-size file.
+    lightboxImg.src = img.dataset.full || img.src;
+    lightboxImg.alt = img.alt || '';
+    const several = images.length > 1;
+    prevBtn.hidden = !several;
+    nextBtn.hidden = !several;
+    counter.hidden = !several;
+    counter.textContent = t('project.lightbox.counter', { n: index + 1, total: images.length });
+  }
+
+  function openLightbox(img) {
+    images = [...document.querySelectorAll(ZOOMABLE)].filter((el) => el.offsetParent !== null);
+    show(Math.max(0, images.indexOf(img)));
     lightbox.classList.add('open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -1064,18 +1274,36 @@ if (galleryGrid) {
     document.body.style.overflow = '';
   }
 
+  const isOpen = () => lightbox.classList.contains('open');
+
   document.addEventListener('click', (e) => {
-    const clickedImg = e.target.closest('[data-project-cover-wrap] img:not(.video-poster), .project-gallery-item img');
-    // Gallery tiles show a thumbnail but zoom to the full-size file.
-    if (clickedImg) openLightbox(clickedImg.dataset.full || clickedImg.src, clickedImg.alt);
+    const clickedImg = e.target.closest(ZOOMABLE);
+    if (clickedImg) openLightbox(clickedImg);
   });
 
   closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', () => show(index - 1));
+  nextBtn.addEventListener('click', () => show(index + 1));
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) closeLightbox();
   });
   document.addEventListener('keydown', (e) => {
+    if (!isOpen()) return;
     if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft' && images.length > 1) show(index - 1);
+    else if (e.key === 'ArrowRight' && images.length > 1) show(index + 1);
+  });
+
+  // Swipe left/right on touch screens.
+  let startX = null;
+  lightbox.addEventListener('touchstart', (e) => {
+    startX = e.touches.length === 1 ? e.touches[0].clientX : null;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (startX === null || images.length < 2) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1));
+    startX = null;
   });
 })();
 
@@ -1089,7 +1317,7 @@ if (galleryGrid) {
    code (e.g. "rubenalves" -> rubenalves.goatcounter.com), and put that
    code between the quotes below. Leave it empty and nothing is loaded.
 
-   Each project counts separately (project.html?id=3d-009 etc), and
+   Each project counts separately (project-3d-009.html etc), and
    local test copies (localhost, file://) are never counted. To stop
    your own visits being counted, open the site once with
    #toggle-goatcounter at the end of the address. */

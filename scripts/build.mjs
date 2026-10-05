@@ -66,6 +66,61 @@ if (!existsSync(path.join(OUT, 'index.html'))) {
 }
 console.log(`build: copied ${copied} files into _site/`);
 
+// ---- One page per project (project-<id>.html) ----
+// The source has a single project.html that fills itself in from
+// ?id=... - fine for visitors, but link previews (LinkedIn, WhatsApp...)
+// don't run JavaScript, so every shared project link showed the same
+// generic card. The build writes a real copy of project.html for each
+// visible project with its own <title>, description and share image
+// (images/og/<id>.jpg if it exists, otherwise the site-wide one), and
+// switches the site's links over to them (PRETTY_PROJECT_URLS in
+// script.js). project.html?id=... keeps working and forwards there.
+{
+  const scriptPath = path.join(OUT, 'script.js');
+  const scriptSrc = readFileSync(scriptPath, 'utf8');
+  const literal = extractObjectLiteral(scriptSrc, 'const PROJECTS =');
+  const template = readFileSync(path.join(OUT, 'project.html'), 'utf8');
+  const attr = (v) => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const made = [];
+
+  if (literal) {
+    const projects = vm.runInNewContext(`(${literal})`, {}, { timeout: 1000 });
+    for (const [category, list] of Object.entries(projects)) {
+      if (category === 'commissions') continue; // they have their own pages
+      for (const p of list) {
+        if (!p.id || p.hidden) continue;
+        const plain = String(p.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        const desc = plain.length > 155 ? `${plain.slice(0, 152).replace(/\s+\S*$/, '')}...` : plain || 'A project by Ruben Alves.';
+        const ogImage = existsSync(path.join(OUT, 'images', 'og', `${p.id}.jpg`)) ? `images/og/${p.id}.jpg` : 'images/og-image.jpg';
+        let html = template;
+        const swap = (pattern, value) => {
+          if (!pattern.test(html)) throw new Error(`build: project.html no longer matches ${pattern} - update scripts/build.mjs`);
+          html = html.replace(pattern, value);
+        };
+        swap(/<title>[^<]*<\/title>/, `<title>${attr(p.title)} - Ruben Alves</title>`);
+        swap(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${attr(desc)}">`);
+        swap(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${attr(p.title)} - Ruben Alves">`);
+        swap(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${attr(desc)}">`);
+        swap(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${ogImage}">`);
+        swap(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${attr(p.title)}">`);
+        swap(/<body>/, `<body data-project-id="${attr(p.id)}">`);
+        writeFileSync(path.join(OUT, `project-${p.id}.html`), html);
+        made.push(p.id);
+      }
+    }
+  }
+
+  // Point the site's own links at the new pages.
+  writeFileSync(scriptPath, scriptSrc.replace('const PRETTY_PROJECT_URLS = false;', 'const PRETTY_PROJECT_URLS = true;'));
+  for (const page of readdirSync(OUT).filter((f) => f.endsWith('.html'))) {
+    const file = path.join(OUT, page);
+    const html = readFileSync(file, 'utf8');
+    const out = html.replace(/href="project\.html\?id=([A-Za-z0-9_-]+)"/g, (m, id) => (made.includes(id) ? `href="project-${id}.html"` : m));
+    if (out !== html) writeFileSync(file, out);
+  }
+  console.log(`build: ${made.length} project pages (project-<id>.html)`);
+}
+
 // ---- Search & sharing extras (only in _site/, generated from the source) ----
 // "homepage" in package.json is the live address, e.g.
 // https://rubenalvesportefolio.github.io/hub-portfolio/ - link previews
@@ -99,18 +154,11 @@ if (!/^https?:\/\//.test(homepage)) {
     writeFileSync(file, html);
   }
 
-  // sitemap.xml - every page plus one entry per visible project page.
+  // sitemap.xml - every page, including the per-project pages above
+  // (project.html itself is left out: it only forwards to them).
   const urls = pages
     .filter((p) => !['404.html', 'project.html'].includes(p))
     .map((p) => new URL(p === 'index.html' ? '' : p, base).href);
-  const literal = extractObjectLiteral(readFileSync(path.join(OUT, 'script.js'), 'utf8'), 'const PROJECTS =');
-  if (literal) {
-    const projects = vm.runInNewContext(`(${literal})`, {}, { timeout: 1000 });
-    for (const [category, list] of Object.entries(projects)) {
-      if (category === 'commissions') continue; // they have their own pages, listed above
-      for (const p of list) if (p.id && !p.hidden) urls.push(new URL(`project.html?id=${encodeURIComponent(p.id)}`, base).href);
-    }
-  }
   const xmlEscape = (v) => v.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   writeFileSync(
     path.join(OUT, 'sitemap.xml'),

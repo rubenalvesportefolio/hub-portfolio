@@ -189,7 +189,15 @@ const TRANSLATIONS = {
     'project.lightbox.close': 'Close',
     'project.playVideo': 'Play video: {title}',
     'project.videoTitle': '{title} - video',
-    'project.watchTeaser': 'Watch the teaser',
+    'project.watchVideo': 'Watch the video',
+    'project.software': 'Software',
+    'project.tagLink': 'See all projects tagged {tag}',
+    'project.prev': 'Previous project',
+    'project.next': 'Next project',
+    'project.pagerAria': 'More projects',
+    'project.lightbox.prev': 'Previous image',
+    'project.lightbox.next': 'Next image',
+    'project.lightbox.counter': '{n} / {total}',
     'project.watchYoutube': 'Watch on YouTube',
 
     // --- "Back to ..." links (label depends on where you came from) ---
@@ -366,7 +374,15 @@ const TRANSLATIONS = {
     'project.lightbox.close': 'Fechar',
     'project.playVideo': 'Reproduzir vídeo: {title}',
     'project.videoTitle': '{title} - vídeo',
-    'project.watchTeaser': 'Ver o teaser',
+    'project.watchVideo': 'Ver o vídeo',
+    'project.software': 'Software',
+    'project.tagLink': 'Ver todos os projetos com {tag}',
+    'project.prev': 'Projeto anterior',
+    'project.next': 'Próximo projeto',
+    'project.pagerAria': 'Mais projetos',
+    'project.lightbox.prev': 'Imagem anterior',
+    'project.lightbox.next': 'Imagem seguinte',
+    'project.lightbox.counter': '{n} / {total}',
     'project.watchYoutube': 'Ver no YouTube',
 
     // --- Ligações "Voltar a ..." (o destino depende de onde vieste) ---
@@ -416,6 +432,10 @@ const TAG_TRANSLATIONS = {
     'Icon Design': 'Design de Ícones',
     'Graphic Design': 'Design Gráfico',
     '3D Printing': 'Impressão 3D',
+    'Logo Design': 'Design de Logótipo',
+    'Brand Identity': 'Identidade Visual',
+    'Advertising Campaign': 'Campanha Publicitária',
+    '3D Effects': 'Efeitos 3D',
   },
 };
 

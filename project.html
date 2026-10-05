@@ -86,6 +86,11 @@
             <p class="eyebrow" data-i18n="project.skills">Skills Applied</p>
             <div class="tools-row" data-project-skills></div>
           </div>
+
+          <div class="skills-block" data-project-software-wrap hidden>
+            <p class="eyebrow" data-i18n="project.software">Software</p>
+            <div class="tools-row" data-project-software></div>
+          </div>
         </div>
       </div>
 
@@ -94,6 +99,8 @@
       </div>
 
       <div class="project-gallery" data-project-gallery></div>
+
+      <nav class="project-pager" data-project-pager hidden data-i18n-attr="aria-label:project.pagerAria" aria-label="More projects"></nav>
 
       <div class="commission-actions" data-project-actions>
         <a class="button button-light" href="work.html" data-smart-back>← Back to Work</a>
@@ -112,7 +119,10 @@
 
   <div class="lightbox" data-lightbox>
     <button type="button" class="lightbox-close" data-lightbox-close data-i18n-attr="aria-label:project.lightbox.close" aria-label="Close">✕</button>
+    <button type="button" class="lightbox-nav lightbox-prev" data-lightbox-prev hidden data-i18n-attr="aria-label:project.lightbox.prev" aria-label="Previous image">‹</button>
     <img data-lightbox-img src="data:," alt="">
+    <button type="button" class="lightbox-nav lightbox-next" data-lightbox-next hidden data-i18n-attr="aria-label:project.lightbox.next" aria-label="Next image">›</button>
+    <p class="lightbox-counter" data-lightbox-counter hidden aria-live="polite"></p>
   </div>
 
   <script src="script.js"></script>
