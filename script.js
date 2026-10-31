@@ -243,6 +243,28 @@ const PROJECTS = {
         },
       },
     },
+    {
+      id: '3d-011',
+      date: '2026-10', // started mid-October 2026, finished 31 Oct 2026
+      software: ['Blender'],
+      title: 'Honey Jar - Product Visualization',
+      tags: ['Product Visualization', '3D Modelling', 'Shading & Materials', 'Lighting'],
+      link: '',
+      image: 'images/work/3d/project-011.webp',
+      images: [
+        'images/work/3d/project-011-b.webp',
+        'images/work/3d/project-011-c.webp',
+        'images/work/3d/project-011-d.webp',
+        'images/work/3d/project-011-e.webp',
+      ],
+      description: 'A product visualization of a 1 kg jar of Portuguese honey, made in Blender 5.2 and rendered in Cycles over about two weeks. The goal was realism in the two hardest materials here: the thick, translucent honey and the glass jar with its honeycomb relief, finished with a gold lid and a hanging label. The scene is lit like a small photo studio, with several lights placed around the jar and an HDRI for the reflections. This project gave me a much better understanding of viscous and glass materials, of where to place lights, and of how to use an HDRI properly - the last two images show the set-up behind the renders.',
+      i18n: {
+        pt: {
+          title: 'Frasco de Mel - Visualização de Produto',
+          description: 'Uma visualização de produto de um frasco de 1 kg de mel português, feita em Blender 5.2 e renderizada em Cycles ao longo de cerca de duas semanas. O objetivo era o realismo nos dois materiais mais difíceis: o mel espesso e translúcido e o frasco de vidro com o relevo em favo, com uma tampa dourada e uma etiqueta pendurada. A cena está iluminada como um pequeno estúdio fotográfico, com várias luzes à volta do frasco e um HDRI para os reflexos. Este projeto deu-me uma compreensão muito melhor dos materiais viscosos e de vidro, de onde colocar as luzes e de como usar corretamente um HDRI - as duas últimas imagens mostram a montagem por trás dos renders.',
+        },
+      },
+    },
   ],
   graphic: [
     {
@@ -395,7 +417,7 @@ Object.keys(PROJECTS).forEach((category) => {
    used on that commission page (straight to Instagram, new tab). It
    takes the same optional "i18n" block as a normal project. */
 const BEST_PROJECTS = {
-  '3d': ['3d-009', '3d-007', '3d-006', '3d-003'],
+  '3d': ['3d-009', '3d-011', '3d-007', '3d-006', '3d-003'],
   graphic: ['graphic-icon-library'],
 };
 const BEST_PROJECTS_EXTRA = {
@@ -414,10 +436,10 @@ const BEST_PROJECTS_EXTRA = {
 
 /* ---------- Homepage: selected work ----------
    The three tiles under the hero on index.html, in order - the first
-   one is shown large. Ids from PROJECTS (picked from BEST_PROJECTS: an
-   interior environment, a procedural animation and a graphic design
+   one is shown large. Ids from PROJECTS (picked from BEST_PROJECTS: a
+   product visualization, a procedural animation and a graphic design
    piece, to show range). */
-const HOME_FEATURED = ['3d-007', '3d-003', 'graphic-icon-library'];
+const HOME_FEATURED = ['3d-011', '3d-003', 'graphic-icon-library'];
 
 const ICONS = {
   download:
@@ -901,7 +923,7 @@ if (galleryGrid) {
     const next = order[(at + 1) % order.length];
     const card = (project, dir) => `
       <a class="pager-card pager-${dir}" href="${esc(projectUrl(project.id))}">
-        ${project.image ? `<img src="${esc(toThumbPath(project.image))}" alt="" loading="lazy" decoding="async">` : ''}
+        ${project.image ? `<img${project.fit === 'contain' ? ' class="contain"' : ''} src="${esc(toThumbPath(project.image))}" alt="" loading="lazy" decoding="async">` : ''}
         <span class="pager-text">
           <span class="pager-label">${dir === 'prev' ? `← ${esc(t('project.prev'))}` : `${esc(t('project.next'))} →`}</span>
           <span class="pager-title">${esc(titleOf(project))}</span>

@@ -436,6 +436,7 @@ a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);b
 .pager-card{display:flex;align-items:center;gap:16px;padding:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .25s,background-color .25s;min-width:0}
 .pager-card:hover,.pager-card:focus-visible{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.05)}
 .pager-card img{width:96px;aspect-ratio:16/10;object-fit:cover;flex-shrink:0;border:1px solid var(--line)}
+.pager-card img.contain{object-fit:contain;background:#0D0D0D}
 .pager-next{flex-direction:row-reverse;text-align:right}
 .pager-text{display:flex;flex-direction:column;gap:6px;min-width:0}
 .pager-label{font:500 10px "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
