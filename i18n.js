@@ -436,6 +436,8 @@ const TAG_TRANSLATIONS = {
     'Brand Identity': 'Identidade Visual',
     'Advertising Campaign': 'Campanha Publicitária',
     '3D Effects': 'Efeitos 3D',
+    'Product Visualization': 'Visualização de Produto',
+    'Lighting': 'Iluminação',
   },
 };
 

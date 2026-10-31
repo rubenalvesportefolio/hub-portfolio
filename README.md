@@ -168,7 +168,7 @@ projects; to bring it back, remove `hidden` from its
 
 ### What's on the site right now
 
-**3D** has 10 projects (8 visible), with cover images in `images/work/3d/`:
+**3D** has 11 projects (9 visible), with cover images in `images/work/3d/`:
 
 - 001 Tower, 002 Pocket Clock, 003 Star Destroyer, 006 Sand and 007
   Medieval Library Interior have real titles, descriptions and skill
@@ -187,7 +187,7 @@ projects; to bring it back, remove `hidden` from its
   a 2-image gallery (the rigged character in Blender, and a viewport
   shot of the city scene). It's also the first pick on Best Projects.
 
-**Added from PDFs** (published after Ruben reviewed them). Text, images
+**Added later** (from PDFs or renders Ruben supplied). Text, images
 and dates were taken from the PDFs Ruben supplied; the PDFs themselves
 are not on the site.
 
@@ -197,6 +197,7 @@ are not on the site.
 | Nunca Percas Uma Boa Aposta - Campaign (`graphic-nunca-percas`) | Graphic Design | June 2025 | Group 10 report (Integrated Communication Design). Team of 3; Ruben did the casino-style 3D effects |
 | IMPERIUM - Logo & Symbol (`graphic-imperium`) | Graphic Design | November 2024 | Exercise 3 PDF (5 Nov 2024). Logotype + symbol given in the brief; Ruben made the lockups and tests |
 | GameStorming - Logo (`graphic-gamestorming`) | Graphic Design | October 2024 | Exercise 2 PDF (28 Oct 2024). Logo, process and tests |
+| Honey Jar - Product Visualization (`3d-011`) | 3D | October 2026 | From Ruben: Blender 5.2, ~2 weeks, finished 31 Oct 2026. 3 renders + 2 Blender viewport shots of the lighting set-up |
 
 New tags (translated in `TAG_TRANSLATIONS`): `Logo Design`, `Brand
 Identity`, `Advertising Campaign`, `3D Effects`; `3ds Max` is a name
@@ -280,12 +281,13 @@ the project's page - whose "Back to ..." link then returns to Home.
 The picks live in `script.js`, just under `BEST_PROJECTS`:
 
 ```js
-const HOME_FEATURED = ['3d-007', '3d-003', 'graphic-icon-library'];
+const HOME_FEATURED = ['3d-011', '3d-003', 'graphic-icon-library'];
 ```
 
-(Medieval Library Interior, Star Destroyer and the Icon Library - an
-environment, a procedural animation and a graphic design piece, to
-show range.) Order = order on the page, and the first is the big one.
+(Honey Jar, Star Destroyer and the Icon Library - a product
+visualization, a procedural animation and a graphic design piece, to
+show range. Medieval Library Interior was the big tile before the Honey
+Jar; it's still on Best Projects.) Order = order on the page, and the first is the big one.
 `npm run validate` fails if an id here doesn't exist or is hidden. The
 tiles load the small thumbnail or the full image depending on how big
 they are on screen.
@@ -307,7 +309,7 @@ function:
 
 ```js
 const BEST_PROJECTS = {
-  '3d': ['3d-009', '3d-007', '3d-006', '3d-003'],
+  '3d': ['3d-009', '3d-011', '3d-007', '3d-006', '3d-003'],
   graphic: ['graphic-icon-library'],
 };
 ```
@@ -331,7 +333,8 @@ Every cover and gallery image ships as WebP (smaller than the original JPEG/PNG 
 the same visual quality) in two sizes:
 
 - `images/.../project-name.webp` - the full-size version (up to 1400px
-  wide), used on the project detail page, and on grid tiles for
+  wide; Honey Jar keeps its renders and viewport shots at their original
+  resolution, high-quality WebP with no visible difference), used on the project detail page, and on grid tiles for
   full-width categories (Contests) where tiles can render quite large.
 - `images/.../thumbs/project-name.webp` - a small version (up to 640px
   wide) with the exact same filename, used on every other grid tile
