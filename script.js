@@ -1343,7 +1343,7 @@ if (galleryGrid) {
    local test copies (localhost, file://) are never counted. To stop
    your own visits being counted, open the site once with
    #toggle-goatcounter at the end of the address. */
-const GOATCOUNTER_CODE = '';
+const GOATCOUNTER_CODE = 'just4youdie';
 
 (function visitorStats() {
   if (!GOATCOUNTER_CODE) return;

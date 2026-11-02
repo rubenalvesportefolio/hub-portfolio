@@ -686,6 +686,11 @@ section headings). `project.html` sets its own `<meta name="description">`
 for each project - the first ~155 characters of its description, in the
 current language.
 
+**Google Search Console**: `index.html` carries Ruben's
+`<meta name="google-site-verification" ...>` tag (in `<head>`, near the
+top). It proves to Google that the site is his - don't remove it, or
+the site stops being verified.
+
 **robots.txt**: search engines only read it at the root of a domain,
 and this site lives in a sub-folder (`/hub-portfolio/`), so the build
 only writes one when `"homepage"` is a domain root. Instead, submit the
@@ -695,7 +700,7 @@ property, then Sitemaps -> `sitemap.xml`).
 **404 page**: `404.html` - GitHub Pages serves it automatically for any
 address that doesn't exist. It's marked `noindex`.
 
-**Visitor stats (GoatCounter)**: off until you set it up. GoatCounter is
+**Visitor stats (GoatCounter)**: on - `GOATCOUNTER_CODE = 'just4youdie'`, dashboard at https://just4youdie.goatcounter.com. GoatCounter is
 free for personal sites, open-source, uses no cookies and collects no
 personal data. To turn it on, sign up at goatcounter.com, pick a code
 (e.g. `rubenalves` -> rubenalves.goatcounter.com) and put it in
