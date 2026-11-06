@@ -438,6 +438,8 @@ const TAG_TRANSLATIONS = {
     '3D Effects': 'Efeitos 3D',
     'Product Visualization': 'Visualização de Produto',
     'Lighting': 'Iluminação',
+    'Packaging Design': 'Design de Embalagem',
+    'Label Design': 'Design de Rótulo',
   },
 };
 

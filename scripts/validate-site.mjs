@@ -18,8 +18,8 @@ const BUDGET = {
   fileMB: 10,    // anything else (e.g. PDFs in files/) - warning only
 };
 const KNOWN_PROJECT_KEYS = new Set([
-  'id', 'title', 'tags', 'link', 'image', 'images', 'description', 'caseStudy', 'fit', 'downloadUrl', 'viewUrl', 'i18n',
-  'video', 'hidden', 'date', 'software',
+  'id', 'title', 'tags', 'link', 'image', 'images', 'description', 'caseStudy', 'fit', 'downloadUrl', 'viewUrl', 'downloads', 'i18n',
+  'video', 'hidden', 'date', 'software', 'theme',
 ]);
 // The only per-project fields worth translating - tags are shared
 // vocabulary and live in i18n.js instead.
@@ -343,6 +343,18 @@ function checkProjects(projects, src) {
         err(`"video" must be a YouTube video ID - the 11 characters after watch?v= (got "${p.video}").`);
       }
       if (!p.hidden && p.id) visibleIds.add(p.id);
+      if (p.theme !== undefined) {
+        const allowed = ['accent', 'accentText', 'accentInk', 'tint', 'layout'];
+        if (!p.theme || typeof p.theme !== 'object' || Array.isArray(p.theme)) err('"theme" must be an object, e.g. { accent: \'#C8202F\', accentText: \'#FF5C6A\' }.');
+        else {
+          for (const k of Object.keys(p.theme)) if (!allowed.includes(k)) warn(`theme.${k} isn't a theme setting (${allowed.join(', ')}) - it will be ignored.`);
+          for (const k of ['accent', 'accentText', 'accentInk', 'tint']) {
+            const v = p.theme[k];
+            if (v !== undefined && (typeof v !== 'string' || !/^(#[0-9a-f]{3,8}|rgba?\([\d\s.,%]+\))$/i.test(v.trim()))) err(`theme.${k} must be a colour like '#C8202F' or 'rgba(200, 32, 47, 0.2)' (got "${v}").`);
+          }
+          if (p.theme.layout !== undefined && p.theme.layout !== 'cinematic') err(`theme.layout can only be 'cinematic' (got "${p.theme.layout}").`);
+        }
+      }
       if (p.software !== undefined && (!Array.isArray(p.software) || p.software.some((x) => typeof x !== 'string' || !x.trim()))) {
         err('"software" must be a list of program names, e.g. [\'Blender\', \'Photoshop\'].');
       }
@@ -462,6 +474,17 @@ function checkProjects(projects, src) {
         const target = resolveLocal(url, SCRIPT);
         referenced.add(target);
         if (!files.has(target)) err(`${key} "${url}" doesn't exist.`);
+      }
+      if (p.downloads !== undefined) {
+        if (!Array.isArray(p.downloads)) err('downloads must be an array of { url, lang }.');
+        else p.downloads.forEach((d, n) => {
+          if (!d || typeof d.url !== 'string' || typeof d.lang !== 'string') return err(`downloads[${n}] needs a url and a lang.`);
+          if (EXTERNAL.test(d.url)) return undefined;
+          const target = resolveLocal(d.url, SCRIPT);
+          referenced.add(target);
+          if (!files.has(target)) err(`downloads[${n}] "${d.url}" doesn't exist.`);
+          return undefined;
+        });
       }
 
       if (!isCommission && typeof p.description === 'string' && PLACEHOLDER_TEXT.test(p.description)) {
