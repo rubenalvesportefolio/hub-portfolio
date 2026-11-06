@@ -576,6 +576,49 @@ a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);b
   .contact-email{font-size:16px;word-break:break-word}
 }
 
+/* ---------- Per-project look ("theme" in PROJECTS, script.js) ----------
+   Only on project pages that set a theme (body[data-themed]); everything
+   here reads the four variables the theme provides. --accent is for
+   lines and fills, --accent-text for accent-coloured TEXT (kept at 4.5:1+
+   contrast on the dark background), --accent-ink for text sitting on an
+   accent fill, --theme-tint for the glow at the top of the page. */
+body[data-themed] .page-bg .page-bg-scrim{
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--theme-tint), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.7) 55%, rgba(0,0,0,.85) 100%);
+}
+body[data-themed] .commission-page > .eyebrow{color:var(--accent-text)}
+body[data-themed] .commission-page > h1::after{content:"";display:block;width:56px;height:3px;margin-top:20px;background:var(--accent)}
+body[data-themed] .back-link:hover{color:var(--accent-text);border-color:var(--accent)}
+body[data-themed] .commission-cover{border-color:color-mix(in srgb, var(--accent) 45%, transparent);box-shadow:0 30px 90px -30px color-mix(in srgb, var(--accent) 45%, transparent)}
+body[data-themed] .project-detail-info .tool-pill{border-color:color-mix(in srgb, var(--accent) 50%, transparent)}
+body[data-themed] a.tool-link:hover,body[data-themed] a.tool-link:focus-visible{border-color:var(--accent);background:color-mix(in srgb, var(--accent) 18%, transparent)}
+body[data-themed] .project-case-study h2{color:var(--accent-text)}
+body[data-themed] .project-case-study h2::before{content:"";display:inline-block;width:18px;height:2px;margin:0 12px .3em 0;vertical-align:middle;background:var(--accent)}
+body[data-themed] .video-play{border-color:var(--accent)}
+body[data-themed] .video-facade:hover .video-play,body[data-themed] .video-facade:focus-visible .video-play{background:var(--accent);color:var(--accent-ink)}
+body[data-themed] .video-label{border-color:color-mix(in srgb, var(--accent) 60%, transparent)}
+body[data-themed] .commission-actions .button-light{border-color:color-mix(in srgb, var(--accent) 55%, transparent)}
+body[data-themed] .commission-actions .button-light:hover{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:none}
+body[data-themed] .project-gallery-item:hover,body[data-themed] .pager-card:hover,body[data-themed] .pager-card:focus-visible{border-color:var(--accent)}
+body[data-themed] .project-pager{border-top-color:color-mix(in srgb, var(--accent) 35%, transparent)}
+
+/* Cinematic layout (theme.layout: 'cinematic'): the cover / video runs the
+   full width on top, the description and the facts sit in two columns
+   underneath. */
+.commission-page.layout-cinematic .project-detail{grid-template-columns:1fr;gap:44px}
+.commission-page.layout-cinematic .project-detail-info{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);column-gap:64px;align-items:start}
+.commission-page.layout-cinematic .project-detail-info > .commission-body{grid-column:1;grid-row:1 / span 4}
+.commission-page.layout-cinematic .project-detail-info > :not(.commission-body){grid-column:2}
+.commission-page.layout-cinematic .project-detail-info > .project-date-block{margin-top:0}
+.commission-page.layout-cinematic .project-overview{font-size:15px}
+@media(max-width:850px){
+  .commission-page.layout-cinematic .project-detail-info{grid-template-columns:1fr}
+  .commission-page.layout-cinematic .project-detail-info > .commission-body,
+  .commission-page.layout-cinematic .project-detail-info > :not(.commission-body){grid-column:1;grid-row:auto}
+  .commission-page.layout-cinematic .project-detail-info > .project-date-block{margin-top:26px}
+}
+
 /* ---------- Lite mode (html[data-mode="lite"]) ----------
    Chosen from the gear switch (display-mode.js). Everything that makes
    the GPU/CPU work continuously is switched off: no animations or

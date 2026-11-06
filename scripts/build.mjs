@@ -103,7 +103,17 @@ console.log(`build: copied ${copied} files into _site/`);
         swap(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${attr(desc)}">`);
         swap(/<meta property="og:image" content="[^"]*">/, `<meta property="og:image" content="${ogImage}">`);
         swap(/<meta property="og:image:alt" content="[^"]*">/, `<meta property="og:image:alt" content="${attr(p.title)}">`);
-        swap(/<body>/, `<body data-project-id="${attr(p.id)}">`);
+        // Per-project look (see "theme" in script.js), written in up front
+        // so the page never flashes the default look first.
+        const t = p.theme || null;
+        const vars = t
+          ? [['--accent', t.accent], ['--accent-text', t.accentText], ['--accent-ink', t.accentInk], ['--theme-tint', t.tint]]
+              .filter(([, v]) => v)
+              .map(([k, v]) => `${k}:${v}`)
+              .join(';')
+          : '';
+        swap(/<body>/, `<body data-project-id="${attr(p.id)}"${t ? ` data-themed="true" style="${attr(vars)}"` : ''}>`);
+        if (t && t.layout === 'cinematic') swap(/<section class="commission-page">/, '<section class="commission-page layout-cinematic">');
         writeFileSync(path.join(OUT, `project-${p.id}.html`), html);
         made.push(p.id);
       }

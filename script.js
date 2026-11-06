@@ -56,6 +56,21 @@
    Shown as its own "Software" row on the project page, separate from
    the skill tags (names, so never translated). Left out = row hidden.
 
+   "theme" is optional: gives a project page its own look, on top of the
+   shared layout. Everything else (header, fonts, languages, lite mode)
+   stays the same, and projects without it look as they always did.
+     accent     - lines, borders and fills (needs 3:1 contrast on the
+                  dark background)
+     accentText - the accent when used for TEXT (needs 4.5:1 - usually a
+                  lighter version of accent)
+     accentInk  - text colour on top of an accent fill (hover states)
+     tint       - the soft glow at the top of the page background
+     layout     - optional; 'cinematic' puts the cover/video full width
+                  on top with the text in two columns underneath
+   e.g. theme: { accent: '#C8202F', accentText: '#FF5C6A',
+                 accentInk: '#FFFFFF', tint: 'rgba(200, 32, 47, 0.2)',
+                 layout: 'cinematic' }
+
    "hidden: true" is optional: keeps a draft in the file but out of the
    site - no Work tile, no Best Projects/home tile, and its
    project.html?id= page says "not found". Remove the line to publish.
@@ -63,6 +78,12 @@
    "downloadUrl" / "viewUrl" are optional: when either is set, the detail
    page shows extra buttons - one to download a file directly, one to
    open a link (e.g. a PDF preview) in a new tab.
+
+   "downloads" is optional, for a document that exists in more than one
+   language: [{ url, lang: 'en' }, { url, lang: 'pt' }]. The page shows a
+   "Download PDF (English)" / "(Português)" button for each - the
+   visitor's language first - plus "View PDF online" for the version in
+   the current language.
 
    "i18n" is optional but expected on anything with English prose: it
    holds the same "title"/"description" in the site's other languages,
@@ -201,6 +222,9 @@ const PROJECTS = {
     },
     {
       id: '3d-009',
+      // Own look: red accent from the character's armour, cinematic layout
+      // (video full width on top). See "theme" in the notes above.
+      theme: { accent: '#C8202F', accentText: '#FF5C6A', accentInk: '#FFFFFF', tint: 'rgba(200, 32, 47, 0.2)', layout: 'cinematic' },
       software: ['Blender', 'Mixamo', 'Premiere Pro', 'After Effects'],
       date: '2025/2026-04', // 1st semester of 3rd year (2025/26) -> final report, April 2026
       title: 'Protocol - Marked',
@@ -245,6 +269,8 @@ const PROJECTS = {
     },
     {
       id: '3d-011',
+      // Own look: warm honey/amber accent and background, matching the renders.
+      theme: { accent: '#D9962F', accentText: '#F0B65A', accentInk: '#1A1205', tint: 'rgba(217, 150, 47, 0.18)' },
       date: '2026-10', // started mid-October 2026, finished 31 Oct 2026
       software: ['Blender'],
       title: 'Honey Jar - Product Visualization',
@@ -268,6 +294,36 @@ const PROJECTS = {
   ],
   graphic: [
     {
+      id: 'graphic-mel-label',
+      // The full label specification, in both languages (14 pages each).
+      downloads: [
+        { url: 'files/mel-label-specification-en.pdf', lang: 'en' },
+        { url: 'files/mel-rotulo-especificacao-pt.pdf', lang: 'pt' },
+      ],
+      date: '2026-08/2026-09', // first designed 5 Aug 2026; seal strip final 13 Aug, label final 3 Sep 2026
+      software: ['Illustrator'],
+      // Own look: Seal Gold from the label's palette.
+      theme: { accent: '#F4AA12', accentText: '#F4AA12', accentInk: '#1A1205', tint: 'rgba(244, 170, 18, 0.14)' },
+      title: 'Mel - Honey Label & Seal Strip',
+      tags: ['Packaging Design', 'Label Design', 'Brand Identity'],
+      link: '',
+      image: 'images/work/graphic/mel-label.webp',
+      images: [
+        'images/work/graphic/mel-label-b.webp',
+        'images/work/graphic/mel-label-c.webp',
+        'images/work/graphic/mel-label-d.webp',
+        'images/work/graphic/mel-label-e.webp',
+        'images/work/graphic/mel-label-f.webp',
+      ],
+      description: 'The label and seal strip for Mel, a small family-run honey from Quinta das Caliças in Santo André das Tojeiras, Castelo Branco, produced by Alexandre Dias Alves and sold at local markets. The wraparound label (230 x 60 mm) is one continuous band with a raised hexagon at its centre: the product name and net quantity sit in the hexagon, the producer details, lot, beekeeper number and best-before date on the left band, and the origin line on the right. A matching seal strip runs from the lid down to the top of the hexagon, so buyers can see the jar has not been opened. I also wrote the full specification behind it - anatomy, colour palette, typography, print specs and the mandatory information required by EU and Portuguese labelling rules. Designed in Illustrator; it is the label on the Honey Jar render.',
+      i18n: {
+        pt: {
+          title: 'Mel - Rótulo e Selo',
+          description: 'O rótulo e o selo do Mel, um mel familiar de pequena produção da Quinta das Caliças, em Santo André das Tojeiras, Castelo Branco, produzido por Alexandre Dias Alves e vendido em mercados locais. O rótulo envolvente (230 x 60 mm) é uma faixa contínua com um hexágono em relevo ao centro: o nome do produto e a quantidade líquida ficam no hexágono, os dados do produtor, o lote, o número de apicultor e a data de durabilidade na faixa esquerda, e a indicação de origem na direita. Um selo a condizer desce da tampa até ao topo do hexágono, para que quem compra veja que o frasco não foi aberto. Escrevi também a especificação completa por trás dele - anatomia, paleta de cores, tipografia, especificações de impressão e a informação obrigatória exigida pelas regras de rotulagem europeias e portuguesas. Desenhado em Illustrator; é o rótulo do render do Frasco de Mel.',
+        },
+      },
+    },
+    {
       id: 'graphic-icon-library',
       software: ['Illustrator'],
       date: '2026-07',
@@ -285,6 +341,8 @@ const PROJECTS = {
     },
     {
       id: 'graphic-nunca-percas',
+      // Own look: the campaign's casino gold.
+      theme: { accent: '#E8C21C', accentText: '#F2D24A', accentInk: '#1A1405', tint: 'rgba(232, 194, 28, 0.13)' },
       software: ['Illustrator'],
       date: '2025-06', // report dated June 2025
       title: 'Nunca Percas Uma Boa Aposta - Campaign',
@@ -357,6 +415,8 @@ const PROJECTS = {
   contests: [
     {
       id: 'contests-jorge',
+      // Own look: the pink from the game's logo.
+      theme: { accent: '#E01080', accentText: '#FF5FAA', accentInk: '#FFFFFF', tint: 'rgba(224, 16, 128, 0.16)' },
       software: ['Aseprite'],
       date: '2024-06', // Micro Jam 017: 28-30 June 2024
       title: 'Jorge',
@@ -490,6 +550,11 @@ function dateOf(project, yearsOnly = false) {
   if (parts.length === 1) return one(parts[0]);
   const [from, to] = parts;
   if (yearsOnly) return from.year === to.year ? String(from.year) : `${from.year}–${to.year}`;
+  // Same year, both with months: "August – September 2026", not the year twice.
+  if (from.year === to.year && from.month && to.month) {
+    const monthOnly = new Intl.DateTimeFormat(DATE_LOCALES[I18N.language] || I18N.language, { month: 'long', timeZone: 'UTC' });
+    return `${monthOnly.format(new Date(Date.UTC(from.year, from.month - 1, 1)))} – ${one(to)}`;
+  }
   return `${one(from)} – ${one(to)}`;
 }
 
@@ -908,6 +973,26 @@ if (galleryGrid) {
     `;
   }
 
+  // Optional per-project look ("theme" in PROJECTS): CSS variables on
+  // <body> plus data-themed, and the cinematic layout class. The build
+  // writes the same into each project page, so there's no flash of the
+  // default look before this runs; doing it here too keeps
+  // project.html?id=... (the unbuilt source) right.
+  function applyTheme(theme) {
+    const page = document.querySelector('.commission-page');
+    const body = document.body;
+    ['--accent', '--accent-text', '--accent-ink', '--theme-tint'].forEach((v) => body.style.removeProperty(v));
+    delete body.dataset.themed;
+    if (page) page.classList.remove('layout-cinematic');
+    if (!theme) return;
+    if (theme.accent) body.style.setProperty('--accent', theme.accent);
+    if (theme.accentText) body.style.setProperty('--accent-text', theme.accentText);
+    if (theme.accentInk) body.style.setProperty('--accent-ink', theme.accentInk);
+    if (theme.tint) body.style.setProperty('--theme-tint', theme.tint);
+    body.dataset.themed = 'true';
+    if (page && theme.layout === 'cinematic') page.classList.add('layout-cinematic');
+  }
+
   // "Previous / next project" cards, in the same order as the Work page
   // (tab order, newest first inside each tab), wrapping around at the
   // ends. Commissions are left out - they have their own pages.
@@ -975,6 +1060,7 @@ if (galleryGrid) {
       return;
     }
 
+    applyTheme(found.theme);
     const title = titleOf(found);
     document.title = `${title} - Ruben Alves`;
     // Search engines run this page's script, so give each project its own
@@ -1094,6 +1180,28 @@ if (galleryGrid) {
       const viewBtn = document.createElement('a');
       viewBtn.className = 'button button-light button-icon';
       viewBtn.href = found.viewUrl;
+      viewBtn.target = '_blank';
+      viewBtn.rel = 'noopener';
+      viewBtn.innerHTML = `${ICONS.view} ${esc(t('project.viewPdf'))}`;
+      actionsEl.insertBefore(viewBtn, backBtn);
+    }
+    if (Array.isArray(found.downloads) && found.downloads.length) {
+      const sorted = [...found.downloads].sort((a, b) => (b.lang === I18N.language) - (a.lang === I18N.language));
+      sorted.forEach((file) => {
+        const dlBtn = document.createElement('a');
+        dlBtn.className = 'button button-light button-icon';
+        dlBtn.href = file.url;
+        dlBtn.setAttribute('download', '');
+        if (file.lang) dlBtn.hreflang = file.lang;
+        // Each language named in itself, so it reads the same on both sites.
+        const langName = { en: 'English', pt: 'Português' }[file.lang] || file.lang.toUpperCase();
+        dlBtn.innerHTML = `${ICONS.download} ${esc(t('project.downloadPdf'))} (${esc(langName)})`;
+        actionsEl.insertBefore(dlBtn, backBtn);
+      });
+      const current = sorted[0];
+      const viewBtn = document.createElement('a');
+      viewBtn.className = 'button button-light button-icon';
+      viewBtn.href = current.url;
       viewBtn.target = '_blank';
       viewBtn.rel = 'noopener';
       viewBtn.innerHTML = `${ICONS.view} ${esc(t('project.viewPdf'))}`;

@@ -122,7 +122,8 @@ give them.
   translatable like `description` (see "Languages" below).
 - `date` - when the project was made: `'2025'`, `'2025-07'`, or a range
   `'start/end'` with either form on each side (`'2025/2026-04'` shows as
-  "2025 – April 2026"). The project page shows it under the
+  "2025 – April 2026"; a range inside one year is shortened, so
+  `'2026-08/2026-09'` shows as "August – September 2026"). The project page shows it under the
   description (month names follow the site language: "julho de 2025"
   in Portuguese), and the tiles on Work, Best Projects and the homepage
   show the year(s). Leave it out and nothing is shown -
@@ -132,6 +133,26 @@ give them.
   'Photoshop']` - shown as its own "Software" row on the project page,
   separate from the skill tags. Names, so never translated. Every
   visible project has it set.
+- `theme` - optional. Gives a project page its own look on top of the
+  shared layout - header, fonts, languages and lite mode stay the same,
+  and projects without it look as they always did:
+  `{ accent, accentText, accentInk, tint, layout }`. `accent` colours
+  lines, borders and fills (needs 3:1 contrast on the dark background);
+  `accentText` is the accent when used for text (eyebrow, case-study
+  headings - needs 4.5:1, so usually a lighter version); `accentInk` is
+  text on an accent fill (button hovers); `tint` is the glow at the top
+  of the page; `layout: 'cinematic'` puts the cover/video full width on
+  top with the text in two columns underneath. In use on:
+  - Protocol - Marked: red from the character's armour (`#C8202F`,
+    text `#FF5C6A` at 6.6:1), cinematic layout.
+  - Honey Jar: honey amber (`#D9962F`, text `#F0B65A` at 10.9:1).
+  - Mel - Honey Label & Seal Strip: "Seal Gold" from the label's own
+    palette (`#F4AA12`).
+  - Jorge: the logo's pink (`#E01080`, text `#FF5FAA` at 7.0:1).
+  - Nunca Percas Uma Boa Aposta: casino gold (`#E8C21C`, text
+    `#F2D24A`).
+  The build writes the theme straight into each project page so it never
+  flashes the default look first; `npm run validate` checks the format.
 - `video` - optional. A YouTube video ID - the 11 characters after
   `watch?v=` in the address (Protocol - Marked: `'I9UdgZKVZ8A'`). The
   detail page then shows the cover image with a play button in the
@@ -152,11 +173,17 @@ give them.
   offer its descriptive-memory PDF alongside the itch.io link, on
   Mystery Box for its project report, and on Protocol - Marked for the
   full final report (`files/protocol-marked-final-report.pdf`).
+- `downloads` - optional, for a document that exists in more than one
+  language: `[{ url, lang: 'en' }, { url, lang: 'pt' }]`. The page shows
+  a "Download PDF (English)" / "Download PDF (Português)" button for
+  each (the visitor's language first) plus "View PDF online" for the
+  version in the current language. Used on the Mel label for its
+  14-page specification (`files/mel-label-specification-en.pdf`,
+  `files/mel-rotulo-especificacao-pt.pdf`).
 
 If a category's array is empty, the Work page shows a simple "Projects
-coming soon" message instead of a blank grid. `graphic` has a single
-entry for now - add entries the same way once you have work to show
-there.
+coming soon" message instead of a blank grid. Add entries the same way
+once you have work to show there.
 
 ### Hiding a category tab
 
@@ -198,9 +225,11 @@ are not on the site.
 | IMPERIUM - Logo & Symbol (`graphic-imperium`) | Graphic Design | November 2024 | Exercise 3 PDF (5 Nov 2024). Logotype + symbol given in the brief; Ruben made the lockups and tests |
 | GameStorming - Logo (`graphic-gamestorming`) | Graphic Design | October 2024 | Exercise 2 PDF (28 Oct 2024). Logo, process and tests |
 | Honey Jar - Product Visualization (`3d-011`) | 3D | October 2026 | From Ruben: Blender 5.2, ~2 weeks, finished 31 Oct 2026. 3 renders + 2 Blender viewport shots of the lighting set-up |
+| Mel - Honey Label & Seal Strip (`graphic-mel-label`) | Graphic Design | August – September 2026 | Label specification PDFs (EN/PT): first designed 5 Aug 2026, seal strip final 13 Aug, label final 3 Sep. Illustrator. Cover = flat label + seal strip; gallery = 5 spec pages. Both spec PDFs can be downloaded from the page (at Ruben's request). It's the label on the Honey Jar render |
 
 New tags (translated in `TAG_TRANSLATIONS`): `Logo Design`, `Brand
-Identity`, `Advertising Campaign`, `3D Effects`; `3ds Max` is a name
+Identity`, `Advertising Campaign`, `3D Effects`, `Product
+Visualization`, `Lighting`, `Packaging Design`, `Label Design`; `3ds Max` is a name
 and stays as written. Logo covers were rebuilt from the clean logo
 artwork inside the PDFs, centred on white; gallery images are PDF pages
 trimmed to their content.
@@ -225,8 +254,8 @@ The UrbanEyePT case-study page is plain HTML, so its date is written
 there directly (`urbaneyept.date` in `i18n.js`) - change both it and the
 `date` in `PROJECTS.commissions` if it ever needs correcting.
 
-**Graphic Design** has four entries: the GameStorming and IMPERIUM logo
-exercises, the "Nunca Percas Uma Boa Aposta" campaign (see the table
+**Graphic Design** has five entries: the Mel honey label & seal strip,
+the GameStorming and IMPERIUM logo exercises, the "Nunca Percas Uma Boa Aposta" campaign (see the table
 below), and the UrbanEyePT Icon Library (linking to Behance) - the same work also appears on the UrbanEyePT commission
 page.
 
