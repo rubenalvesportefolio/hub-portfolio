@@ -283,11 +283,11 @@ const PROJECTS = {
         'images/work/3d/project-011-d.webp',
         'images/work/3d/project-011-e.webp',
       ],
-      description: 'A product visualization of a 1 kg jar of Portuguese honey, made in Blender 5.2 and rendered in Cycles over about two weeks. The goal was realism in the two hardest materials here: the thick, translucent honey and the glass jar with its honeycomb relief, finished with a gold lid and a hanging label. The scene is lit like a small photo studio, with several lights placed around the jar and an HDRI for the reflections. This project gave me a much better understanding of viscous and glass materials, of where to place lights, and of how to use an HDRI properly - the last two images show the set-up behind the renders.',
+      description: 'A product visualization of a 1 kg jar of Portuguese honey, made in Blender 5.2 and rendered in Cycles over about two weeks. The goal was realism in the two hardest materials here: the thick, translucent honey and the glass jar with its honeycomb relief, finished with a gold lid and a hanging label.\n\nThe scene is lit like a small photo studio, with several lights placed around the jar and an HDRI for the reflections.\n\nThis project gave me a much better understanding of viscous and glass materials, of where to place lights, and of how to use an HDRI properly - the last two images show the set-up behind the renders.',
       i18n: {
         pt: {
           title: 'Frasco de Mel - Visualização de Produto',
-          description: 'Uma visualização de produto de um frasco de 1 kg de mel português, feita em Blender 5.2 e renderizada em Cycles ao longo de cerca de duas semanas. O objetivo era o realismo nos dois materiais mais difíceis: o mel espesso e translúcido e o frasco de vidro com o relevo em favo, com uma tampa dourada e uma etiqueta pendurada. A cena está iluminada como um pequeno estúdio fotográfico, com várias luzes à volta do frasco e um HDRI para os reflexos. Este projeto deu-me uma compreensão muito melhor dos materiais viscosos e de vidro, de onde colocar as luzes e de como usar corretamente um HDRI - as duas últimas imagens mostram a montagem por trás dos renders.',
+          description: 'Uma visualização de produto de um frasco de 1 kg de mel português, feita em Blender 5.2 e renderizada em Cycles ao longo de cerca de duas semanas. O objetivo era o realismo nos dois materiais mais difíceis: o mel espesso e translúcido e o frasco de vidro com o relevo em favo, com uma tampa dourada e uma etiqueta pendurada.\n\nA cena está iluminada como um pequeno estúdio fotográfico, com várias luzes à volta do frasco e um HDRI para os reflexos.\n\nEste projeto deu-me uma compreensão muito melhor dos materiais viscosos e de vidro, de onde colocar as luzes e de como usar corretamente um HDRI - as duas últimas imagens mostram a montagem por trás dos renders.',
         },
       },
     },
@@ -315,11 +315,11 @@ const PROJECTS = {
         'images/work/graphic/mel-label-e.webp',
         'images/work/graphic/mel-label-f.webp',
       ],
-      description: 'The label and seal strip for Mel, a small family-run honey from Quinta das Caliças in Santo André das Tojeiras, Castelo Branco, produced by Alexandre Dias Alves and sold at local markets. The wraparound label (230 x 60 mm) is one continuous band with a raised hexagon at its centre: the product name and net quantity sit in the hexagon, the producer details, lot, beekeeper number and best-before date on the left band, and the origin line on the right. A matching seal strip runs from the lid down to the top of the hexagon, so buyers can see the jar has not been opened. I also wrote the full specification behind it - anatomy, colour palette, typography, print specs and the mandatory information required by EU and Portuguese labelling rules. Designed in Illustrator; it is the label on the Honey Jar render.',
+      description: 'The label and seal strip for Mel, a small family-run honey from Quinta das Caliças in Santo André das Tojeiras, Castelo Branco, produced by Alexandre Dias Alves and sold at local markets.\n\nThe wraparound label (230 x 60 mm) is one continuous band with a raised hexagon at its centre: the product name and net quantity sit in the hexagon, the producer details, lot, beekeeper number and best-before date on the left band, and the origin line on the right. A matching seal strip runs from the lid down to the top of the hexagon, so buyers can see the jar has not been opened.\n\nI also wrote the full specification behind it - anatomy, colour palette, typography, print specs and the mandatory information required by EU and Portuguese labelling rules. Designed in Illustrator; it is the label on the Honey Jar render.',
       i18n: {
         pt: {
           title: 'Mel - Rótulo e Selo',
-          description: 'O rótulo e o selo do Mel, um mel familiar de pequena produção da Quinta das Caliças, em Santo André das Tojeiras, Castelo Branco, produzido por Alexandre Dias Alves e vendido em mercados locais. O rótulo envolvente (230 x 60 mm) é uma faixa contínua com um hexágono em relevo ao centro: o nome do produto e a quantidade líquida ficam no hexágono, os dados do produtor, o lote, o número de apicultor e a data de durabilidade na faixa esquerda, e a indicação de origem na direita. Um selo a condizer desce da tampa até ao topo do hexágono, para que quem compra veja que o frasco não foi aberto. Escrevi também a especificação completa por trás dele - anatomia, paleta de cores, tipografia, especificações de impressão e a informação obrigatória exigida pelas regras de rotulagem europeias e portuguesas. Desenhado em Illustrator; é o rótulo do render do Frasco de Mel.',
+          description: 'O rótulo e o selo do Mel, um mel familiar de pequena produção da Quinta das Caliças, em Santo André das Tojeiras, Castelo Branco, produzido por Alexandre Dias Alves e vendido em mercados locais.\n\nO rótulo envolvente (230 x 60 mm) é uma faixa contínua com um hexágono em relevo ao centro: o nome do produto e a quantidade líquida ficam no hexágono, os dados do produtor, o lote, o número de apicultor e a data de durabilidade na faixa esquerda, e a indicação de origem na direita. Um selo a condizer desce da tampa até ao topo do hexágono, para que quem compra veja que o frasco não foi aberto.\n\nEscrevi também a especificação completa por trás dele - anatomia, paleta de cores, tipografia, especificações de impressão e a informação obrigatória exigida pelas regras de rotulagem europeias e portuguesas. Desenhado em Illustrator; é o rótulo do render do Frasco de Mel.',
         },
       },
     },
@@ -350,11 +350,11 @@ const PROJECTS = {
       link: '',
       image: 'images/work/graphic/nunca-percas.webp',
       images: ['images/work/graphic/nunca-percas-b.webp'],
-      description: 'An awareness campaign against gambling addiction among 16 to 25-year-olds, made for the Integrated Communication Design course in a team of three (with Tiago Crispim and João Teixeira) for the Instituto de Apoio ao Jogador. The slogan borrows the language of betting ads and turns it around - the best bet is the one you make on yourself. My part was the casino-style 3D effects, built to mimic the look of real betting adverts. The A3 poster was then adapted to A4, an outdoor banner, flyers, pocket cards, social media posts and web banners.',
+      description: 'An awareness campaign against gambling addiction among 16 to 25-year-olds, made for the Integrated Communication Design course in a team of three (with Tiago Crispim and João Teixeira) for the Instituto de Apoio ao Jogador. The slogan borrows the language of betting ads and turns it around - the best bet is the one you make on yourself.\n\nMy part was the casino-style 3D effects, built to mimic the look of real betting adverts. The A3 poster was then adapted to A4, an outdoor banner, flyers, pocket cards, social media posts and web banners.',
       i18n: {
         pt: {
           title: 'Nunca Percas Uma Boa Aposta - Campanha',
-          description: 'Uma campanha de sensibilização contra o vício do jogo a dinheiro entre jovens dos 16 aos 25 anos, feita para a unidade curricular de Design de Comunicação Integrada numa equipa de três (com o Tiago Crispim e o João Teixeira) para o Instituto de Apoio ao Jogador. O slogan apropria-se da linguagem das casas de apostas e inverte-a - a melhor aposta é a que fazes em ti. A minha parte foram os efeitos 3D ao estilo dos casinos, pensados para imitar o visual da publicidade real das casas de apostas. O cartaz A3 foi depois adaptado a A4, outdoor, flyers, cartões de bolso, publicações para redes sociais e banners web.',
+          description: 'Uma campanha de sensibilização contra o vício do jogo a dinheiro entre jovens dos 16 aos 25 anos, feita para a unidade curricular de Design de Comunicação Integrada numa equipa de três (com o Tiago Crispim e o João Teixeira) para o Instituto de Apoio ao Jogador. O slogan apropria-se da linguagem das casas de apostas e inverte-a - a melhor aposta é a que fazes em ti.\n\nA minha parte foram os efeitos 3D ao estilo dos casinos, pensados para imitar o visual da publicidade real das casas de apostas. O cartaz A3 foi depois adaptado a A4, outdoor, flyers, cartões de bolso, publicações para redes sociais e banners web.',
         },
       },
     },
@@ -446,10 +446,10 @@ const PROJECTS = {
       image: 'images/work/3dprint/mysterybox.webp',
       images: ['images/work/3dprint/mysterybox-b.webp', 'images/work/3dprint/mysterybox-c.webp'],
       downloadUrl: 'files/mystery-box-project-report.pdf',
-      description: "A university project for Design de Interfaces e Usabilidade III (3rd year, Communication Design and Audiovisual, ESART), built with a 3-person team (João Teixeira and Tiago Crispim): Mystery Travel, a surprise travel service centred on a physical Mystery Box. The box holds a symbolic coin and an NFC tag that opens a companion app revealing the trip. I designed the box itself in Blender - including the world-map side panels and lid branding - and sent it out for 3D printing (PLA); I was also responsible for the transition from the visual design into the app prototype using Adobe XD.",
+      description: "A university project for Design de Interfaces e Usabilidade III (3rd year, Communication Design and Audiovisual, ESART), built with a 3-person team (João Teixeira and Tiago Crispim): Mystery Travel, a surprise travel service centred on a physical Mystery Box. The box holds a symbolic coin and an NFC tag that opens a companion app revealing the trip.\n\nI designed the box itself in Blender - including the world-map side panels and lid branding - and sent it out for 3D printing (PLA); I was also responsible for the transition from the visual design into the app prototype using Adobe XD.",
       i18n: {
         pt: {
-          description: 'Um projeto académico para Design de Interfaces e Usabilidade III (3.º ano, Design de Comunicação e Audiovisual, ESART), feito com uma equipa de 3 pessoas (João Teixeira e Tiago Crispim): Mystery Travel, um serviço de viagens surpresa centrado numa Mystery Box física. A caixa contém uma moeda simbólica e uma tag NFC que abre uma app complementar a revelar a viagem. Desenhei a própria caixa em Blender - incluindo os painéis laterais com o mapa-múndi e a marca na tampa - e enviei-a para impressão 3D (PLA); fui também responsável pela transição do design visual para o protótipo da app em Adobe XD.',
+          description: 'Um projeto académico para Design de Interfaces e Usabilidade III (3.º ano, Design de Comunicação e Audiovisual, ESART), feito com uma equipa de 3 pessoas (João Teixeira e Tiago Crispim): Mystery Travel, um serviço de viagens surpresa centrado numa Mystery Box física. A caixa contém uma moeda simbólica e uma tag NFC que abre uma app complementar a revelar a viagem.\n\nDesenhei a própria caixa em Blender - incluindo os painéis laterais com o mapa-múndi e a marca na tampa - e enviei-a para impressão 3D (PLA); fui também responsável pela transição do design visual para o protótipo da app em Adobe XD.',
         },
       },
     },
@@ -1135,7 +1135,11 @@ if (galleryGrid) {
       galleryEl.style.display = extraImages.length > 0 ? '' : 'none';
     }
 
-    descEl.innerHTML = descriptionOf(found) || t('project.descFallback');
+    // A blank line ("\n\n") in a description starts a new paragraph.
+    const desc = descriptionOf(found) || t('project.descFallback');
+    descEl.innerHTML = desc.includes('\n\n')
+      ? desc.split(/\n\n+/).map((para) => `<p>${para.trim()}</p>`).join('')
+      : desc;
 
     const caseStudyHtml = caseStudyOf(found);
     if (caseStudyEl && caseStudyWrapEl) {

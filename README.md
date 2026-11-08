@@ -88,8 +88,10 @@ give them.
   `Shading & Materials`, `Procedural Shading`, `Compositing`,
   `University Work`.
 - `description` - shown on the project's detail page, next to the cover
-  image. Plain text, or simple HTML (e.g. `<p>...</p>` paragraphs) when
-  it needs more than one paragraph. Bracketed placeholder text (`[...]`) means "write the real thing
+  image. Plain text; put a blank line (`\n\n` inside the quotes) where
+  a new paragraph should start - anything longer than about 3-4
+  sentences reads better split up (Honey Jar, Mel label, Nunca Percas
+  and Mystery Box are). Simple HTML also works. Bracketed placeholder text (`[...]`) means "write the real thing
   whenever you have it" - several 3D projects still have these
   since only you know the actual brief/process for each one.
 - `link` - the "View full project" destination on the detail page (always
@@ -617,6 +619,27 @@ GitHub Actions (`.github/workflows/`):
 - Dependabot opens one grouped update PR a month for the actions and
   `html-validate`.
 
+## Reading text (sizes, line length, contrast)
+
+Long text follows the usual web-reading guidelines, set once as
+variables at the top of `styles.css`:
+
+- **Size** - body copy (project descriptions, case studies, About) is
+  16-17px (`--text-body`), the homepage intro 17-19px (`--text-lead`),
+  smaller intros 15px (`--text-small`). Nothing on the site is smaller
+  than 11px, and that's only for short uppercase labels.
+- **rem, not px** - these sizes follow the visitor's browser text-size
+  setting, so someone who reads with bigger text gets bigger text.
+- **Line length** - paragraphs stop at `--measure` (65 characters wide,
+  roughly 60-75 letters a line); wider than that and the eye loses its
+  place going back to the next line.
+- **Line spacing** - 1.6-1.7 for paragraphs.
+- **Contrast** - paragraphs use `--text-read` (#B4BAC0, 10.1:1 on the
+  background). Brighter than the grey used for labels (`--muted`,
+  7.5:1), but not pure white, which glares on a dark page.
+
+Change a variable and every page follows.
+
 ## Display mode (full experience / lite)
 
 A gear button sits in the top-right corner of every page's header
@@ -674,6 +697,19 @@ resolution, for a picture shown at a fraction of its brightness. If you
 ever want motion back here, a short pre-rendered looping video (muted,
 `playsinline`, `preload="none"`, paused in lite mode) would be far
 cheaper than a live scene.
+
+## Favicon (browser tab icon)
+
+Made from Ruben's RA logo (the black circle PNG, 1926 px), scaled down:
+
+- `favicon.ico` - 16, 32 and 48 px in one file (browser tabs, bookmarks)
+- `images/icons/icon-192.png` - Android / high-resolution screens
+- `images/icons/apple-touch-icon.png` - 180 px, for "Add to Home Screen"
+  on iPhone/iPad (on black, since iOS fills transparent corners anyway)
+
+Every page links them in its `<head>`, right after the viewport tag. To
+change the icon, replace those three files with the same names and
+sizes - the pages don't need editing.
 
 ## Search, sharing and stats
 
