@@ -20,6 +20,21 @@
   --chrome-text: linear-gradient(115deg, var(--chrome-1) 0%, var(--chrome-2) 22%, var(--chrome-4) 48%, var(--chrome-1) 72%, var(--chrome-3) 100%);
   --chrome-solid: linear-gradient(135deg, var(--chrome-1) 0%, var(--chrome-2) 30%, var(--chrome-4) 55%, var(--chrome-1) 80%, var(--chrome-3) 100%);
 
+  /* Reading text. Sizes are in rem so they follow the visitor's own
+     browser text-size setting (1rem = 16px by default).
+     - body: descriptions, case studies, About text (16-17px)
+     - lead: the short intro under a big heading (17-19px)
+     - small: secondary copy such as page intros and the CV card (15px)
+     --text-read is a lighter grey than --muted for long paragraphs
+     (10.1:1 on the background instead of 7.5:1) - still not pure white,
+     which glares on a dark page. --measure caps a paragraph at a
+     comfortable line length (about 70 characters). */
+  --text-body: clamp(1rem, .96rem + .2vw, 1.0625rem);
+  --text-lead: clamp(1.0625rem, 1rem + .3vw, 1.1875rem);
+  --text-small: .9375rem;
+  --text-read: #B4BAC0;
+  --measure: 65ch;
+
   --glow-navy: 0 0 40px rgba(0,0,139,.35);
   --glow-silver: 0 0 24px rgba(255,255,255,.14);
   --header-h: 64px;
@@ -58,7 +73,7 @@ button{font-family:inherit;touch-action:manipulation}
 .brand{display:flex;align-items:center;gap:10px;font-size:clamp(10px,3vw,12px);font-weight:800;letter-spacing:.08em;white-space:nowrap;min-width:0}
 .brand span:last-child{overflow:hidden;text-overflow:ellipsis}
 .brand-mark{flex-shrink:0;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;font-size:10px;border:1px solid var(--line-strong);color:var(--ink);box-shadow:inset 0 0 8px rgba(255,255,255,.08)}
-.nav{display:flex;align-items:center;gap:26px;font-size:12px;font-weight:700}
+.nav{display:flex;align-items:center;gap:26px;font-size:.8125rem;font-weight:700}
 .nav a:not(.nav-cv){opacity:.62;transition:opacity .2s,text-shadow .2s;padding:4px 0}
 .nav a:not(.nav-cv):hover,.nav a.active{opacity:1;text-shadow:0 0 14px rgba(255,255,255,.35)}
 .nav-cv{border:1px solid var(--line-strong);padding:9px 14px;color:var(--ink);transition:box-shadow .25s,border-color .25s}
@@ -112,12 +127,12 @@ button{font-family:inherit;touch-action:manipulation}
 .mode-switch[aria-checked="true"]{background:var(--chrome-2);border-color:transparent}
 .mode-switch[aria-checked="true"] .mode-switch-knob{transform:translateX(20px);background:#0A0A0A}
 .mode-switch:focus-visible,.settings-toggle:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.mode-note{margin:10px 0 0;font-size:11.5px;line-height:1.5;color:var(--muted)}
+.mode-note{margin:10px 0 0;font-size:.8125rem;line-height:1.5;color:var(--muted)}
 html[data-mode="full"] .mode-note-lite,html:not([data-mode="full"]) .mode-note-full{display:none}
 .lang-btn:focus-visible{outline:2px solid var(--ink);outline-offset:-3px}
 
 /* ---------- Shared type ---------- */
-.eyebrow{font:500 10px/1.2 "DM Mono",monospace;letter-spacing:.14em;margin:0 0 14px;color:var(--muted)}
+.eyebrow{font:500 .6875rem/1.2 "DM Mono",monospace;letter-spacing:.14em;margin:0 0 14px;color:var(--muted)}
 h1,h2,h3,p{margin-top:0}
 h1{margin-bottom:.83em} /* match the h2 these page titles used to be */
 /* Read by screen readers and search engines, not shown. */
@@ -131,7 +146,7 @@ em{
 }
 @keyframes chromeShift{0%,100%{background-position:10% 50%}50%{background-position:90% 50%}}
 
-.button{display:inline-flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 16px;font-size:12px;font-weight:800;transition:box-shadow .25s,transform .2s}
+.button{display:inline-flex;gap:20px;align-items:center;justify-content:space-between;padding:14px 16px;font-size:.8125rem;font-weight:800;transition:box-shadow .25s,transform .2s}
 .button-icon{justify-content:center;gap:9px}
 .button-dark{background:var(--chrome-solid);background-size:220% 220%;color:#0A0A0A;min-width:200px;border:1px solid rgba(255,255,255,.5);box-shadow:0 10px 30px rgba(0,0,0,.55)}
 .button-dark:hover{box-shadow:0 10px 30px rgba(0,0,0,.55),var(--glow-navy);transform:translateY(-1px)}
@@ -187,7 +202,7 @@ em{
 }
 .home-hero-content{max-width:660px}
 .home-hero h1{font-size:clamp(34px,6.6vw,92px);line-height:.92;letter-spacing:-.06em;margin-bottom:18px;font-weight:800;color:var(--ink)}
-.home-hero .hero-text{max-width:460px;color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:26px}
+.home-hero .hero-text{max-width:30em;color:var(--text-read);font-size:var(--text-lead);line-height:1.6;margin-bottom:26px}
 .hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;row-gap:14px}
 .hero-actions .button{flex:0 1 auto}
 
@@ -206,11 +221,11 @@ em{
 .featured-item:hover img{transform:scale(1.04)}
 .featured-item:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .featured-caption{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:48px 20px 18px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.94) 100%)}
-.featured-index{margin:0 0 8px;font:500 10px "DM Mono",monospace;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.featured-index{margin:0 0 8px;font:500 .6875rem "DM Mono",monospace;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
 .featured-caption h3{margin:0 0 6px;font-size:clamp(16px,1.5vw,21px);line-height:1.15;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
 .featured-main .featured-caption{padding:80px 26px 24px}
 .featured-main .featured-caption h3{font-size:clamp(22px,2.4vw,34px);letter-spacing:-.03em}
-.featured-tags{margin:0;font:500 10px "DM Mono",monospace;color:var(--muted)}
+.featured-tags{margin:0;font:500 .6875rem "DM Mono",monospace;color:var(--muted)}
 .featured-arrow{
   position:absolute;top:14px;right:14px;z-index:1;width:34px;height:34px;display:grid;place-items:center;
   border:1px solid var(--line-strong);border-radius:50%;background:rgba(10,10,10,.6);color:var(--ink);font-size:13px;
@@ -224,7 +239,7 @@ em{
   min-height:calc(100vh - var(--header-h));min-height:calc(100dvh - var(--header-h));
 }
 .work-intro h1,.work-intro h2{font-size:clamp(28px,3.6vw,52px);line-height:.95;letter-spacing:-.05em;font-weight:800;color:var(--ink)}
-.work-intro p{max-width:420px;color:var(--muted);font-size:13px;line-height:1.6;margin-top:10px}
+.work-intro p{max-width:32em;color:var(--text-read);font-size:var(--text-small);line-height:1.6;margin-top:10px}
 
 /* Best Projects: fewer, larger tiles - a 2-column "featured" grid rather
    than the standard 3-column Work grid, with the lone Graphic Design
@@ -236,7 +251,7 @@ em{
 
 .work-tabs{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 32px}
 .tab-btn{
-  padding:11px 18px;font-size:12px;font-weight:700;letter-spacing:.01em;
+  padding:11px 18px;font-size:.8125rem;font-weight:700;letter-spacing:.01em;
   border:1px solid var(--line-strong);background:rgba(255,255,255,.03);color:var(--muted);
   cursor:pointer;transition:color .2s,border-color .2s,box-shadow .2s;
 }
@@ -286,10 +301,10 @@ em{
   background:linear-gradient(135deg,var(--chrome-1),var(--chrome-4));
   box-shadow:14px 18px 40px rgba(0,0,0,.6), 0 0 34px rgba(0,0,139,.16);
 }
-.gallery-tag{position:absolute;top:12px;left:12px;z-index:2;background:rgba(10,10,10,.7);border:1px solid var(--line);color:var(--ink);padding:6px 9px;font:500 9px "DM Mono",monospace;backdrop-filter:blur(6px)}
+.gallery-tag{position:absolute;top:12px;left:12px;z-index:2;background:rgba(10,10,10,.7);border:1px solid var(--line);color:var(--ink);padding:6px 9px;font:500 .6875rem "DM Mono",monospace;backdrop-filter:blur(6px)}
 .gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:34px 14px 14px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.92) 100%);z-index:2}
-.gallery-caption h3{font-size:14px;margin:0 0 2px;color:var(--ink)}
-.gallery-caption p{font:9px "DM Mono",monospace;color:var(--muted);margin:0}
+.gallery-caption h3{font-size:.9375rem;margin:0 0 2px;color:var(--ink)}
+.gallery-caption p{font:.6875rem "DM Mono",monospace;color:var(--muted);margin:0}
 .gallery-empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted);font:500 12px "DM Mono",monospace;letter-spacing:.05em}
 
 /* ================= ABOUT (simple, single column) ================= */
@@ -301,31 +316,31 @@ em{
 .about-solo{max-width:640px}
 .about-solo h1,.about-solo h2{font-size:clamp(30px,3.8vw,56px);line-height:.95;letter-spacing:-.05em;font-weight:800;color:var(--ink);margin-bottom:18px}
 .large-copy{font-size:clamp(18px,1.7vw,24px);line-height:1.35;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px}
-.about-solo>p:not(.large-copy){color:var(--muted);font-size:14px;line-height:1.7;max-width:480px}
+.about-solo>p:not(.large-copy){color:var(--text-read);font-size:var(--text-body);line-height:1.7;max-width:36em}
 
 .facts-row{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
   column-gap:32px;row-gap:22px;margin-top:30px;border-top:1px solid var(--line);padding-top:24px;
 }
 .facts-row div{display:flex;flex-direction:column;gap:8px}
-.facts-row strong{font:600 10px "DM Mono",monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.facts-row strong{font:600 .6875rem "DM Mono",monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
 .facts-row span{font-size:15px;line-height:1.4;color:var(--ink)}
 
 .tools-group{margin-top:28px}
-.tools-group h4{font:600 10px "DM Mono",monospace;letter-spacing:.12em;color:var(--muted);margin:0 0 12px;text-transform:uppercase}
+.tools-group h4{font:600 .6875rem "DM Mono",monospace;letter-spacing:.12em;color:var(--muted);margin:0 0 12px;text-transform:uppercase}
 .tools-row{display:flex;gap:12px;flex-wrap:wrap}
 .tool-pill{padding:9px 15px;border:1px solid var(--line-strong);font:500 12px "DM Mono",monospace;color:var(--ink);background:rgba(255,255,255,.03);letter-spacing:.02em}
 .tool-pill.some-experience{border-style:dotted;color:var(--ink);opacity:.85}
 .tool-pill.learning{color:var(--muted);border-style:dashed}
 
 .about-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 56px;max-width:1040px;margin-top:46px}
-.about-block h4,.about-tools h4{font:600 10px "DM Mono",monospace;letter-spacing:.12em;color:var(--muted);margin:0 0 14px;text-transform:uppercase}
+.about-block h4,.about-tools h4{font:600 .6875rem "DM Mono",monospace;letter-spacing:.12em;color:var(--muted);margin:0 0 14px;text-transform:uppercase}
 .cv-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .cv-item{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
 .cv-years{font:500 11px/1.6 "DM Mono",monospace;color:var(--muted);letter-spacing:.04em}
 .cv-item div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
-.cv-item strong{font-size:14px;line-height:1.4;font-weight:700;color:var(--ink)}
-.cv-item span:not(.cv-years){font-size:13px;line-height:1.5;color:var(--muted)}
+.cv-item strong{font-size:.9375rem;line-height:1.4;font-weight:700;color:var(--ink)}
+.cv-item span:not(.cv-years){font-size:.875rem;line-height:1.55;color:var(--text-read)}
 .cv-item .text-link{margin-top:6px}
 .about-tools{display:flex;flex-wrap:wrap;gap:0 56px;max-width:1040px;margin-top:18px}
 .about-tools .tools-group{flex:0 1 auto}
@@ -394,7 +409,7 @@ em{
 }
 .video-facade:hover .video-play,.video-facade:focus-visible .video-play{background:var(--chrome-2);color:#0A0A0A;transform:scale(1.06)}
 .video-facade:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
-.video-label{position:absolute;left:16px;bottom:14px;font:500 10px "DM Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(10,10,10,.7);border:1px solid var(--line);padding:6px 9px}
+.video-label{position:absolute;left:16px;bottom:14px;font:500 .6875rem "DM Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:rgba(10,10,10,.7);border:1px solid var(--line);padding:6px 9px}
 .commission-cover.is-video iframe{display:block;width:100%;height:100%;border:0}
 
 /* Lightbox - click any project image to view it larger */
@@ -439,33 +454,34 @@ a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);b
 .pager-card img.contain{object-fit:contain;background:#0D0D0D}
 .pager-next{flex-direction:row-reverse;text-align:right}
 .pager-text{display:flex;flex-direction:column;gap:6px;min-width:0}
-.pager-label{font:500 10px "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pager-label{font:500 .6875rem "DM Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .pager-title{font-size:15px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 .commission-body{width:100%}
-.commission-body p,.project-overview p{color:var(--muted);font-size:14px;line-height:1.75}
-.project-overview{color:var(--muted);font-size:14px;line-height:1.75;width:100%}
+.commission-body p,.project-overview p{color:var(--text-read);font-size:var(--text-body);line-height:1.7;max-width:var(--measure)}
+.project-overview{color:var(--text-read);font-size:var(--text-body);line-height:1.7;width:100%}
 .project-overview > p{margin:0 0 1.1em}
 .project-overview > p:last-child{margin-bottom:0}
-.project-case-study{color:var(--muted);font-size:14px;line-height:1.75;width:100%;max-width:none}
+.project-case-study{color:var(--text-read);font-size:var(--text-body);line-height:1.7;width:100%;max-width:none}
+.project-case-study > p,.project-case-study > ul,.project-case-study > h2,.project-case-study > h3{max-width:var(--measure)}
 .project-case-study > p{margin:0 0 1.1em}
 .project-case-study > p:last-child{margin-bottom:0}
 .project-case-study h2{
   margin:1.85em 0 .55em;
-  font-size:19px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  font-size:1.1875rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink);
 }
 .project-case-study h2:first-child{margin-top:0}
 .project-case-study h3{
   margin:1.25em 0 .35em;
-  font-size:19px;font-weight:600;
+  font-size:1.1875rem;font-weight:600;
   color:var(--ink);
 }
 .project-case-study ul{
   margin:.35em 0 1.1em;padding-left:1.15em;
-  color:var(--muted);
+  color:var(--text-read);
 }
-.project-case-study li{margin:.2em 0;line-height:1.65}
+.project-case-study li{margin:.3em 0;line-height:1.65}
 .project-case-study strong{color:var(--ink);font-weight:600}
 
 .commission-works{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin:30px 0}
@@ -488,7 +504,7 @@ a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);b
 }
 .cv-card:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.06) 45%,transparent 60%)}
 .cv-card h2{font-size:clamp(30px,4vw,54px);line-height:.9;letter-spacing:-.05em;margin:0 0 12px;color:var(--ink)}
-.cv-card p:not(.eyebrow){max-width:400px;font-size:13px;line-height:1.55;color:var(--muted)}
+.cv-card p:not(.eyebrow){max-width:28em;font-size:var(--text-small);line-height:1.6;color:var(--text-read)}
 .cv-actions{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
 
 .contact-info{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px}
@@ -496,7 +512,7 @@ a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);b
 .contact-email{font-size:clamp(16px,2.1vw,26px);letter-spacing:-.03em;border-bottom:2px solid var(--chrome-3);color:var(--ink);transition:border-color .25s,text-shadow .25s}
 .contact-email:hover{border-color:var(--navy);text-shadow:0 0 26px rgba(0,0,139,.55)}
 
-.page-footer{border-top:1px solid var(--line);padding:16px 5vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font:500 9px "DM Mono",monospace;letter-spacing:.1em;color:var(--muted)}
+.page-footer{border-top:1px solid var(--line);padding:16px 5vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font:500 .6875rem "DM Mono",monospace;letter-spacing:.1em;color:var(--muted)}
 .page-footer div{display:flex;gap:20px;flex-wrap:wrap}
 .page-footer a:hover{opacity:.7;color:var(--ink)}
 
@@ -570,7 +586,7 @@ a.tool-link:hover,a.tool-link:focus-visible{border-color:rgba(255,255,255,.55);b
   .home-hero h1{font-size:clamp(30px,9vw,44px)}
   .hero-actions .button{width:100%;justify-content:space-between}
   .work-intro h1,.work-intro h2{font-size:clamp(24px,7vw,32px)}
-  .tab-btn{font-size:11px;padding:10px 12px}
+  .tab-btn{font-size:.75rem;padding:10px 12px}
   .about-solo h1,.about-solo h2{font-size:clamp(26px,7.5vw,34px)}
   .cv-card h2{font-size:clamp(26px,8vw,36px)}
   .contact-email{font-size:16px;word-break:break-word}
@@ -611,7 +627,7 @@ body[data-themed] .project-pager{border-top-color:color-mix(in srgb, var(--accen
 .commission-page.layout-cinematic .project-detail-info > .commission-body{grid-column:1;grid-row:1 / span 4}
 .commission-page.layout-cinematic .project-detail-info > :not(.commission-body){grid-column:2}
 .commission-page.layout-cinematic .project-detail-info > .project-date-block{margin-top:0}
-.commission-page.layout-cinematic .project-overview{font-size:15px}
+.commission-page.layout-cinematic .project-overview{font-size:var(--text-lead)}
 @media(max-width:850px){
   .commission-page.layout-cinematic .project-detail-info{grid-template-columns:1fr}
   .commission-page.layout-cinematic .project-detail-info > .commission-body,
